@@ -14,7 +14,7 @@ app.use(logger-request({filename:'pippo.log'}));
 
 ### logger-request(options)
 
-Setup session store with the given `options`.
+Setup logger with the given `options` (object).
 
 #### Options
 
@@ -23,6 +23,11 @@ Setup session store with the given `options`.
   - `json` - If true, messages will be logged as JSON (default true).
 
 releated to https://github.com/flatiron/winston#file-transport
+
+#### Examples
+
+Take a look at my [examples](https://github.com/hex7c0/logger-request/tree/master/examples)
+
 
 ## License
 Copyright (c) 2014 hex7c0
