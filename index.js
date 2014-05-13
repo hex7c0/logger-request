@@ -6,7 +6,9 @@
  * @subpackage index
  * @version 1.0.1
  * @author hex7c0 <0x7c0@teboss.tk>
- * @copyright GPLv3
+ * @license GPLv3
+ * @overview main module
+ * @copyright hex7c0 2014
  */
 
 /**
@@ -69,13 +71,13 @@ function logger(options) {
                 pid : process.pid,
                 method : req.method,
                 status : res.statusCode,
-                url : req.url,
+                response : Date.now() - start,
                 ip : req.headers['x-forwarded-for'] || req.ip
                         || req.connection.remoteAddress,
-                cookie : req.cookies,
-                response : Date.now() - start,
+                url : req.url,
                 userAgent : req.headers['user-agent'],
-                lang : req.headers['accept-language']
+                lang : req.headers['accept-language'],
+                cookie : req.cookies,
             });
 
             res.end = buffer;
@@ -87,6 +89,6 @@ function logger(options) {
 };
 
 /**
- * exports functions
+ * exports function
  */
-module.exports = logger;
+exports = module.exports = logger;

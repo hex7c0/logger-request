@@ -6,7 +6,7 @@
  * @subpackage examples
  * @version 0.0.1
  * @author hex7c0 <0x7c0@teboss.tk>
- * @copyright GPLv3
+ * @license GPLv3
  */
 
 /**

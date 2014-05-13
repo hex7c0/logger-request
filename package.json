@@ -16,10 +16,10 @@
     "url": "http://hex7c0.tk/"
   },
   "dependencies": {
-      "winston": "0.7.3"
+    "winston": "0.7.3"
   },
   "devDependencies":{
-      "express": ">=4.0.0"
+    "express": ">=4.0.0"
   },
   "engines": {
     "node": ">=0.8.0"
