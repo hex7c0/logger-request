@@ -4,7 +4,7 @@
  * 
  * @package logger-request
  * @subpackage index
- * @version 1.0.0
+ * @version 1.0.1
  * @author hex7c0 <0x7c0@teboss.tk>
  * @copyright GPLv3
  */
@@ -22,8 +22,16 @@ try {
 }
 
 function logger(options) {
+    /**
+     * setting options
+     * 
+     * @param string filename: name of log
+     * @param integer maxsize: max size of log
+     * @param bollean json: if write data with json format
+     */
+
     var options = options || {};
-    var filename = options.store || 'route.log';
+    var filename = options.filename || 'route.log';
     var maxsize = options.maxsize || 8388608;
     var json = options.json || true;
 
