@@ -22,7 +22,7 @@
       "express": ">=4.0.0"
   },
   "engines": {
-    "node": ">0.8.0"
+    "node": ">=0.8.0"
   },
   "keywords": [
     "request",

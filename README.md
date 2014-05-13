@@ -1,6 +1,4 @@
-# logger-request
- [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request)
- [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
+logger-request [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request) [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
 ==============
 
 simple logger middleware for express
@@ -8,15 +6,13 @@ simple logger middleware for express
 ## API
 
 ```js
-var express = require('express');
+var app = require('express')();
 var logger-request = require('logger-request');
-
-var app = express();
 
 app.use(logger-request({filename:'pippo.log'}));
 ```
 
-### session(options)
+### logger-request(options)
 
 Setup session store with the given `options`.
 
