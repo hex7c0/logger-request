@@ -1,4 +1,6 @@
-express-logger
+# logger-request
+ [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request)
+ [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
 ==============
 
 simple logger middleware for express
@@ -7,14 +9,16 @@ simple logger middleware for express
 
 ```js
 var express = require('express');
-var express-logger = require('express-logger');
+var logger-request = require('logger-request');
 
 var app = express();
 
-app.use(express-logger());
+app.use(logger-request({filename:'pippo.log'}));
 ```
 
-### express-logger(options)
+### session(options)
+
+Setup session store with the given `options`.
 
 #### Options
 
@@ -23,3 +27,7 @@ app.use(express-logger());
   - `json` - If true, messages will be logged as JSON (default true).
 
 releated to https://github.com/flatiron/winston#file-transport
+
+## License
+Copyright (c) 2014 hex7c0
+Licensed under the GPLv3 license.
