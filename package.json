@@ -1,0 +1,34 @@
+{
+  "name": "express-logger",
+  "version": "0.0.1",
+  "description": "simple logger middleware for express",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hex7c0/express-logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hex7c0/express-logger/issues"
+  },
+  "author": {
+    "name": "Francesco Carnielli",
+   "email": "carniellifrancesco@gmail.com",
+    "url": "http://hex7c0.tk/"
+  },
+  "dependencies": {
+      "winston": "0.7.3"
+  },
+  "devDependencies":{
+      "express": ">=4.2.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "keywords": [
+    "logger",
+    "logging",
+    "express"
+  ],
+  "license": "GPLv3",
+  "homepage": "https://github.com/hex7c0/express-logger"
+}
