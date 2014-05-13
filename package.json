@@ -1,14 +1,14 @@
 {
-  "name": "express-logger",
+  "name": "logger-request",
   "version": "1.0.0",
   "description": "simple logger middleware for express",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hex7c0/express-logger.git"
+    "url": "git://github.com/hex7c0/logger-request.git"
   },
   "bugs": {
-    "url": "https://github.com/hex7c0/express-logger/issues"
+    "url": "https://github.com/hex7c0/logger-request/issues"
   },
   "author": {
     "name": "hex7c0",
@@ -19,16 +19,17 @@
       "winston": "0.7.3"
   },
   "devDependencies":{
-      "express": ">=4.2.0"
+      "express": ">=4.0.0"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">=0.10.0"
   },
   "keywords": [
+    "request",
     "logger",
     "logging",
     "express"
   ],
   "license": "GPLv3",
-  "homepage": "https://github.com/hex7c0/express-logger"
+  "homepage": "https://github.com/hex7c0/logger-request"
 }

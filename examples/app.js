@@ -2,7 +2,7 @@
 /**
  * example with express
  * 
- * @package express-logger
+ * @package logger-request
  * @subpackage examples
  * @version 0.0.1
  * @author hex7c0 <0x7c0@teboss.tk>

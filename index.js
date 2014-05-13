@@ -1,8 +1,8 @@
 "use strict";
 /**
- * express-logger
+ * logger-request
  * 
- * @package express-logger
+ * @package logger-request
  * @subpackage index
  * @version 1.0.0
  * @author hex7c0 <0x7c0@teboss.tk>
