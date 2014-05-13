@@ -1,6 +1,6 @@
 {
   "name": "express-logger",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "simple logger middleware for express",
   "main": "index.js",
   "repository": {
@@ -11,8 +11,8 @@
     "url": "https://github.com/hex7c0/express-logger/issues"
   },
   "author": {
-    "name": "Francesco Carnielli",
-   "email": "carniellifrancesco@gmail.com",
+    "name": "hex7c0",
+   "email": "0x7c0@teboss.tk",
     "url": "http://hex7c0.tk/"
   },
   "dependencies": {

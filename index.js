@@ -4,8 +4,8 @@
  * 
  * @package express-logger
  * @subpackage index
- * @version 0.0.1
- * @author hex7c0 <carniellifrancesco@gmail.com>
+ * @version 1.0.0
+ * @author hex7c0 <0x7c0@teboss.tk>
  * @copyright GPLv3
  */
 
