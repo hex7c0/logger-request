@@ -1,6 +1,6 @@
 {
   "name": "logger-request",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "simple logger middleware for express",
   "main": "index.js",
   "repository": {

@@ -1,7 +1,7 @@
 logger-request [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request) [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
 ==============
 
-simple logger middleware for express
+logger middleware for [expressjs](http://expressjs.com/)
 
 ## API
 

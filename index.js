@@ -4,7 +4,7 @@
  * 
  * @package logger-request
  * @subpackage index
- * @version 1.0.2
+ * @version 1.0.3
  * @author hex7c0 <0x7c0@teboss.tk>
  * @license GPLv3
  * @overview main module
@@ -30,6 +30,7 @@ function logger(options) {
      * @param string filename: name of log
      * @param integer maxsize: max size of log
      * @param bollean json: if write data with json format
+     * @return function
      */
 
     var options = options || {};
@@ -57,21 +58,25 @@ function logger(options) {
          * @param object req: request
          * @param object res: response
          * @param object next: continue routes
+         * @return function
          */
 
-        var start = Date.now();
+        var start = process.hrtime();
         var buffer = res.end;
 
         res.end = function final() {
             /**
              * end of job. Get response time and status code
+             * 
+             * @return void
              */
 
+            var diff = process.hrtime(start)
             logger('routes', {
                 pid : process.pid,
                 method : req.method,
                 status : res.statusCode,
-                response : Date.now() - start,
+                response : diff[0] * 1e9 + diff[1],
                 ip : req.headers['x-forwarded-for'] || req.ip
                         || req.connection.remoteAddress,
                 url : req.url,
@@ -81,10 +86,11 @@ function logger(options) {
             });
 
             res.end = buffer;
+            return;
         }
         res.end()
 
-        next();
+        return next();
     };
 };
 
