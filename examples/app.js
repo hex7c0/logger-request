@@ -15,14 +15,16 @@
 // import
 try {
     var app = require('express')();
-    var logger = require('../index.js');
+    var logger = require('../index.js'); // use 'logger-request' instead
 } catch (MODULE_NOT_FOUND) {
     console.log(MODULE_NOT_FOUND);
     process.exit(1);
 }
 
 // using middleware
-app.use(logger())
+app.use(logger({
+    filename : 'example.log'
+}))
 
 // express routing
 app.get('/', function(req, res) {
