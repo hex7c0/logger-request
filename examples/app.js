@@ -24,7 +24,7 @@ try {
 // using middleware
 app.use(logger({
     filename : 'example.log'
-}))
+}));
 
 // express routing
 app.get('/', function(req, res) {

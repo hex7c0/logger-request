@@ -4,7 +4,7 @@
  * 
  * @package logger-request
  * @subpackage index
- * @version 1.0.4
+ * @version 1.0.5
  * @author hex7c0 <0x7c0@teboss.tk>
  * @license GPLv3
  * @overview main module
@@ -35,7 +35,7 @@ function logger(options) {
     options.level = options.level || 'info';
     options.silent = Boolean(options.silent);
     options.colorize = Boolean(options.colorize);
-    options.timestamp = Boolean(options.timestamp) || true;
+    options.timestamp = options.timestamp || true;
     options.filename = options.filename || 'route.log';
     options.maxsize = parseInt(options.maxsize) || 8388608;
     options.maxFiles = parseInt(options.maxFiles) || null;

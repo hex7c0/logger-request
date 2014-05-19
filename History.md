@@ -1,8 +1,13 @@
+1.0.4 / 2014-05-19
+==================
+
+  * timestamp option not require a Boolean
+
 1.0.4 / 2014-05-16
 ==================
 
   * More Options, releated to 'winston' module
-  
+
 1.0.3 / 2014-05-14
 ==================
 
