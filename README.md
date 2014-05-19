@@ -7,12 +7,11 @@ logger middleware for [expressjs](http://expressjs.com/)
 
 ```js
 var app = require('express')();
-var logger-request = require('logger-request');
+var logger = require('logger-request');
 
 app.use(logger({
     filename : 'pippo.log'
-}))
-
+}));
 ```
 
 ### logger-request(options)
@@ -37,7 +36,7 @@ releated to https://github.com/flatiron/winston#file-transport
 
 Take a look at my [examples](https://github.com/hex7c0/logger-request/tree/master/examples)
 
-
 ## License
 Copyright (c) 2014 hex7c0
+
 Licensed under the GPLv3 license.
