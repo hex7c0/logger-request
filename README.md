@@ -26,6 +26,7 @@ app.use(logger({
  - `maxsize` - **Integer** Max size in bytes of the logfile, if the size is exceeded then a new file is created *(default '8388608' [8Mb])*
  - `maxFiles` - **Integer** Limit the number of files created when the size of the logfile is exceeded
  - `json` - **Boolean** If true, messages will be logged as JSON *(default 'true')*
+ - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default 'false')*
  - `console` - **Boolean** If true, it displays log also to console *(default 'false')*
 
 releated to https://github.com/flatiron/winston#file-transport
