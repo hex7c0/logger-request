@@ -1,7 +1,13 @@
-1.0.4 / 2014-05-19
+1.0.6 / 2014-05-21
 ==================
 
-  * timestamp option not require a Boolean
+  * Validate options flag
+  * Update Expressjs to 4.3.0
+
+1.0.5 / 2014-05-19
+==================
+
+  * Timestamp option not require a Boolean
 
 1.0.4 / 2014-05-16
 ==================

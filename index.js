@@ -4,7 +4,7 @@
  * 
  * @package logger-request
  * @subpackage index
- * @version 1.0.5
+ * @version 1.0.6
  * @author hex7c0 <0x7c0@teboss.tk>
  * @license GPLv3
  * @overview main module
@@ -25,22 +25,24 @@ try {
 
 function logger(options) {
     /**
-     * setting options
+     * option setting
      * 
-     * @param object options: various options. check README.md
+     * @param object options: various options. Check README.md
      * @return function
      */
 
     var options = options || {};
-    options.level = options.level || 'info';
+    // winston
+    options.level = String(options.level || 'info');
     options.silent = Boolean(options.silent);
     options.colorize = Boolean(options.colorize);
-    options.timestamp = options.timestamp || true;
-    options.filename = options.filename || 'route.log';
+    options.timestamp = options.timestamp == false ? false : true;
+    options.filename = String(options.filename || 'route.log');
     options.maxsize = parseInt(options.maxsize) || 8388608;
     options.maxFiles = parseInt(options.maxFiles) || null;
-    options.json = Boolean(options.json) || true;
-    options.console = Boolean(options.console) || true;
+    options.json = options.json == false ? false : true;
+    // override
+    options.console = options.console == true ? false : true;
 
     if (options.silent) {
         return function logging(req, res, next) {
@@ -90,7 +92,7 @@ function logger(options) {
             var start = process.hrtime();
             var buffer = res.end;
 
-            res.end = function final() {
+            res.end = function finale() {
                 /**
                  * end of job. Get response time and status code
                  * 
@@ -98,7 +100,7 @@ function logger(options) {
                  */
 
                 var diff = process.hrtime(start)
-                logger('routes', {
+                logger('logger-reques', {
                     pid : process.pid,
                     method : req.method,
                     status : res.statusCode,
@@ -106,8 +108,8 @@ function logger(options) {
                     ip : req.headers['x-forwarded-for'] || req.ip
                             || req.connection.remoteAddress,
                     url : req.url,
-                    userAgent : req.headers['user-agent'],
-                    lang : req.headers['accept-language'],
+                    agent : req.headers['user-agent'],
+                    language : req.headers['accept-language'],
                     cookie : req.cookies,
                 });
 

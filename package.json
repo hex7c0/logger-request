@@ -1,6 +1,6 @@
 {
   "name": "logger-request",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "logger middleware for expressjs",
   "main": "index.js",
   "repository": {
@@ -19,7 +19,7 @@
     "winston": "0.7.3"
   },
   "devDependencies":{
-    "express": ">=4.0.0"
+    "express": "4.3.0"
   },
   "engines": {
     "node": ">=0.8.0"
