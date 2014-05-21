@@ -109,7 +109,7 @@ function logger(options) {
                             || req.connection.remoteAddress,
                     url : req.url,
                     agent : req.headers['user-agent'],
-                    language : req.headers['accept-language'],
+                    lang : req.headers['accept-language'],
                     cookie : req.cookies,
                 });
 

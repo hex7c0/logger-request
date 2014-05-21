@@ -22,11 +22,11 @@ app.use(logger({
  - `silent` - **Boolean** Flag indicating whether to suppress output
  - `colorize` - **Boolean** Flag indicating if we should colorize output
  - `timestamp` - **Boolean** Flag indicating if we should prepend output with timestamps *(default 'true')*. If function is specified, its return value will be used instead of timestamps
- - `filename` - **String** Filename of the logfile to write output to
- - `maxsize` - **Integer** Max size in bytes of the logfile, if the size is exceeded then a new file is created
+ - `filename` - **String** Filename of the logfile to write output to *(default 'route.log')*
+ - `maxsize` - **Integer** Max size in bytes of the logfile, if the size is exceeded then a new file is created *(default '8388608' [8Mb])*
  - `maxFiles` - **Integer** Limit the number of files created when the size of the logfile is exceeded
  - `json` - **Boolean** If true, messages will be logged as JSON *(default 'true')*
- - `console` - **Boolean** If you want use console too
+ - `console` - **Boolean** If true, it displays log also to console *(default 'false')*
 
 releated to https://github.com/flatiron/winston#file-transport
 
