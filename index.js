@@ -7,7 +7,6 @@
  * @version 1.0.8
  * @author hex7c0 <0x7c0@teboss.tk>
  * @license GPLv3
- * @file main module
  * @copyright hex7c0 2014
  */
 
