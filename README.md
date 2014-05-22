@@ -18,6 +18,7 @@ app.use(logger({
 
 #### Options
 
+ - `logger` - **String** Logger option related to [this](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default 'logger-request')*
  - `level` - **String** Level of messages that this transport should log *(default 'info')*
  - `silent` - **Boolean** Flag indicating whether to suppress output
  - `colorize` - **Boolean** Flag indicating if we should colorize output

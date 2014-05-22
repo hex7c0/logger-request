@@ -1,3 +1,8 @@
+1.0.8 / 2014-05-21
+==================
+
+  * Logger option related to [this](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston)
+
 1.0.7 / 2014-05-21
 ==================
 

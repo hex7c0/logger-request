@@ -13,24 +13,24 @@
  * initialize module
  */
 // import
-try {
+try{
     var app = require('express')();
     var logger = require('../index.js'); // use 'logger-request' instead
-} catch (MODULE_NOT_FOUND) {
+} catch (MODULE_NOT_FOUND){
     console.log(MODULE_NOT_FOUND);
     process.exit(1);
 }
 
 // using middleware
 app.use(logger({
-    filename : 'example.log'
+    logger: 'pippo',
+    filename: 'example.log',
 }));
 
 // express routing
-app.get('/', function(req, res) {
+app.get('/',function(req,res){
     res.send('hello world!');
 });
-
 // server starting
 app.listen(3000);
 console.log('starting server on port 3000');
