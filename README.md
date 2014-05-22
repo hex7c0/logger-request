@@ -1,4 +1,4 @@
-logger-request [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request) [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
+#logger-request [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request) [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
 
 logger middleware for [expressjs](http://expressjs.com/)
 
@@ -10,7 +10,7 @@ var app = require('express')();
 var logger = require('logger-request');
 
 app.use(logger({
-    filename : 'pippo.log'
+    filename : 'pippo.log',
 }));
 ```
 
@@ -20,12 +20,12 @@ app.use(logger({
 
  - `logger` - **String** Logger option related to [this](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default 'logger-request')*
  - `level` - **String** Level of messages that this transport should log *(default 'info')*
- - `silent` - **Boolean** Flag indicating whether to suppress output
- - `colorize` - **Boolean** Flag indicating if we should colorize output
+ - `silent` - **Boolean** Flag indicating whether to suppress output *(default 'false')*
+ - `colorize` - **Boolean** Flag indicating if we should colorize output *(default 'false')*
  - `timestamp` - **Boolean** Flag indicating if we should prepend output with timestamps *(default 'true')*. If function is specified, its return value will be used instead of timestamps
  - `filename` - **String** Filename of the logfile to write output to *(default 'route.log')*
  - `maxsize` - **Integer** Max size in bytes of the logfile, if the size is exceeded then a new file is created *(default '8388608' [8Mb])*
- - `maxFiles` - **Integer** Limit the number of files created when the size of the logfile is exceeded
+ - `maxFiles` - **Integer** Limit the number of files created when the size of the logfile is exceeded *(default 'no limit')*
  - `json` - **Boolean** If true, messages will be logged as JSON *(default 'true')*
  - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default 'false')*
  - `console` - **Boolean** If true, it displays log also to console *(default 'false')*
@@ -39,4 +39,4 @@ Take a look at my [examples](https://github.com/hex7c0/logger-request/tree/maste
 ## License
 Copyright (c) 2014 hex7c0
 
-Licensed under the GPLv3 license.
+Licensed under the GPLv3 license
