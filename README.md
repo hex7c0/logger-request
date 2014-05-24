@@ -2,6 +2,18 @@
 
 logger middleware for [expressjs](http://expressjs.com/)
 
+## Installation
+
+Install through NPM
+
+```
+npm install logger-request
+```
+or
+```
+git clone git://github.com/hex7c0/logger-request.git
+```
+
 ## API
 
 inside expressjs project
@@ -10,13 +22,13 @@ var app = require('express')();
 var logger = require('logger-request');
 
 app.use(logger({
-    filename : 'pippo.log',
+    filename : 'foo.log',
 }));
 ```
 
 ### logger(options)
 
-#### Options
+#### options
 
  - `logger` - **String** Logger option related to [this](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default 'logger-request')*
  - `level` - **String** Level of messages that this transport should log *(default 'info')*
@@ -27,6 +39,7 @@ app.use(logger({
  - `maxsize` - **Integer** Max size in bytes of the logfile, if the size is exceeded then a new file is created *(default '8388608' [8Mb])*
  - `maxFiles` - **Integer** Limit the number of files created when the size of the logfile is exceeded *(default 'no limit')*
  - `json` - **Boolean** If true, messages will be logged as JSON *(default 'true')*
+ - `raw` - **Boolean** If true, raw messages will be logged to console *(default 'false')*
  - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default 'false')*
  - `console` - **Boolean** If true, it displays log also to console *(default 'false')*
 

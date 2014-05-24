@@ -4,7 +4,7 @@
  * 
  * @package logger-request
  * @subpackage index
- * @version 1.0.8
+ * @version 1.0.9
  * @author hex7c0 <0x7c0@teboss.tk>
  * @license GPLv3
  * @copyright hex7c0 2014
@@ -20,7 +20,7 @@ try{
     // personal
     var LOG = require('winston');
 } catch (MODULE_NOT_FOUND){
-    console.log(MODULE_NOT_FOUND);
+    console.error(MODULE_NOT_FOUND);
     process.exit(1);
 }
 
@@ -33,23 +33,26 @@ function logger(options){
      */
 
     var options = options || {};
-    options.logger = options.logger || 'logger-request';
-    // winston
-    options.level = String(options.level || 'info');
-    options.silent = Boolean(options.silent);
-    options.colorize = Boolean(options.colorize);
-    options.timestamp = options.timestamp == false ? false : true;
-    options.filename = String(options.filename || 'route.log');
-    options.maxsize = parseInt(options.maxsize) || 8388608;
-    options.maxFiles = parseInt(options.maxFiles) || null;
-    options.json = options.json == false ? false : true;
-    // override
-    options.console = options.console == true ? false : true;
+    var my = {
+        logger: options.logger || 'logger-request',
+        // winston
+        level: String(options.level || 'info'),
+        silent: Boolean(options.silent),
+        colorize: Boolean(options.colorize),
+        timestamp: options.timestamp == false ? false : true,
+        filename: String(options.filename || 'route.log'),
+        maxsize: parseInt(options.maxsize) || 8388608,
+        maxFiles: parseInt(options.maxFiles) || null,
+        json: options.json == false ? false : true,
+        raw: options.raw == false ? false : true,
+        // override
+        console: options.console == true ? false : true,
+    };
     var standalone = options.standalone == true ? true : false;
 
-    if (options.silent){
+    if (my.silent){
         // remove obsolete
-        LOG = options = null;
+        LOG = my = options = null;
 
         return function logging(req,res,next){
             /**
@@ -67,30 +70,31 @@ function logger(options){
     // setting
     LOG.loggers.add(options.logger,{
         console: {
-            level: options.level,
-            silent: options.console,
-            colorize: options.colorize,
-            timestamp: options.timestamp,
+            level: my.level,
+            silent: my.console,
+            colorize: my.colorize,
+            timestamp: my.timestamp,
+            json: my.json,
+            raw: my.raw,
         },
         file: {
-            level: options.level,
-            silent: options.silent,
-            colorize: options.colorize,
-            timestamp: options.timestamp,
-            filename: options.filename,
-            maxsize: options.maxsize,
-            maxFiles: options.maxFiles,
-            json: options.json,
+            level: my.level,
+            silent: my.silent,
+            colorize: my.colorize,
+            timestamp: my.timestamp,
+            filename: my.filename,
+            maxsize: my.maxsize,
+            maxFiles: my.maxFiles,
+            json: my.json,
         }
     });
-    var logger = LOG.loggers.get(options.logger)[options.level];
+    var logger = LOG.loggers.get(my.logger)[my.level];
     // remove obsolete
-    LOG = options = null;
+    LOG = options = my = null;
 
     if (standalone){
         return logger;
     }
-
     return function logging(req,res,next){
         /**
          * logging all routing
@@ -103,7 +107,6 @@ function logger(options){
 
         var start = process.hrtime();
         var buffer = res.end;
-
         res.end = function finale(){
             /**
              * end of job. Get response time and status code
@@ -116,19 +119,17 @@ function logger(options){
                 pid: process.pid,
                 method: req.method,
                 status: res.statusCode,
-                response: diff[0] * 1e9 + diff[1],
                 ip: req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress,
                 url: req.url,
                 agent: req.headers['user-agent'],
                 lang: req.headers['accept-language'],
                 cookie: req.cookies,
+                response: diff[0] * 1e9 + diff[1],
             });
-
             res.end = buffer;
             return;
         };
         res.end();
-
         return next();
     };
 }
