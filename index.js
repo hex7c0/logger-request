@@ -34,7 +34,7 @@ function logger(options){
 
     var options = options || {};
     var my = {
-        logger: options.logger || 'logger-request',
+        logger: String(options.logger || 'logger-request'),
         // winston
         level: String(options.level || 'info'),
         silent: Boolean(options.silent),
