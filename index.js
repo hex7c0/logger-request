@@ -4,7 +4,7 @@
  * 
  * @package logger-request
  * @subpackage index
- * @version 1.0.9
+ * @version 1.0.10
  * @author hex7c0 <0x7c0@teboss.tk>
  * @license GPLv3
  * @copyright hex7c0 2014
@@ -68,7 +68,7 @@ function logger(options){
         };
     }
     // setting
-    LOG.loggers.add(options.logger,{
+    LOG.loggers.add(my.logger,{
         console: {
             level: my.level,
             silent: my.console,
