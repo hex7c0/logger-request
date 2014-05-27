@@ -1,36 +1,100 @@
 "use strict";
 /**
- * logger-request
- * 
- * @package logger-request
- * @subpackage index
- * @version 1.0.10
- * @author hex7c0 <0x7c0@teboss.tk>
- * @license GPLv3
+ * @file logger-request main
+ * @module logger-request
+ * @version 1.1.0
+ * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
+ * @license GPLv3
  */
 
 /**
  * initialize module
  * 
- * @global
+ * @requires winston
  */
 // import
-try{
+try {
     // personal
+    /**
+     * @global
+     */
     var LOG = require('winston');
-} catch (MODULE_NOT_FOUND){
+} catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
     process.exit(1);
 }
+// load
+/**
+ * @global
+ */
+var logger = null;
 
-function logger(options){
+/**
+ * logging all route
+ * 
+ * @function logging
+ * @param {object} req - client request
+ * @param {object} res - response to client
+ * @param {next} next - continue routes
+ * @return
+ */
+function logging(req,res,next) {
+
+    var start = process.hrtime();
+    var buffer = res.end;
+
     /**
-     * option setting
+     * end of job. Get response time and status code
      * 
-     * @param object options: various options. Check README.md
-     * @return function
+     * @param {string} chunk - data sent
+     * @param {string} encoding - data encoding
+     * @return
      */
+    res.end = function finale(chunk,encoding) {
+
+        var diff = process.hrtime(start);
+        logger('logger-request',{
+            pid: process.pid,
+            method: req.method,
+            status: res.statusCode,
+            ip: req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress,
+            url: req.url,
+            agent: req.headers['user-agent'],
+            lang: req.headers['accept-language'],
+            cookie: req.cookies,
+            response: diff[0] * 1e9 + diff[1],
+        });
+
+        res.end = buffer;
+        res.end(chunk,encoding);
+        return;
+    };
+
+    return next();
+}
+/**
+ * logging none
+ * 
+ * @function empty
+ * @param {object} req - client request
+ * @param {object} res - response to client
+ * @param {next} next - continue routes
+ * @return
+ */
+function empty(req,res,next) {
+
+    return next();
+
+}
+/**
+ * option setting
+ * 
+ * @function main
+ * @param {object} options - various options. Check README.md
+ * @return {function|object}
+ */
+function main(options) {
 
     var options = options || {};
     var my = {
@@ -50,22 +114,10 @@ function logger(options){
     };
     var standalone = options.standalone == true ? true : false;
 
-    if (my.silent){
+    if (my.silent) {
         // remove obsolete
-        LOG = my = options = null;
-
-        return function logging(req,res,next){
-            /**
-             * logging none
-             * 
-             * @param object req: request
-             * @param object res: response
-             * @param object next: continue routes
-             * @return function
-             */
-
-            return next();
-        };
+        LOG = main = logging = null;
+        return empty;
     }
     // setting
     LOG.loggers.add(my.logger,{
@@ -88,53 +140,20 @@ function logger(options){
             json: my.json,
         }
     });
-    var logger = LOG.loggers.get(my.logger)[my.level];
-    // remove obsolete
-    LOG = options = my = null;
+    logger = LOG.loggers.get(my.logger)[my.level];
 
-    if (standalone){
+    // remove obsolete
+    LOG = main = empty = null;
+    if (standalone) {
+        logging = null;
         return logger;
     }
-    return function logging(req,res,next){
-        /**
-         * logging all routing
-         * 
-         * @param object req: request
-         * @param object res: response
-         * @param object next: continue routes
-         * @return function
-         */
-
-        var start = process.hrtime();
-        var buffer = res.end;
-        res.end = function finale(){
-            /**
-             * end of job. Get response time and status code
-             * 
-             * @return void
-             */
-
-            var diff = process.hrtime(start);
-            logger('logger-request',{
-                pid: process.pid,
-                method: req.method,
-                status: res.statusCode,
-                ip: req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress,
-                url: req.url,
-                agent: req.headers['user-agent'],
-                lang: req.headers['accept-language'],
-                cookie: req.cookies,
-                response: diff[0] * 1e9 + diff[1],
-            });
-            res.end = buffer;
-            return;
-        };
-        res.end();
-        return next();
-    };
+    return logging;
 }
 
 /**
  * exports function
+ * 
+ * @exports logger-request
  */
-module.exports = logger;
+module.exports = main;
