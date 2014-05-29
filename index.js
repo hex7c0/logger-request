@@ -34,8 +34,8 @@ var logger = null;
  * logging all route
  * 
  * @function logging
- * @param {object} req - client request
- * @param {object} res - response to client
+ * @param {Object} req - client request
+ * @param {Object} res - response to client
  * @param {next} next - continue routes
  * @return
  */
@@ -47,8 +47,8 @@ function logging(req,res,next) {
     /**
      * end of job. Get response time and status code
      * 
-     * @param {string} chunk - data sent
-     * @param {string} encoding - data encoding
+     * @param {String} chunk - data sent
+     * @param {String} encoding - data encoding
      * @return
      */
     res.end = function finale(chunk,encoding) {
@@ -77,8 +77,8 @@ function logging(req,res,next) {
  * logging none
  * 
  * @function empty
- * @param {object} req - client request
- * @param {object} res - response to client
+ * @param {Object} req - client request
+ * @param {Object} res - response to client
  * @param {next} next - continue routes
  * @return
  */
@@ -90,11 +90,11 @@ function empty(req,res,next) {
 /**
  * option setting
  * 
- * @function main
- * @param {object} options - various options. Check README.md
+ * @function logger
+ * @param {Object} options - various options. Check README.md
  * @return {function|object}
  */
-function main(options) {
+function logger(options) {
 
     var options = options || {};
     var my = {
@@ -154,6 +154,6 @@ function main(options) {
 /**
  * exports function
  * 
- * @exports logger-request
+ * @exports logger
  */
-module.exports = main;
+module.exports = logger;
