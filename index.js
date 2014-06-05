@@ -2,22 +2,21 @@
 /**
  * @file logger-request main
  * @module logger-request
- * @version 1.1.0
+ * @version 1.1.1
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
  */
 
-/**
+/*
  * initialize module
  * 
- * @requires winston
  */
 // import
 try {
-    // personal
     /**
      * @global
+     * @requires winston
      */
     var LOG = require('winston');
 } catch (MODULE_NOT_FOUND) {
@@ -28,8 +27,11 @@ try {
 /**
  * @global
  */
-var logger = null;
+var log = null;
 
+/*
+ * functions
+ */
 /**
  * logging all route
  * 
@@ -43,7 +45,6 @@ function logging(req,res,next) {
 
     var start = process.hrtime();
     var buffer = res.end;
-
     /**
      * end of job. Get response time and status code
      * 
@@ -53,24 +54,25 @@ function logging(req,res,next) {
      */
     res.end = function finale(chunk,encoding) {
 
-        var diff = process.hrtime(start);
-        logger('logger-request',{
-            pid: process.pid,
-            method: req.method,
-            status: res.statusCode,
-            ip: req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress,
-            url: req.url,
-            agent: req.headers['user-agent'],
-            lang: req.headers['accept-language'],
-            cookie: req.cookies,
-            response: diff[0] * 1e9 + diff[1],
-        });
-
         res.end = buffer;
-        res.end(chunk,encoding);
+        res.end(chunk,encoding,function() {
+
+            var diff = process.hrtime(start);
+            log('logger-request',{
+                pid: process.pid,
+                method: req.method,
+                status: res.statusCode,
+                ip: req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress,
+                url: req.url,
+                agent: req.headers['user-agent'],
+                lang: req.headers['accept-language'],
+                cookie: req.cookies,
+                response: diff[0] * 1e9 + diff[1],
+            });
+            return;
+        });
         return;
     };
-
     return next();
 }
 /**
@@ -85,16 +87,16 @@ function logging(req,res,next) {
 function empty(req,res,next) {
 
     return next();
-
 }
 /**
  * option setting
  * 
+ * @exports logger
  * @function logger
  * @param {Object} options - various options. Check README.md
  * @return {function|object}
  */
-function logger(options) {
+module.exports = function logger(options) {
 
     var options = options || {};
     var my = {
@@ -116,7 +118,7 @@ function logger(options) {
 
     if (my.silent) {
         // remove obsolete
-        LOG = main = logging = null;
+        LOG = log = logging = null;
         return empty;
     }
     // setting
@@ -140,20 +142,12 @@ function logger(options) {
             json: my.json,
         }
     });
-    logger = LOG.loggers.get(my.logger)[my.level];
-
+    log = LOG.loggers.get(my.logger)[my.level];
     // remove obsolete
-    LOG = main = empty = null;
+    LOG = empty = null;
     if (standalone) {
         logging = null;
-        return logger;
+        return log;
     }
     return logging;
 }
-
-/**
- * exports function
- * 
- * @exports logger
- */
-module.exports = logger;
