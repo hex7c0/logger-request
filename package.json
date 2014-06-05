@@ -19,7 +19,7 @@
     "winston": "0.7.3"
   },
   "devDependencies":{
-    "express": ">=4.0.0"
+    "express": ">4.0.0"
   },
   "engines": {
     "node": ">=0.8.0"
@@ -27,8 +27,7 @@
   "keywords": [
     "request",
     "logger",
-    "logging",
-    "express"
+    "logging"
   ],
   "license": "GPLv3",
   "homepage": "https://github.com/hex7c0/logger-request"
