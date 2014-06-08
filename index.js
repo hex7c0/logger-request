@@ -91,7 +91,7 @@ function empty(req,res,next) {
  * @exports main
  * @function main
  * @param {Object} options - various options. Check README.md
- * @return {function|Object}
+ * @return {Function|Object}
  */
 var main = module.exports = function(options) {
 
