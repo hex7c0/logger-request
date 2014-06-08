@@ -1,10 +1,10 @@
 "use strict";
 /**
- * example with express
- * 
+ * @file express example
+ * @module logger-request
  * @package logger-request
  * @subpackage examples
- * @version 0.0.1
+ * @version 0.0.2
  * @author hex7c0 <hex7c0@gmail.com>
  * @license GPLv3
  */
@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var logger = require('../index.js'); // use 'logger-request' instead
+    var logger = require('../index.js'); // use require('logger-request') instead
     var app = require('express')();
 } catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
@@ -28,9 +28,11 @@ app.use(logger({
 
 // express routing
 app.get('/',function(req,res) {
+
     res.send('hello world!');
 });
 app.get('/err',function(req,res) {
+
     res.status(401).end('Unauthorized');
 });
 // server starting

@@ -1,6 +1,6 @@
 {
   "name": "logger-request",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "logger middleware for expressjs",
   "main": "index.js",
   "repository": {
@@ -12,17 +12,17 @@
   },
   "author": {
     "name": "hex7c0",
-    "email": "0x7c0@gmail.com",
+    "email": "hex7c0@gmail.com",
     "url": "http://hex7c0.tk/"
   },
   "dependencies": {
     "winston": "0.7.3"
   },
   "devDependencies":{
-    "express": ">4.0.0"
+    "express": ">4.4.0"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.8.X"
   },
   "keywords": [
     "request",
