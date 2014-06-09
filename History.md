@@ -3,7 +3,7 @@
 
   * Improve closures functions
 
-1.1.3 / 2014-06-08
+1.1.2 / 2014-06-08
 ==================
 
   * Various fixes
