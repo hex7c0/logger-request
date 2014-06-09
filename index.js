@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.1.2
+ * @version 1.1.3
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -38,36 +38,44 @@ var log = null;
 function logging(req,res,next) {
 
     var start = process.hrtime();
-    var cache0 = log;
+    var log1 = log;
     var buffer = res.end;
     /**
-     * end of job. Get response time and status code
+     * end of job (closures). Get response time and status code
      * 
+     * @function finale
+     * @return
+     */
+    var finale = function() {
+
+        var req1 = req;
+        var diff = process.hrtime(start);
+        log1({
+            pid: process.pid,
+            method: req1.method,
+            status: res.statusCode,
+            ip: req1.headers['x-forwarded-for'] || req1.ip || req1.connection.remoteAddress,
+            url: req1.url,
+            original: req1.originalUrl,
+            agent: req1.headers['user-agent'],
+            lang: req1.headers['accept-language'],
+            cookie: req1.cookies,
+            response: (diff[0] * 1e9 + diff[1]) / 1000000,
+        });
+        return;
+    };
+    /**
+     * middle of job (closures). Set right end function
+     * 
+     * @function
      * @param {String} chunk - data sent
      * @param {String} encoding - data encoding
      * @return
      */
-    res.end = function finale(chunk,encoding) {
+    res.end = function(chunk,encoding) {
 
-        var cache1 = cache0;
         res.end = buffer;
-        res.end(chunk,encoding,function() {
-
-            var diff = process.hrtime(start);
-            cache1({
-                pid: process.pid,
-                method: req.method,
-                status: res.statusCode,
-                ip: req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress,
-                url: req.url,
-                original: req.originalUrl,
-                agent: req.headers['user-agent'],
-                lang: req.headers['accept-language'],
-                cookie: req.cookies,
-                response: (diff[0] * 1e9 + diff[1]) / 1000000,
-            });
-            return;
-        });
+        res.end(chunk,encoding,finale)
         return;
     };
     return next();
@@ -109,7 +117,7 @@ var main = module.exports = function(options) {
         json: options.json == false ? false : true,
         raw: options.raw == false ? false : true,
         // override
-        console: Boolean(options.console),
+        console: !Boolean(options.console),
         standalone: Boolean(options.standalone),
     };
 
@@ -120,7 +128,7 @@ var main = module.exports = function(options) {
     log = LOG.loggers.add(my.logger,{
         console: {
             level: my.level,
-            silent: !my.console,
+            silent: my.console,
             colorize: my.colorize,
             timestamp: my.timestamp,
             json: my.json,
