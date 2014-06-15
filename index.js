@@ -105,10 +105,10 @@ module.exports = function(options) {
 
     var options = options || {};
     var my = {
-        logger: String(options.logger || 'logger-request'),
         console: !Boolean(options.console),
         standalone: Boolean(options.standalone),
         // winston
+        logger: String(options.logger || 'logger-request'),
         level: String(options.level || 'info'),
         silent: Boolean(options.silent),
         colorize: Boolean(options.colorize),
