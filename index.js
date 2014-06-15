@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.1.3
+ * @version 1.1.4
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -54,9 +54,9 @@ function logging(req,res,next) {
             pid: process.pid,
             method: req1.method,
             status: res.statusCode,
-            ip: req1.headers['x-forwarded-for'] || req1.ip || req1.connection.remoteAddress,
+            byte: req1.socket._bytesDispatched,
+            ip: req1.headers['x-forwarded-for'] || req1.ip || req1.headers['host'],
             url: req1.url,
-            original: req1.originalUrl,
             agent: req1.headers['user-agent'],
             lang: req1.headers['accept-language'],
             cookie: req1.cookies,
@@ -101,11 +101,13 @@ function empty(req,res,next) {
  * @param {Object} options - various options. Check README.md
  * @return {Function|Object}
  */
-var main = module.exports = function(options) {
+module.exports = function(options) {
 
     var options = options || {};
     var my = {
         logger: String(options.logger || 'logger-request'),
+        console: !Boolean(options.console),
+        standalone: Boolean(options.standalone),
         // winston
         level: String(options.level || 'info'),
         silent: Boolean(options.silent),
@@ -116,9 +118,6 @@ var main = module.exports = function(options) {
         maxFiles: Number(options.maxFiles) || null,
         json: options.json == false ? false : true,
         raw: options.raw == false ? false : true,
-        // override
-        console: !Boolean(options.console),
-        standalone: Boolean(options.standalone),
     };
 
     if (my.silent) {
