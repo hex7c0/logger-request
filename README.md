@@ -30,19 +30,19 @@ app.use(logger({
 
 #### options
 
- - `logger` - **String** Logger option related to [this](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default 'logger-request')*
- - `console` - **Boolean** If true, it displays log also to console *(default 'false')*
- - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default 'false')*
+ - `logger` - **String** Logger option related to [`winston`](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default "logger-request")*
+ - `console` - **Boolean** If true, it displays log also to console *(default "false")*
+ - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default "false")*
  
- - `level` - **String** Level of messages that this transport should log *(default 'info')*
- - `silent` - **Boolean** Flag indicating whether to suppress output *(default 'false')*
- - `colorize` - **Boolean** Flag indicating if we should colorize output *(default 'false')*
- - `timestamp` - **Boolean|Function** Flag indicating if we should prepend output with timestamps *(default 'true')*. If function is specified, its return value will be used instead of timestamps
- - `filename` - **String** Filename of the logfile to write output to *(default 'route.log')*
- - `maxsize` - **Number** Max size in bytes of the logfile, if the size is exceeded then a new file is created *(default '8388608' [8Mb])*
- - `maxFiles` - **Number** Limit the number of files created when the size of the logfile is exceeded *(default 'no limit')*
- - `json` - **Boolean** If true, messages will be logged as JSON *(default 'true')*
- - `raw` - **Boolean** If true, raw messages will be logged to console *(default 'false')*
+ - `level` - **String** Level of messages that this transport should log *(default "info")*
+ - `silent` - **Boolean** Flag indicating whether to suppress output *(default "false")*
+ - `colorize` - **Boolean** Flag indicating if we should colorize output *(default "false")*
+ - `timestamp` - **Boolean|Function** Flag indicating if we should prepend output with timestamps *(default "true")*. If function is specified, its return value will be used instead of timestamps
+ - `filename` - **String** Filename of the logfile to write output to *(default "route.log")*
+ - `maxsize` - **Number** Max size in bytes of the logfile, if the size is exceeded then a new file is created *(default "8388608" [8Mb])*
+ - `maxFiles` - **Number** Limit the number of files created when the size of the logfile is exceeded *(default "no limit")*
+ - `json` - **Boolean** If true, messages will be logged as JSON *(default "true")*
+ - `raw` - **Boolean** If true, raw messages will be logged to console *(default "false")*
  
 releated to https://github.com/flatiron/winston#file-transport
 
