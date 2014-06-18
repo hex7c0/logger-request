@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.1.4
+ * @version 1.1.5
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
