@@ -38,8 +38,8 @@ var log = null;
 function logging(req,res,next) {
 
     var start = process.hrtime();
-    var log1 = log;
     var buffer = res.end;
+    var log1 = log;
     /**
      * end of job (closures). Get response time and status code
      * 
@@ -78,20 +78,11 @@ function logging(req,res,next) {
         res.end(chunk,encoding,finale)
         return;
     };
-    return next();
-}
-/**
- * logging none
- * 
- * @function empty
- * @param {Object} req - client request
- * @param {Object} res - response to client
- * @param {next} next - continue routes
- * @return
- */
-function empty(req,res,next) {
-
-    return next();
+    try {
+        return next();
+    } catch (TypeError) {
+        return;
+    }
 }
 /**
  * option setting
@@ -122,7 +113,10 @@ module.exports = function(options) {
 
     if (my.silent) {
         LOG = log = logging = null;
-        return empty;
+        return function(req,res,next) {
+
+            return next();
+        };
     }
     log = LOG.loggers.add(my.logger,{
         console: {
@@ -144,7 +138,7 @@ module.exports = function(options) {
             json: my.json,
         }
     })[my.level];
-    LOG = empty = null;
+    LOG = null;
     if (my.standalone) {
         logging = null;
         return log;
