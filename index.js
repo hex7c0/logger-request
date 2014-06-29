@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.1.5
+ * @version 1.1.6
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -55,7 +55,8 @@ function logging(req,res,next) {
             method: req1.method,
             status: res.statusCode,
             byte: req1.socket._bytesDispatched,
-            ip: req1.headers['x-forwarded-for'] || req1.ip || req1.headers['host'],
+            ip: req1.headers['x-forwarded-for'] || req1.ip
+                    || req1.headers['host'],
             url: req1.url,
             agent: req1.headers['user-agent'],
             lang: req1.headers['accept-language'],
@@ -87,12 +88,12 @@ function logging(req,res,next) {
 /**
  * option setting
  * 
- * @exports main
- * @function main
+ * @exports logger
+ * @function logger
  * @param {Object} options - various options. Check README.md
  * @return {Function|Object}
  */
-module.exports = function(options) {
+module.exports = function logger(options) {
 
     var options = options || {};
     var my = {
