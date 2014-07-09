@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.1.7
+ * @version 1.1.8
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -37,9 +37,11 @@ var log = null;
  */
 function logging(req,res,next) {
 
+    console.log(2)
     var start = process.hrtime();
     var buffer = res.end;
     var log1 = log;
+
     /**
      * end of job (closures). Get response time and status code
      * 
@@ -48,6 +50,7 @@ function logging(req,res,next) {
      */
     var finale = function() {
 
+        console.log(1)
         var req1 = req;
         var diff = process.hrtime(start);
         log1({
@@ -65,6 +68,7 @@ function logging(req,res,next) {
         });
         return;
     };
+
     /**
      * middle of job (closures). Set right end function
      * 
@@ -75,10 +79,13 @@ function logging(req,res,next) {
      */
     res.end = function(chunk,encoding) {
 
+        finale()
         res.end = buffer;
-        res.end(chunk,encoding,finale)
+        res.end(chunk,encoding)
+        // res.end(chunk,encoding,finale) //callback available only with node 0.11
         return;
     };
+
     try {
         return next();
     } catch (TypeError) {
