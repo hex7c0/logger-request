@@ -37,7 +37,6 @@ var log = null;
  */
 function logging(req,res,next) {
 
-    console.log(2)
     var start = process.hrtime();
     var buffer = res.end;
     var log1 = log;
@@ -50,7 +49,6 @@ function logging(req,res,next) {
      */
     var finale = function() {
 
-        console.log(1)
         var req1 = req;
         var diff = process.hrtime(start);
         log1({
