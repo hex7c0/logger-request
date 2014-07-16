@@ -1,7 +1,13 @@
+v1.1.9 / 2014-07-16
+==================
+
+  * Improve performance (remove closure)
+  * Write log, after sending all stuff to client
+
 v1.1.8 / 2014-07-09
 ==================
 
-  * Fix critical issue with node 0.10.29
+  * Fix critical issue with node 0.10.29 (callback)
 
 v1.1.7 / 2014-06-29
 ==================

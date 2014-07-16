@@ -32,9 +32,7 @@ app.use(logger({
 
  - `console` - **Boolean** If true, it displays log also to console *(default "false")*
  - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default "false")*
-
  - `logger` - **String** Logger option related to [`winston`](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default "logger-request")*
-
  - `level` - **String** Level of messages that this transport should log *(default "info")*
  - `silent` - **Boolean** Flag indicating whether to suppress output *(default "false")*
  - `colorize` - **Boolean** Flag indicating if we should colorize output *(default "false")*
