@@ -48,7 +48,7 @@ function finale(req,statusCode,start) {
         url: req.url,
         agent: headers['user-agent'],
         lang: headers['accept-language'],
-        cookie: req.cookies,
+        // cookie: req.cookies,
         response: (diff[0] * 1e9 + diff[1]) / 1000000,
     });
     return;

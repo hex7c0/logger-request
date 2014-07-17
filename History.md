@@ -1,3 +1,10 @@
+v1.2.0 / 2014-07-17
+==================
+
+  * Don't store 'cookie' anymore
+  * Minor var to function
+  * Change MINOR version, due critical issue with node 0.11
+
 v1.1.9 / 2014-07-16
 ==================
 
