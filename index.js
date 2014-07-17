@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.1.9
+ * @version 1.2.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -31,22 +31,23 @@ var log = null;
  * 
  * @function finale
  * @param {Object} req - client request
- * @param {Object} res - response to client
+ * @param {Integr} code - statusCode
  * @param {Array} start - hrtime
  * @return
  */
-function finale(req,res,start) {
+function finale(req,statusCode,start) {
 
     var diff = process.hrtime(start);
+    var headers = req.headers;
     log({
         pid: process.pid,
         method: req.method,
-        status: res.statusCode,
+        status: statusCode,
         byte: req.socket._bytesDispatched,
-        ip: req.headers['x-forwarded-for'] || req.ip || req.headers['host'],
+        ip: headers['x-forwarded-for'] || req.ip || headers['host'],
         url: req.url,
-        agent: req.headers['user-agent'],
-        lang: req.headers['accept-language'],
+        agent: headers['user-agent'],
+        lang: headers['accept-language'],
         cookie: req.cookies,
         response: (diff[0] * 1e9 + diff[1]) / 1000000,
     });
@@ -66,9 +67,10 @@ function logging(req,res,next) {
 
     var start = process.hrtime();
     var buffer = res.end;
+    var fin = finale;
 
     /**
-     * middle of job. Set right end function
+     * middle of job. Set right end function (closure)
      * 
      * @function
      * @param {String} chunk - data sent
@@ -80,11 +82,15 @@ function logging(req,res,next) {
         res.end = buffer;
         res.end(chunk,encoding);
         // res.end(chunk,encoding,finale) // callback available only with node 0.11
-        finale(req,res,start); // write after sending all stuff, instead of callback
+        fin(req,res.statusCode,start); // write after sending all stuff, instead of callback
         return;
     };
 
-    return next();
+    try {
+        return next();
+    } catch (TypeError) {
+        return;
+    }
 }
 
 /**
@@ -141,6 +147,7 @@ module.exports = function logger(options) {
             json: my.json,
         }
     })[my.level];
+
     LOG = null;
     if (my.standalone) {
         logging = finale = null;
