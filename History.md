@@ -1,3 +1,11 @@
+v1.3.0 / 2014-07-19
+==================
+
+  * (log) Rename 'byte' to 'bytesRes', bytes read
+  * (log) New 'bytesReq', bytes dispatched
+  * (log) New '__filename', who wrote log
+  * Now working even as a function
+
 v1.2.0 / 2014-07-17
 ==================
 
