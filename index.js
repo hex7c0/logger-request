@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.2.0
+ * @version 1.3.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -21,8 +21,8 @@ try {
     process.exit(1);
 }
 // load
-var log;
 var storyReq = 0, storyRes = 0;
+var log;
 
 /*
  * functions
@@ -43,11 +43,11 @@ function finale(req,statusCode,start) {
     var socket = req.socket;
     log(__filename,{
         pid: process.pid,
+        bytesReq: socket.bytesRead - storyReq,
+        bytesRes: socket._bytesDispatched - storyRes,
+        ip: headers['x-forwarded-for'] || req.ip || headers['host'],
         method: req.method,
         status: statusCode,
-        byteReq: socket.bytesRead - storyReq,
-        byteRes: socket._bytesDispatched - storyRes,
-        ip: headers['x-forwarded-for'] || req.ip || headers['host'],
         url: req.url,
         agent: headers['user-agent'],
         lang: headers['accept-language'],
@@ -71,25 +71,30 @@ function finale(req,statusCode,start) {
 function logging(req,res,next) {
 
     var start = process.hrtime();
-    var buffer = res.end;
-    var fin = finale;
 
-    /**
-     * middle of job. Set right end function (closure)
-     * 
-     * @function
-     * @param {String} chunk - data sent
-     * @param {String} encoding - data encoding
-     * @return
-     */
-    res.end = function(chunk,encoding) {
+    if (res._headerSent) { // function
+        finale(req,res.statusCode,start); // after res.end()
+    } else { // middleware
+        var buffer = res.end;
+        var fin = finale;
 
-        res.end = buffer;
-        res.end(chunk,encoding);
-        // res.end(chunk,encoding,finale) // callback available only with node 0.11
-        fin(req,res.statusCode,start); // write after sending all stuff, instead of callback
-        return;
-    };
+        /**
+         * middle of job. Set right end function (closure)
+         * 
+         * @function
+         * @param {String} chunk - data sent
+         * @param {String} encoding - data encoding
+         * @return
+         */
+        res.end = function(chunk,encoding) {
+
+            res.end = buffer;
+            res.end(chunk,encoding);
+            // res.end(chunk,encoding,finale) // callback available only with node 0.11
+            fin(req,res.statusCode,start); // write after sending all stuff, instead of callback
+            return;
+        };
+    }
 
     try {
         return next();
@@ -118,7 +123,8 @@ module.exports = function logger(options) {
         silent: Boolean(options.silent),
         colorize: Boolean(options.colorize),
         timestamp: options.timestamp || true,
-        filename: String(options.filename || 'route.log'),
+        filename: require('path').resolve(
+                String(options.filename || 'route.log')),
         maxsize: Number(options.maxsize) || 8388608,
         maxFiles: Number(options.maxFiles) || null,
         json: options.json == false ? false : true,
