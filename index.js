@@ -22,7 +22,7 @@ try {
 }
 // load
 var log;
-var story = 0;
+var storyReq = 0, storyRes = 0;
 
 /*
  * functions
@@ -40,11 +40,13 @@ function finale(req,statusCode,start) {
 
     var diff = process.hrtime(start);
     var headers = req.headers;
+    var socket = req.socket;
     log(__filename,{
         pid: process.pid,
         method: req.method,
         status: statusCode,
-        byte: req.socket._bytesDispatched - story,
+        byteReq: socket.bytesRead - storyReq,
+        byteRes: socket._bytesDispatched - storyRes,
         ip: headers['x-forwarded-for'] || req.ip || headers['host'],
         url: req.url,
         agent: headers['user-agent'],
@@ -52,7 +54,8 @@ function finale(req,statusCode,start) {
         // cookie: req.cookies,
         response: (diff[0] * 1e9 + diff[1]) / 1000000,
     });
-    story = req.socket._bytesDispatched;
+    storyReq = socket.bytesRead;
+    storyRes = socket._bytesDispatched;
     return;
 };
 
