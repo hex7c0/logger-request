@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 1.3.0
+ * @version 2.0.1
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -190,7 +190,6 @@ module.exports = function logger(options) {
     var options = options || Object.create(null);
     var my = {
         console: !Boolean(options.console),
-        standalone: Boolean(options.standalone),
         filename: require('path').resolve(
                 String(options.filename || 'route.log')),
     };
@@ -247,7 +246,7 @@ module.exports = function logger(options) {
         version: Boolean(options.custom.version),
     });
 
-    if (my.standalone) {
+    if (Boolean(options.standalone)) {
         return log;
     }
     return logging;
