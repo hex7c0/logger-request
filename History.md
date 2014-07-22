@@ -2,7 +2,7 @@ v2.0.0 / 2014-07-22
 ==================
 
   * Add `custom` object. Now can change log output
-  * Change API. This setting now, are under `winston` object
+  * Change _API. This setting now, are under `winston` object
    * `logger`
    * `level`
    * `silent`
@@ -16,9 +16,9 @@ v2.0.0 / 2014-07-22
 v1.3.0 / 2014-07-19
 ==================
 
-  * (log) Rename 'byte' to 'bytesRes', bytes read
-  * (log) New 'bytesReq', bytes dispatched
-  * (log) New '__filename', who wrote log
+  * _log_ Rename 'byte' to 'bytesRes', bytes read
+  * -log_ New 'bytesReq', bytes dispatched
+  * _log_ New '__filename', who wrote log
   * Now working even as a function
 
 v1.2.0 / 2014-07-17
