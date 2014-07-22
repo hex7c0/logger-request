@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage examples
- * @version 0.0.3
+ * @version 0.0.4
  * @author hex7c0 <hex7c0@gmail.com>
  * @license GPLv3
  */
@@ -24,6 +24,11 @@ try {
 // using middleware
 app.use(logger({
     filename: 'middleware.log',
+    custom: {
+        pid: true,
+        bytesReq: true,
+        bytesRes: true,
+    }
 }));
 
 // express routing
