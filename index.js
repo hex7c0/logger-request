@@ -21,8 +21,8 @@ try {
     process.exit(1);
 }
 // load
+var oi, log;
 var storyReq = 0, storyRes = 0;
-var log;
 
 /*
  * functions
@@ -39,25 +39,99 @@ var log;
 function finale(req,statusCode,start) {
 
     var diff = process.hrtime(start);
-    var headers = req.headers;
-    var socket = req.socket;
-    log(__filename,{
-        pid: process.pid,
-        bytesReq: socket.bytesRead - storyReq,
-        bytesRes: socket._bytesDispatched - storyRes,
-        ip: headers['x-forwarded-for'] || req.ip || headers['host'],
-        method: req.method,
-        status: statusCode,
-        url: req.url,
-        agent: headers['user-agent'],
-        lang: headers['accept-language'],
-        // cookie: req.cookies,
-        response: (diff[0] * 1e9 + diff[1]) / 1000000,
-    });
-    storyReq = socket.bytesRead;
-    storyRes = socket._bytesDispatched;
-    return;
-};
+    return log('',oi(req,statusCode,(diff[0] * 1e9 + diff[1]) / 1000000));
+}
+
+/**
+ * builder of option
+ * 
+ * @function info
+ * @param {Object} my - user options
+ * @return {Object}
+ */
+function info(my) {
+
+    var out = Object.create(null);
+    var promise = new Array();
+
+    if (my.pid) {
+        promise.push(['pid',function(req) {
+
+            return process.pid;
+        }]);
+    }
+    if (my.bytesReq) {
+        promise.push(['bytesReq',function(req) {
+
+            var s = req.socket.bytesRead - storyReq;
+            storyReq = req.socket.bytesRead;
+            return s;
+        }]);
+    }
+    if (my.bytesRes) {
+        promise.push(['bytesRes',function(req) {
+
+            var s = req.socket._bytesDispatched - storyRes;
+            storyRes = req.socket._bytesDispatched;
+            return s;
+        }]);
+    }
+    if (my.referrer) {
+        promise.push(['referrer',function(req) {
+
+            return req.headers['referer'] || req.headers['referrer'];
+        }]);
+    }
+    if (my.auth) {
+        LOG = require('basic-authentication')({
+            legacy: true
+        });
+        promise.push(['auth',function(req) {
+
+            return LOG(req).user;
+        }]);
+    }
+    if (my.agent) {
+        promise.push(['agent',function(req) {
+
+            return req.headers['user-agent'];
+        }]);
+    }
+    if (my.lang) {
+        promise.push(['lang',function(req) {
+
+            return req.headers['accept-language'];
+        }]);
+    }
+    if (my.cookie) {
+        promise.push(['cookie',function(req) {
+
+            return req.cookies;
+        }]);
+    }
+    if (my.version) {
+        promise.push(['version',function(req) {
+
+            return req.httpVersionMajor + '.' + req.httpVersionMinor;
+        }]);
+    }
+
+    return function(req,statusCode,start) {
+
+        var prom = promise;
+        out.ip = req.headers['x-forwarded-for'] || req.ip
+                || req.connection.remoteAddress;
+        out.method = req.method;
+        out.status = statusCode;
+        out.url = req.url;
+        out.response = start.toFixed(3);
+        for (var i = 0, ii = prom.length; i < ii; i++) {
+            var p = prom[i][0];
+            out[p] = prom[i][1](req);
+        }
+        return out;
+    };
+}
 
 /**
  * logging all route
@@ -113,53 +187,67 @@ function logging(req,res,next) {
  */
 module.exports = function logger(options) {
 
-    var options = options || {};
+    var options = options || Object.create(null);
     var my = {
         console: !Boolean(options.console),
         standalone: Boolean(options.standalone),
-        // winston
-        logger: String(options.logger || 'logger-request'),
-        level: String(options.level || 'info'),
-        silent: Boolean(options.silent),
-        colorize: Boolean(options.colorize),
-        timestamp: options.timestamp || true,
         filename: require('path').resolve(
                 String(options.filename || 'route.log')),
-        maxsize: Number(options.maxsize) || 8388608,
-        maxFiles: Number(options.maxFiles) || null,
-        json: options.json == false ? false : true,
-        raw: options.raw == false ? false : true,
     };
 
-    if (my.silent) {
+    // winston
+    options.winston = options.winston || Object.create(null);
+    if (Boolean(options.winston.silent)) {
         LOG = log = logging = finale = null;
         return function(req,res,next) {
 
             return next();
         };
     }
+    my.winston = {
+        logger: String(options.winston.logger || 'logger-request'),
+        level: String(options.winston.level || 'info'),
+        colorize: Boolean(options.winston.colorize),
+        timestamp: options.winston.timestamp || true,
+        maxsize: Number(options.winston.maxsize) || 8388608,
+        maxFiles: Number(options.winston.maxFiles) || null,
+        json: options.winston.json == false ? false : true,
+        raw: options.winston.raw == false ? false : true,
+    };
     log = LOG.loggers.add(my.logger,{
         console: {
-            level: my.level,
+            level: my.winston.level,
             silent: my.console,
-            colorize: my.colorize,
-            timestamp: my.timestamp,
-            json: my.json,
-            raw: my.raw,
+            colorize: my.winston.colorize,
+            timestamp: my.winston.timestamp,
+            json: my.winston.json,
+            raw: my.winston.raw,
         },
         file: {
-            level: my.level,
-            silent: my.silent,
-            colorize: my.colorize,
-            timestamp: my.timestamp,
+            level: my.winston.level,
+            silent: false,
+            colorize: my.winston.colorize,
+            timestamp: my.winston.timestamp,
             filename: my.filename,
-            maxsize: my.maxsize,
-            maxFiles: my.maxFiles,
-            json: my.json,
+            maxsize: my.winston.maxsize,
+            maxFiles: my.winston.maxFiles,
+            json: my.winston.json,
         }
-    })[my.level];
+    })[my.winston.level];
 
-    LOG = null;
+    // custom
+    oi = info({
+        pid: Boolean(options.custom.pid),
+        bytesReq: Boolean(options.custom.bytesReq),
+        bytesRes: Boolean(options.custom.bytesRes),
+        referrer: Boolean(options.custom.referrer),
+        auth: Boolean(options.custom.auth),
+        agent: Boolean(options.custom.agent),
+        lang: Boolean(options.custom.lang),
+        cookie: Boolean(options.custom.cookie),
+        version: Boolean(options.custom.version),
+    });
+
     if (my.standalone) {
         logging = finale = null;
         return log;
