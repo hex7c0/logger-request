@@ -1,3 +1,18 @@
+v2.0.0 / 2014-07-22
+==================
+
+  * Add `custom` object. Now can change log output
+  * Change API. This setting now, are under `winston` object
+   * `logger`
+   * `level`
+   * `silent`
+   * `colorize`
+   * `timestamp`
+   * `maxsize`
+   * `maxFiles`
+   * `json`
+   * `raw`
+
 v1.3.0 / 2014-07-19
 ==================
 

@@ -35,6 +35,7 @@ app.use(logger({
  - `filename` - **String** Filename of the logfile to write output to *(default "route.log")*
  
  
+ 
  - `winston` - **Object** Setting for logger
   - `logger` - **String** Logger option related to [`winston`](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default "logger-request")*
   - `level` - **String** Level of messages that this transport should log *(default "info")*
@@ -48,16 +49,16 @@ app.use(logger({
  
 releated to https://github.com/flatiron/winston#file-transport
 
- - `custom` - **Object** Setting for customization
-  - `pid` - **Boolean** Flag  *(default "false")*
-  - `bytesReq` - **Boolean** Flag  *(default "false")*
-  - `bytesRes` - **Boolean** Flag  *(default "false")*
-  - `referrer` - **Boolean** Flag  *(default "false")*
-  - `auth` - **Boolean** Flag  *(default "false")*
-  - `agent` - **Boolean** Flag  *(default "false")*
-  - `lang` - **Boolean** Flag  *(default "false")*
-  - `cookie` - **Boolean** Flag  *(default "false")*
-  - `version` - **Boolean** Flag  *(default "false")*
+ - `custom` - **Object** Setting for add customization to log
+  - `pid` - **Boolean** Flag for `process.pid` *(default "disabled")*
+  - `bytesReq` - **Boolean** Flag for `req.socket.bytesRead` *(default "disabled")*
+  - `bytesRes` - **Boolean** Flag for `req.socket._bytesDispatched` *(default "disabled")*
+  - `referrer` - **Boolean** Flag for `req.headers['referrer']` *(default "disabled")*
+  - `auth` - **Boolean** Flag for `basic-authentication` *(default "disabled")*
+  - `agent` - **Boolean** Flag for `req.headers['user-agent']` *(default "disabled")*
+  - `lang` - **Boolean** Flag for `req.headers['accept-language']` *(default "disabled")*
+  - `cookie` - **Boolean** Flag for `req.cookies` *(default "disabled")*
+  - `version` - **Boolean** Flag for `req.httpVersionMajor` *(default "disabled")*
 
 #### Examples
 
