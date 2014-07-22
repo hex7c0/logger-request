@@ -198,7 +198,6 @@ module.exports = function logger(options) {
     // winston
     options.winston = options.winston || Object.create(null);
     if (Boolean(options.winston.silent)) {
-        LOG = log = logging = finale = null;
         return function(req,res,next) {
 
             return next();
@@ -249,7 +248,6 @@ module.exports = function logger(options) {
     });
 
     if (my.standalone) {
-        logging = finale = null;
         return log;
     }
     return logging;
