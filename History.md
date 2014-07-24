@@ -1,3 +1,9 @@
+v2.0.2 / 2014-07-23
+==================
+
+  * `res.end` correct return Boolean
+  * Fix `options.winston.silent` for display only console out and not file
+
 v2.0.0 / 2014-07-22
 ==================
 

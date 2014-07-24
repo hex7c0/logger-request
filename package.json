@@ -1,6 +1,6 @@
 {
   "name": "logger-request",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "http request logger middleware for nodejs",
   "main": "index.js",
   "repository": {
