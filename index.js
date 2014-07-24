@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 2.0.2
+ * @version 2.0.3
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -228,7 +228,8 @@ module.exports = function logger(options) {
     })[my.winston.level];
 
     // custom
-    oi = info({
+    options.custom = options.custom || Object.create(null);
+    my.custom = {
         pid: Boolean(options.custom.pid),
         bytesReq: Boolean(options.custom.bytesReq),
         bytesRes: Boolean(options.custom.bytesRes),
@@ -238,7 +239,8 @@ module.exports = function logger(options) {
         lang: Boolean(options.custom.lang),
         cookie: Boolean(options.custom.cookie),
         version: Boolean(options.custom.version),
-    });
+    };
+    oi = info(my.custom);
 
     if (Boolean(options.standalone)) {
         return log;
