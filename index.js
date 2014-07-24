@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 2.0.1
+ * @version 2.0.2
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -126,8 +126,8 @@ function info(my) {
         out.url = req.url;
         out.response = start.toFixed(3);
         for (var i = 0, ii = prom.length; i < ii; i++) {
-            var p = prom[i][0];
-            out[p] = prom[i][1](req);
+            var p = prom[i];
+            out[p[0]] = p[1](req);
         }
         return out;
     };
@@ -145,7 +145,6 @@ function info(my) {
 function logging(req,res,next) {
 
     var start = process.hrtime();
-
     if (res._headerSent) { // function
         finale(req,res.statusCode,start); // after res.end()
     } else { // middleware
@@ -158,15 +157,15 @@ function logging(req,res,next) {
          * @function
          * @param {String} chunk - data sent
          * @param {String} encoding - data encoding
-         * @return
+         * @return {Boolean}
          */
         res.end = function(chunk,encoding) {
 
             res.end = buffer;
-            res.end(chunk,encoding);
+            var b = res.end(chunk,encoding);
             // res.end(chunk,encoding,finale) // callback available only with node 0.11
             fin(req,res.statusCode,start); // write after sending all stuff, instead of callback
-            return;
+            return b;
         };
     }
 
@@ -196,15 +195,10 @@ module.exports = function logger(options) {
 
     // winston
     options.winston = options.winston || Object.create(null);
-    if (Boolean(options.winston.silent)) {
-        return function(req,res,next) {
-
-            return next();
-        };
-    }
     my.winston = {
         logger: String(options.winston.logger || 'logger-request'),
         level: String(options.winston.level || 'info'),
+        silent: Boolean(options.winston.silent),
         colorize: Boolean(options.winston.colorize),
         timestamp: options.winston.timestamp || true,
         maxsize: Number(options.winston.maxsize) || 8388608,
@@ -223,7 +217,7 @@ module.exports = function logger(options) {
         },
         file: {
             level: my.winston.level,
-            silent: false,
+            silent: my.winston.silent,
             colorize: my.winston.colorize,
             timestamp: my.winston.timestamp,
             filename: my.filename,
