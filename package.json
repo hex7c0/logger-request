@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "name": "tickle",
+  "name": "logger-request",
   "description": "http request logger middleware for nodejs",
   "keywords": [
     "request",
@@ -8,7 +8,7 @@
     "logging"
   ],
   "preferGlobal": false,
-  "homepage": "https://github.com/hex7c0/tickle/",
+  "homepage": "https://github.com/hex7c0/logger-request/",
   "author": {
     "name": "hex7c0",
     "email": "hex7c0@gmail.com",
@@ -16,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hex7c0/tickle.git"
+    "url": "https://github.com/hex7c0/logger-request.git"
   },
   "bugs": {
-    "url": "https://github.com/hex7c0/tickle/issues",
+    "url": "https://github.com/hex7c0/logger-request/issues",
     "email": "hex7c0@gmail.com"
   },
   "directories":{
