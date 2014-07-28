@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var logger = require('../index.js'); // use require('logger-request')
+    var logger = require('../index.min.js'); // use require('logger-request')
     var app = require('express')();
     var request = require('supertest');
     var assert = require('assert');
@@ -32,15 +32,15 @@ describe('200',function() {
     before(function(done) {
 
         var loggerf = logger({
-            filename: 'f.log',
+            filename: 'f2.log',
             winston: {
-                logger: 'f'
+                logger: 'f2'
             }
         })
         var loggerr = logger({
-            filename: 'r.log',
+            filename: 'r2.log',
             winston: {
-                logger: 'r'
+                logger: 'r2'
             }
         })
         app.use(loggerr);
@@ -66,7 +66,7 @@ describe('200',function() {
 
         setTimeout(function() {
 
-            fs.readFile('r.log',{
+            fs.readFile('r2.log',{
                 encoding: 'utf8'
             },function(err,data) {
 
@@ -76,9 +76,9 @@ describe('200',function() {
                 assert.deepEqual(d.method,'GET','method');
                 assert.deepEqual(d.status,200,'status code');
                 assert.deepEqual(d.url,'/','url');
-                assert.deepEqual(d.message,'r','logger');
+                assert.deepEqual(d.message,'r2','logger');
                 assert.deepEqual(d.level,'info','log level');
-                fs.unlink('r.log',function() {
+                fs.unlink('r2.log',function() {
 
                     done();
                 });
@@ -95,7 +95,7 @@ describe('200',function() {
 
         setTimeout(function() {
 
-            fs.readFile('f.log',{
+            fs.readFile('f2.log',{
                 encoding: 'utf8'
             },function(err,data) {
 
@@ -105,9 +105,9 @@ describe('200',function() {
                 assert.deepEqual(d.method,'GET','method');
                 assert.deepEqual(d.status,200,'status code');
                 assert.deepEqual(d.url,'/f','url');
-                assert.deepEqual(d.message,'f','logger');
+                assert.deepEqual(d.message,'f2','logger');
                 assert.deepEqual(d.level,'info','log level');
-                fs.unlink('f.log',function() {
+                fs.unlink('f2.log',function() {
 
                     done();
                 });

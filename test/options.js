@@ -34,7 +34,10 @@ describe('options',function() {
 
         app.use(cookie('foo'));
         app.use(logger({
-            filename: 'r.log',
+            filename: 'ro.log',
+            winston: {
+                logger: 'ro'
+            },
             custom: {
                 pid: true,
                 bytesReq: true,
@@ -64,7 +67,7 @@ describe('options',function() {
 
         setTimeout(function() {
 
-            fs.readFile('r.log',{
+            fs.readFile('ro.log',{
                 encoding: 'utf8'
             },function(err,data) {
 
@@ -88,7 +91,7 @@ describe('options',function() {
                     Path: '/'
                 },'cookie');
                 assert.deepEqual(d.pid,process.pid,'pid');
-                fs.unlink('r.log',function() {
+                fs.unlink('ro.log',function() {
 
                     done();
                 });
