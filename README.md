@@ -1,6 +1,10 @@
-#logger-request [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request) [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
+# [logger-request](https://github.com/hex7c0/logger-request)
+[![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
+[![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request)
+[![devDependency Status](https://david-dm.org/hex7c0/logger-request/dev-status.svg)](https://david-dm.org/hex7c0/logger-request#info=devDependencies)
 
-http request logger middleware for [nodejs](http://nodejs.org/)
+HTTP request logger middleware for [nodejs](http://nodejs.org/).
+Save logs to file or show to console.
 
 ## Installation
 

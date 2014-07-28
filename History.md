@@ -1,3 +1,13 @@
+v2.2.0 / 2014-07-27
+==================
+
+  * Test "node": ">=0.10.0" only
+  * Using task runner `grunt`
+  * Using test framework `mocha`
+  * Testing script will be put inside "test/"
+  * ".npmignore" more aggressive
+  * `uglify` compiles
+
 v2.1.1 / 2014-07-25
 ==================
 
