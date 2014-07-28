@@ -1,35 +1,51 @@
 {
-  "name": "logger-request",
-  "version": "2.1.1",
+  "version": "2.2.0",
+  "name": "tickle",
   "description": "http request logger middleware for nodejs",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/hex7c0/logger-request.git"
-  },
-  "bugs": {
-    "url": "https://github.com/hex7c0/logger-request/issues"
-  },
-  "author": {
-    "name": "hex7c0",
-    "email": "hex7c0@gmail.com",
-    "url": "http://hex7c0.tk/"
-  },
-  "dependencies": {
-    "basic-authentication": "1.4.0",
-    "winston": "0.7.X"
-  },
-  "devDependencies":{
-    "express": "4.6.X"
-  },
-  "engines": {
-    "node": ">0.10.0"
-  },
   "keywords": [
     "request",
     "logger",
     "logging"
   ],
-  "license": "GPLv3",
-  "homepage": "https://github.com/hex7c0/logger-request"
+  "preferGlobal": false,
+  "homepage": "https://github.com/hex7c0/tickle/",
+  "author": {
+    "name": "hex7c0",
+    "email": "hex7c0@gmail.com",
+    "url": "http://hex7c0.tk/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hex7c0/tickle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hex7c0/tickle/issues",
+    "email": "hex7c0@gmail.com"
+  },
+  "directories":{
+    "doc":"./doc",
+    "lib":"./lib"
+  },
+  "main": "index.min.js",
+  "dependencies": {
+    "basic-authentication": "1.5.0",
+    "winston": "0.7.3"
+  },
+  "devDependencies": {
+    "cookie-parser": "~1.3.2",
+    "express": "~4.7.2",
+    "mocha": "~1.21.3",
+    "grunt-contrib-clean": "0.5.0",
+    "grunt-contrib-uglify": "0.5.0",
+    "grunt-shell": "~0.7.0",
+    "supertest": "~0.13.0"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "scripts": {
+    "prepublish": "npm prune",
+    "test": "mocha --bail --check-leaks test/"
+  },
+  "license": "GPLv3"
 }
