@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 2.1.0
+ * @version 2.2.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -21,11 +21,11 @@
  * @param {Object} cst - custom object parsed
  * @return {Function}
  */
-function wrapper(logger,cst) {
+function wrapper(log,my) {
 
     var mod;
-    var log = logger
-    var oi = info(cst);
+    var who = my.winston.logger;
+    var oi = info(my.custom);
     var storyReq = 0, storyRes = 0;
 
     /**
@@ -104,17 +104,16 @@ function wrapper(logger,cst) {
 
         return function(req,statusCode,start) {
 
-            var re = req.req || req;
-            var prom = promise;
-            out.ip = re.headers['x-forwarded-for'] || re.ip
-                    || re.connection.remoteAddress;
-            out.method = re.method;
+            req = req.req || req;
+            out.ip = req.headers['x-forwarded-for'] || req.ip
+                    || req.connection.reqmoteAddreqss;
+            out.method = req.method;
             out.status = statusCode;
-            out.url = re.url;
+            out.url = req.url;
             out.response = start.toFixed(3);
-            for (var i = 0, ii = prom.length; i < ii; i++) {
-                var p = prom[i];
-                out[p[0]] = p[1](re);
+            for (var i = 0, ii = promise.length; i < ii; i++) {
+                var p = promise[i];
+                out[p[0]] = p[1](req);
             }
             return out;
         };
@@ -127,12 +126,11 @@ function wrapper(logger,cst) {
      * @param {Object} req - client request
      * @param {Integr} code - statusCode
      * @param {Array} start - hrtime
-     * @return
      */
     function finale(req,statusCode,start) {
 
         var diff = process.hrtime(start);
-        return log(oi(req,statusCode,(diff[0] * 1e9 + diff[1]) / 1000000));
+        return log(who,oi(req,statusCode,(diff[0] * 1e9 + diff[1]) / 1000000));
     }
 
     /**
@@ -211,7 +209,7 @@ module.exports = function logger(options) {
         json: options.winston.json == false ? false : true,
         raw: options.winston.raw == false ? false : true,
     };
-    var log = require('winston').loggers.add(my.logger,{
+    var log = require('winston').loggers.add(my.winston.logger,{
         console: {
             level: my.winston.level,
             silent: my.console,
@@ -237,18 +235,18 @@ module.exports = function logger(options) {
     }
 
     // custom
-    options.custom = options.custom || Object.create(null);
+    options = options.custom || Object.create(null);
     my.custom = {
-        pid: Boolean(options.custom.pid),
-        bytesReq: Boolean(options.custom.bytesReq),
-        bytesRes: Boolean(options.custom.bytesRes),
-        referrer: Boolean(options.custom.referrer),
-        auth: Boolean(options.custom.auth),
-        agent: Boolean(options.custom.agent),
-        lang: Boolean(options.custom.lang),
-        cookie: Boolean(options.custom.cookie),
-        version: Boolean(options.custom.version),
+        pid: Boolean(options.pid),
+        bytesReq: Boolean(options.bytesReq),
+        bytesRes: Boolean(options.bytesRes),
+        referrer: Boolean(options.referrer),
+        auth: Boolean(options.auth),
+        agent: Boolean(options.agent),
+        lang: Boolean(options.lang),
+        cookie: Boolean(options.cookie),
+        version: Boolean(options.version),
     };
 
-    return wrapper(log,my.custom);
+    return wrapper(log,my);
 };
