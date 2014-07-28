@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var logger = require('../index.js'); // use require('logger-request') instead
+    var logger = require('../index.min.js'); // use require('logger-request') instead
     var authentication = require('basic-authentication');
     var app = require('express')();
 } catch (MODULE_NOT_FOUND) {
