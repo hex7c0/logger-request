@@ -81,7 +81,7 @@ describe('basic authentication',function() {
                     done();
                 });
             });
-        },40);
+        },30);
     });
 
     it('auth - should read log of "/" 401',function(done) {
@@ -130,6 +130,6 @@ describe('basic authentication',function() {
                     done();
                 });
             });
-        },40);
+        },30);
     });
 });
