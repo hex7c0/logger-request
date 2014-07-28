@@ -96,7 +96,7 @@ describe('options',function() {
                     done();
                 });
             });
-        },20);
+        },40);
     });
 
 });

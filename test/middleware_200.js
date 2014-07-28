@@ -83,7 +83,7 @@ describe('200',function() {
                     done();
                 });
             });
-        },20);
+        },40);
     });
 
     it('function - should read log of "/" 200',function(done) {
@@ -112,6 +112,6 @@ describe('200',function() {
                     done();
                 });
             });
-        },20);
+        },40);
     });
 });
