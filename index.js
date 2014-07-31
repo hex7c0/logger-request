@@ -24,7 +24,7 @@
 function wrapper(log,my) {
 
     var mod;
-    var who = my.winston.logger;
+    var who = my.logger;
     var oi = info(my.custom);
     var storyReq = 0, storyRes = 0;
 
@@ -49,17 +49,29 @@ function wrapper(log,my) {
         if (my.bytesReq) {
             promise.push(['bytesReq',function(req) {
 
-                var s = req.socket.bytesRead - storyReq;
-                storyReq = req.socket.bytesRead;
-                return s;
+                // console.log(process.pid)
+                // console.log(req.connection.bytesRead)
+                // console.log(req.client.bytesRead)
+                // console.log(req.socket.bytesRead)
+                // console.log()
+                // var s = req.socket.bytesRead - storyReq;
+                // storyReq = req.socket.bytesRead;
+                // return s;
+                return req.socket.bytesRead;
             }]);
         }
         if (my.bytesRes) {
             promise.push(['bytesRes',function(req) {
 
-                var s = req.socket._bytesDispatched - storyRes;
-                storyRes = req.socket._bytesDispatched;
-                return s;
+                // console.log(process.pid)
+                // console.log(req.connection._bytesDispatched)
+                // console.log(req.client._bytesDispatched)
+                // console.log(req.socket._bytesDispatched)
+                // console.log()
+                // var s = req.socket._bytesDispatched - storyRes;
+                // storyRes = req.socket._bytesDispatched;
+                // return s;
+                return req.socket._bytesDispatched;
             }]);
         }
         if (my.referrer) {
@@ -95,6 +107,12 @@ function wrapper(log,my) {
                 return req.cookies;
             }]);
         }
+        if (my.cookie) {
+            promise.push(['headers',function(req) {
+
+                return req.headers;
+            }]);
+        }
         if (my.version) {
             promise.push(['version',function(req) {
 
@@ -105,8 +123,7 @@ function wrapper(log,my) {
         return function(req,statusCode,start) {
 
             req = req.req || req;
-            out.ip = req.headers['x-forwarded-for'] || req.ip
-                    || req.connection.reqmoteAddreqss;
+            out.ip = req.headers['x-forwarded-for'] || req.ip;
             out.method = req.method;
             out.status = statusCode;
             out.url = req.url;
@@ -193,12 +210,13 @@ module.exports = function logger(options) {
     var my = {
         console: !Boolean(options.console),
         filename: require('path').resolve(
-                String(options.filename || 'route.log')),
+                String(options.filename || 'route.log'))
     };
 
     // winston
     options.winston = options.winston || Object.create(null);
-    my.winston = {
+    var winston = {
+        filename: my.filename,
         logger: String(options.winston.logger || 'logger-request'),
         level: String(options.winston.level || 'info'),
         silent: Boolean(options.winston.silent),
@@ -207,28 +225,30 @@ module.exports = function logger(options) {
         maxsize: Number(options.winston.maxsize) || 8388608,
         maxFiles: Number(options.winston.maxFiles) || null,
         json: options.winston.json == false ? false : true,
-        raw: options.winston.raw == false ? false : true,
+        raw: options.winston.raw == false ? false : true
     };
-    var log = require('winston').loggers.add(my.winston.logger,{
+    my.logger = winston.logger;
+
+    var log = require('winston').loggers.add(winston.logger,{
         console: {
-            level: my.winston.level,
+            level: winston.level,
             silent: my.console,
-            colorize: my.winston.colorize,
-            timestamp: my.winston.timestamp,
-            json: my.winston.json,
-            raw: my.winston.raw,
+            colorize: winston.colorize,
+            timestamp: winston.timestamp,
+            json: winston.json,
+            raw: winston.raw
         },
         file: {
-            level: my.winston.level,
-            silent: my.winston.silent,
-            colorize: my.winston.colorize,
-            timestamp: my.winston.timestamp,
-            filename: my.filename,
-            maxsize: my.winston.maxsize,
-            maxFiles: my.winston.maxFiles,
-            json: my.winston.json,
+            level: winston.level,
+            silent: winston.silent,
+            colorize: winston.colorize,
+            timestamp: winston.timestamp,
+            filename: winston.filename,
+            maxsize: winston.maxsize,
+            maxFiles: winston.maxFiles,
+            json: winston.json
         }
-    })[my.winston.level];
+    })[winston.level];
 
     if (Boolean(options.standalone)) {
         return log;
@@ -245,7 +265,8 @@ module.exports = function logger(options) {
         agent: Boolean(options.agent),
         lang: Boolean(options.lang),
         cookie: Boolean(options.cookie),
-        version: Boolean(options.version),
+        headers: Boolean(options.headers),
+        version: Boolean(options.version)
     };
 
     return wrapper(log,my);

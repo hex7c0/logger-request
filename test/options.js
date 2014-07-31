@@ -46,6 +46,7 @@ describe('options',function() {
                 lang: true,
                 cookie: true,
                 version: true,
+                headers: true
             }
         }));
         app.get('/',function(req,res) {
@@ -90,6 +91,15 @@ describe('options',function() {
                     'Max-Age': '31536000',
                     Path: '/'
                 },'cookie');
+                var h = d.headers;
+                assert.deepEqual(h['accept-encoding'],'gzip, deflate');
+                assert
+                        .deepEqual(h['cookie'],
+                                'cc=XX; Max-Age=31536000; Path=/;');
+                assert.deepEqual(h['user-agent'],'SuPeR');
+                assert.deepEqual(h['accept-language'],
+                        'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4');
+                assert.deepEqual(h['connection'],'close');
                 assert.deepEqual(d.pid,process.pid,'pid');
                 fs.unlink('ro.log',function() {
 
