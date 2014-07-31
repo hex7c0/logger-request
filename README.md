@@ -62,6 +62,7 @@ releated to https://github.com/flatiron/winston#file-transport
   - `agent` - **Boolean** Flag for `req.headers['user-agent']` *(default "disabled")*
   - `lang` - **Boolean** Flag for `req.headers['accept-language']` *(default "disabled")*
   - `cookie` - **Boolean** Flag for `req.cookies` *(default "disabled")*
+  - `headers` - **Boolean** Flag for `req.headers` *(default "disabled")*
   - `version` - **Boolean** Flag for `req.httpVersionMajor` *(default "disabled")*
 
 #### Examples
