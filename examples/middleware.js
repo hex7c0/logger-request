@@ -25,7 +25,6 @@ try {
 app.use(logger({
     filename: 'middleware.log',
     custom: {
-        pid: true,
         bytesReq: true,
         bytesRes: true,
     }
