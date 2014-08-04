@@ -5,6 +5,7 @@
 
 HTTP request logger middleware for [nodejs](http://nodejs.org/).
 Save logs to file or show to console.
+Look at [`logger-request-cli`](https://github.com/hex7c0/logger-request-cli) for Parser.
 
 ## Installation
 
@@ -16,6 +17,10 @@ npm install logger-request
 or
 ```
 git clone git://github.com/hex7c0/logger-request.git
+```
+or
+```
+http://supergiovane.tk/#/logger-request
 ```
 
 ## API

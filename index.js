@@ -26,7 +26,7 @@ function wrapper(log,my) {
     var mod;
     var who = my.logger;
     var oi = info(my.custom);
-    var storyReq = 0, storyRes = 0;
+    // var storyReq = 0, storyRes = 0;
 
     /**
      * builder of option
@@ -193,7 +193,7 @@ function wrapper(log,my) {
         } catch (TypeError) {
             return;
         }
-    }
+    };
 }
 
 /**
