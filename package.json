@@ -1,5 +1,5 @@
 {
-  "version": "2.2.2",
+  "version": "2.2.3",
   "name": "logger-request",
   "description": "http request logger middleware for nodejs",
   "keywords": [
@@ -8,7 +8,7 @@
     "logging"
   ],
   "preferGlobal": false,
-  "homepage": "https://github.com/hex7c0/logger-request/",
+  "homepage": "http://supergiovane.tk/#/logger-request",
   "author": {
     "name": "hex7c0",
     "email": "hex7c0@gmail.com",
@@ -23,12 +23,11 @@
     "email": "hex7c0@gmail.com"
   },
   "directories":{
-    "doc":"./doc",
-    "lib":"./lib"
+    "doc":"./doc"
   },
   "main": "index.min.js",
   "dependencies": {
-    "basic-authentication": "1.5.0",
+    "basic-authentication": "1.5.1",
     "winston": "0.7.3"
   },
   "devDependencies": {
