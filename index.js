@@ -120,14 +120,14 @@ function wrapper(log,my) {
             }]);
         }
 
-        return function(req,statusCode,start) {
+        return function(req,statusCode,end) {
 
             req = req.req || req;
             out.ip = req.headers['x-forwarded-for'] || req.ip;
             out.method = req.method;
             out.status = statusCode;
             out.url = req.url;
-            out.response = start.toFixed(3);
+            out.response = end.toFixed(3);
             for (var i = 0, ii = promise.length; i < ii; i++) {
                 var p = promise[i];
                 out[p[0]] = p[1](req);

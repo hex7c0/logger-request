@@ -1,4 +1,5 @@
-# [logger-request](https://github.com/hex7c0/logger-request)
+# [logger-request](http://supergiovane.tk/#/logger-request)
+
 [![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
 [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request)
 [![devDependency Status](https://david-dm.org/hex7c0/logger-request/dev-status.svg)](https://david-dm.org/hex7c0/logger-request#info=devDependencies)
@@ -11,16 +12,12 @@ Look at [`logger-request-cli`](https://github.com/hex7c0/logger-request-cli) for
 
 Install through NPM
 
-```
+```bash
 npm install logger-request
 ```
 or
-```
+```bash
 git clone git://github.com/hex7c0/logger-request.git
-```
-or
-```
-http://supergiovane.tk/#/logger-request
 ```
 
 ## API
@@ -56,8 +53,8 @@ app.use(logger({
   - `json` - **Boolean** If true, messages will be logged as JSON *(default "true")*
   - `raw` - **Boolean** If true, raw messages will be logged to console *(default "false")*
  
-releated to https://github.com/flatiron/winston#file-transport
-
+related to https://github.com/flatiron/winston#file-transport
+ 
  - `custom` - **Object** Setting for add customization to log
   - `pid` - **Boolean** Flag for `process.pid` *(default "disabled")*
   - `bytesReq` - **Boolean** Flag for `req.socket.bytesRead` *(default "disabled")*
@@ -70,11 +67,8 @@ releated to https://github.com/flatiron/winston#file-transport
   - `headers` - **Boolean** Flag for `req.headers` *(default "disabled")*
   - `version` - **Boolean** Flag for `req.httpVersionMajor` *(default "disabled")*
 
-#### Examples
+## Examples
 
 Take a look at my [examples](https://github.com/hex7c0/logger-request/tree/master/examples)
 
-## License
-Copyright (c) 2014 hex7c0
-
-Licensed under the GPLv3 license
+### [License GPLv3](http://opensource.org/licenses/GPL-3.0)
