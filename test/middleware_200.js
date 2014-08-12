@@ -61,57 +61,53 @@ describe('200', function() {
 
         request(app).get('/').expect(200).end(function(err, res) {
 
-            // pass
-        });
+            setTimeout(function() {
 
-        setTimeout(function() {
+                fs.readFile('r2.log', {
+                    encoding: 'utf8'
+                }, function(err, data) {
 
-            fs.readFile('r2.log', {
-                encoding: 'utf8'
-            }, function(err, data) {
+                    if (err)
+                        return done(err);
+                    var d = JSON.parse(data);
+                    assert.deepEqual(d.method, 'GET', 'method');
+                    assert.deepEqual(d.status, 200, 'status code');
+                    assert.deepEqual(d.url, '/', 'url');
+                    assert.deepEqual(d.message, 'r2', 'logger');
+                    assert.deepEqual(d.level, 'info', 'log level');
+                    fs.unlink('r2.log', function() {
 
-                if (err)
-                    return done(err);
-                var d = JSON.parse(data);
-                assert.deepEqual(d.method, 'GET', 'method');
-                assert.deepEqual(d.status, 200, 'status code');
-                assert.deepEqual(d.url, '/', 'url');
-                assert.deepEqual(d.message, 'r2', 'logger');
-                assert.deepEqual(d.level, 'info', 'log level');
-                fs.unlink('r2.log', function() {
-
-                    done();
+                        done();
+                    });
                 });
-            });
-        }, 100);
+            }, 25);
+        });
     });
 
     it('function - should read log of "/" 200', function(done) {
 
         request(app).get('/f').expect(200).end(function(err, res) {
 
-            // pass
-        });
+            setTimeout(function() {
 
-        setTimeout(function() {
+                fs.readFile('f2.log', {
+                    encoding: 'utf8'
+                }, function(err, data) {
 
-            fs.readFile('f2.log', {
-                encoding: 'utf8'
-            }, function(err, data) {
+                    if (err)
+                        return done(err);
+                    var d = JSON.parse(data);
+                    assert.deepEqual(d.method, 'GET', 'method');
+                    assert.deepEqual(d.status, 200, 'status code');
+                    assert.deepEqual(d.url, '/f', 'url');
+                    assert.deepEqual(d.message, 'f2', 'logger');
+                    assert.deepEqual(d.level, 'info', 'log level');
+                    fs.unlink('f2.log', function() {
 
-                if (err)
-                    return done(err);
-                var d = JSON.parse(data);
-                assert.deepEqual(d.method, 'GET', 'method');
-                assert.deepEqual(d.status, 200, 'status code');
-                assert.deepEqual(d.url, '/f', 'url');
-                assert.deepEqual(d.message, 'f2', 'logger');
-                assert.deepEqual(d.level, 'info', 'log level');
-                fs.unlink('f2.log', function() {
-
-                    done();
+                        done();
+                    });
                 });
-            });
-        }, 100);
+            }, 25);
+        });
     });
 });

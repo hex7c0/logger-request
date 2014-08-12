@@ -61,27 +61,25 @@ describe('basic authentication', function() {
         request(app).get('/').set('Authorization', p).expect(200).end(
                 function(err, res) {
 
-                    // pass
+                    setTimeout(function() {
+
+                        fs.readFile('rb.log', {
+                            encoding: 'utf8'
+                        }, function(err, data) {
+
+                            if (err)
+                                return done(err);
+                            var d = JSON.parse(data);
+                            assert.deepEqual(d.method, 'GET', 'method');
+                            assert.deepEqual(d.status, 200, 'status code');
+                            assert.deepEqual(d.auth, 'admin3', 'status code');
+                            fs.unlink('rb.log', function() {
+
+                                done();
+                            });
+                        });
+                    }, 25);
                 });
-
-        setTimeout(function() {
-
-            fs.readFile('rb.log', {
-                encoding: 'utf8'
-            }, function(err, data) {
-
-                if (err)
-                    return done(err);
-                var d = JSON.parse(data);
-                assert.deepEqual(d.method, 'GET', 'method');
-                assert.deepEqual(d.status, 200, 'status code');
-                assert.deepEqual(d.auth, 'admin3', 'status code');
-                fs.unlink('rb.log', function() {
-
-                    done();
-                });
-            });
-        }, 100);
     });
 
     it('auth - should read log of "/" 401', function(done) {
@@ -110,26 +108,24 @@ describe('basic authentication', function() {
         request(app).get('/').set('Authorization', p).expect(401).end(
                 function(err, res) {
 
-                    // pass
+                    setTimeout(function() {
+
+                        fs.readFile('fb.log', {
+                            encoding: 'utf8'
+                        }, function(err, data) {
+
+                            if (err)
+                                return done(err);
+                            var d = JSON.parse(data);
+                            assert.deepEqual(d.method, 'GET', 'method');
+                            assert.deepEqual(d.status, 401, 'status code');
+                            assert.deepEqual(d.auth, 'admin', 'status code');
+                            fs.unlink('fb.log', function() {
+
+                                done();
+                            });
+                        });
+                    }, 25);
                 });
-
-        setTimeout(function() {
-
-            fs.readFile('fb.log', {
-                encoding: 'utf8'
-            }, function(err, data) {
-
-                if (err)
-                    return done(err);
-                var d = JSON.parse(data);
-                assert.deepEqual(d.method, 'GET', 'method');
-                assert.deepEqual(d.status, 401, 'status code');
-                assert.deepEqual(d.auth, 'admin', 'status code');
-                fs.unlink('fb.log', function() {
-
-                    done();
-                });
-            });
-        }, 100);
     });
 });
