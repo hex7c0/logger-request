@@ -27,7 +27,7 @@ try {
 /*
  * test module
  */
-describe('404',function() {
+describe('404', function() {
 
     before(function(done) {
 
@@ -44,74 +44,74 @@ describe('404',function() {
             }
         })
         app.use(loggerr);
-        app.get('/',function(req,res) {
+        app.get('/', function(req, res) {
 
             res.status(404).end('hello world!');
-            logger(req,res); // after res.end()
+            logger(req, res); // after res.end()
         });
-        app.get('/f',function(req,res) {
+        app.get('/f', function(req, res) {
 
             res.status(404).end('hello world!');
-            loggerf(req,res); // after res.end()
+            loggerf(req, res); // after res.end()
         });
         done();
     });
 
-    it('middleware - should read log of "/" 404',function(done) {
+    it('middleware - should read log of "/" 404', function(done) {
 
-        request(app).get('/').expect(404).end(function(err,res) {
+        request(app).get('/').expect(404).end(function(err, res) {
 
             // pass
         });
 
         setTimeout(function() {
 
-            fs.readFile('r4.log',{
+            fs.readFile('r4.log', {
                 encoding: 'utf8'
-            },function(err,data) {
+            }, function(err, data) {
 
                 if (err)
                     return done(err);
                 var d = JSON.parse(data);
-                assert.deepEqual(d.method,'GET','method');
-                assert.deepEqual(d.status,404,'status code');
-                assert.deepEqual(d.url,'/','url');
-                assert.deepEqual(d.message,'r4','logger');
-                assert.deepEqual(d.level,'info','log level');
-                fs.unlink('r4.log',function() {
+                assert.deepEqual(d.method, 'GET', 'method');
+                assert.deepEqual(d.status, 404, 'status code');
+                assert.deepEqual(d.url, '/', 'url');
+                assert.deepEqual(d.message, 'r4', 'logger');
+                assert.deepEqual(d.level, 'info', 'log level');
+                fs.unlink('r4.log', function() {
 
                     done();
                 });
             });
-        },30);
+        }, 50);
     });
 
-    it('function - should read log of "/" 404',function(done) {
+    it('function - should read log of "/" 404', function(done) {
 
-        request(app).get('/f').expect(404).end(function(err,res) {
+        request(app).get('/f').expect(404).end(function(err, res) {
 
             // pass
         });
 
         setTimeout(function() {
 
-            fs.readFile('f4.log',{
+            fs.readFile('f4.log', {
                 encoding: 'utf8'
-            },function(err,data) {
+            }, function(err, data) {
 
                 if (err)
                     return done(err);
                 var d = JSON.parse(data);
-                assert.deepEqual(d.method,'GET','method');
-                assert.deepEqual(d.status,404,'status code');
-                assert.deepEqual(d.url,'/f','url');
-                assert.deepEqual(d.message,'f4','logger');
-                assert.deepEqual(d.level,'info','log level');
-                fs.unlink('f4.log',function() {
+                assert.deepEqual(d.method, 'GET', 'method');
+                assert.deepEqual(d.status, 404, 'status code');
+                assert.deepEqual(d.url, '/f', 'url');
+                assert.deepEqual(d.message, 'f4', 'logger');
+                assert.deepEqual(d.level, 'info', 'log level');
+                fs.unlink('f4.log', function() {
 
                     done();
                 });
             });
-        },30);
+        }, 50);
     });
 });
