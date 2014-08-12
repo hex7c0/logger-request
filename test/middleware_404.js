@@ -83,7 +83,7 @@ describe('404', function() {
                     done();
                 });
             });
-        }, 50);
+        }, 100);
     });
 
     it('function - should read log of "/" 404', function(done) {
@@ -112,6 +112,6 @@ describe('404', function() {
                     done();
                 });
             });
-        }, 50);
+        }, 100);
     });
 });

@@ -105,7 +105,7 @@ describe('options', function() {
                     done();
                 });
             });
-        }, 50);
+        }, 100);
     });
 
 });
