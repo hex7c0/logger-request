@@ -49,7 +49,7 @@ describe('404', function() {
             res.status(404).end('hello world!');
             logger(req, res); // after res.end()
         });
-        app.get('/f', function(req, res) {
+        app.post('/f', function(req, res) {
 
             res.status(404).end('hello world!');
             loggerf(req, res); // after res.end()
@@ -57,7 +57,7 @@ describe('404', function() {
         done();
     });
 
-    it('middleware - should read log of "/" 404', function(done) {
+    it('middleware - should read log of GET "/" 404', function(done) {
 
         request(app).get('/').expect(404).end(function(err, res) {
 
@@ -84,9 +84,9 @@ describe('404', function() {
         });
     });
 
-    it('function - should read log of "/" 404', function(done) {
+    it('function - should read log of POST "/" 404', function(done) {
 
-        request(app).get('/f').expect(404).end(function(err, res) {
+        request(app).post('/f').expect(404).end(function(err, res) {
 
             setTimeout(function() {
 
@@ -97,7 +97,7 @@ describe('404', function() {
                     if (err)
                         return done(err);
                     var d = JSON.parse(data);
-                    assert.deepEqual(d.method, 'GET', 'method');
+                    assert.deepEqual(d.method, 'POST', 'method');
                     assert.deepEqual(d.status, 404, 'status code');
                     assert.deepEqual(d.url, '/f', 'url');
                     assert.deepEqual(d.message, 'f4', 'logger');

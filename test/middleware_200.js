@@ -48,7 +48,7 @@ describe('200', function() {
 
             res.send('hello world!');
         });
-        app.get('/f', function(req, res) {
+        app.post('/f', function(req, res) {
 
             res.send('hello world!');
             res.end();
@@ -57,7 +57,7 @@ describe('200', function() {
         done();
     });
 
-    it('middleware - should read log of "/" 200', function(done) {
+    it('middleware - should read log of GET "/" 200', function(done) {
 
         request(app).get('/').expect(200).end(function(err, res) {
 
@@ -84,9 +84,9 @@ describe('200', function() {
         });
     });
 
-    it('function - should read log of "/" 200', function(done) {
+    it('function - should read log of POST "/" 200', function(done) {
 
-        request(app).get('/f').expect(200).end(function(err, res) {
+        request(app).post('/f').expect(200).end(function(err, res) {
 
             setTimeout(function() {
 
@@ -97,7 +97,7 @@ describe('200', function() {
                     if (err)
                         return done(err);
                     var d = JSON.parse(data);
-                    assert.deepEqual(d.method, 'GET', 'method');
+                    assert.deepEqual(d.method, 'POST', 'method');
                     assert.deepEqual(d.status, 200, 'status code');
                     assert.deepEqual(d.url, '/f', 'url');
                     assert.deepEqual(d.message, 'f2', 'logger');
