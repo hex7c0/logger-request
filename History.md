@@ -1,3 +1,11 @@
+v3.0.0 / 2014-08-14
+==================
+
+  * "deprecated" (options)
+  * Using `finished`@1.2.2
+  * Use event listener instead of rewrite `res.end`
+   * You can use old method with "deprecated" flag
+
 v2.2.5 / 2014-08-11
 ==================
 
@@ -65,15 +73,15 @@ v2.0.0 / 2014-07-22
 v1.3.0 / 2014-07-19
 ==================
 
-  * _log_ Rename 'byte' to 'bytesRes', bytes read
-  * _log_ New 'bytesReq', bytes dispatched
-  * _log_ New '__filename', who wrote log
+  * _log_ Rename "byte" to "bytesRes", bytes read
+  * _log_ New "bytesReq", bytes dispatched
+  * _log_ New "__filename", who wrote log
   * Now working even as a function
 
 v1.2.0 / 2014-07-17
 ==================
 
-  * Don't store 'cookie' anymore
+  * Don"t store "cookie" anymore
   * Minor var to function
   * Change MINOR version, due critical issue with node 0.11
 
@@ -129,13 +137,13 @@ v1.1.7 / 2014-06-29
 1.0.10 / 2014-05-25
 ==================
 
-  * Fix 'logger' arg
+  * Fix "logger" arg
 
 1.0.9 / 2014-05-24
 ==================
 
   * Better use of memory
-  * 'raw' option
+  * "raw" (options)
 
 1.0.8 / 2014-05-21
 ==================
@@ -161,7 +169,7 @@ v1.1.7 / 2014-06-29
 1.0.4 / 2014-05-16
 ==================
 
-  * More Options, related to 'winston' module
+  * More Options, related to "winston" module
 
 1.0.3 / 2014-05-14
 ==================
