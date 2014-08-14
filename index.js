@@ -11,6 +11,17 @@
  */
 
 /*
+ * initialize module
+ */
+// import
+try {
+    var finished = require('finished');
+} catch (MODULE_NOT_FOUND) {
+    console.error(MODULE_NOT_FOUND);
+    process.exit(1);
+}
+
+/*
  * functions
  */
 /**
@@ -107,8 +118,7 @@ function info(my) {
 
     return function(req, statusCode, end) {
 
-        var req = req.req || req;
-        out.ip = req.headers['x-forwarded-for'] || req.ip;
+        out.ip = req.headers['x-forwarded-for'] || req.ip || 'next';
         out.method = req.method;
         out.status = statusCode;
         out.url = req.url;
@@ -150,6 +160,54 @@ function wrapper(log, my) {
                 oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1000000));
     }
 
+    if (my.deprecated) {
+        console.error('warning! `logger-request` option is deprecated');
+        /**
+         * logging all route
+         * 
+         * @deprecated
+         * @function deprecated
+         * @param {Object} req - client request
+         * @param {Object} res - response to client
+         * @param {next} next - continue routes
+         * @return {next}
+         */
+        return function deprecated(req, res, next) {
+
+            var start = process.hrtime();
+            if (res._headerSent) { // function
+                finale(req, res.statusCode, start); // after res.end()
+            } else { // middleware
+                var buffer = res.end;
+                var fin = finale;
+                /**
+                 * middle of job. Set right end function (closure)
+                 * 
+                 * @function
+                 * @param {String} chunk - data sent
+                 * @param {String} encoding - data encoding
+                 * @return {Boolean}
+                 */
+                res.end = function(chunk, encoding) {
+
+                    res.end = buffer;
+                    var b = res.end(chunk, encoding);
+                    // res.end(chunk,encoding,finale) // callback available only
+                    // with node 0.11
+                    fin(req, res.statusCode, start); // write after sending
+                    // all stuff, instead of callback
+                    return b;
+                };
+            }
+
+            try {
+                return next();
+            } catch (TypeError) {
+                return;
+            }
+        };
+    }
+
     /**
      * logging all route
      * 
@@ -162,32 +220,13 @@ function wrapper(log, my) {
     return function logging(req, res, next) {
 
         var start = process.hrtime();
+        if (res._headerSent) { // function || cache
+            finale(req, res.statusCode, start);
+        } else { // listener
+            finished(res, function() {
 
-        if (res._headerSent) { // function
-            finale(req, res.statusCode, start); // after res.end()
-        } else { // middleware
-            var buffer = res.end;
-            var fin = finale;
-
-            /**
-             * middle of job. Set right end function (closure)
-             * 
-             * @function
-             * @param {String} chunk - data sent
-             * @param {String} encoding - data encoding
-             * @return {Boolean}
-             */
-            res.end = function(chunk, encoding) {
-
-                res.end = buffer;
-                var b = res.end(chunk, encoding);
-                // res.end(chunk,encoding,finale) // callback available only
-                // with node 0.11
-                fin(req, res.statusCode, start); // write after sending all
-                // stuff, instead of
-                // callback
-                return b;
-            };
+                finale(req, res.statusCode, start);
+            });
         }
 
         try {
@@ -212,7 +251,8 @@ module.exports = function logger(options) {
     var my = {
         console: !Boolean(options.console),
         filename: require('path').resolve(
-                String(options.filename || 'route.log'))
+                String(options.filename || 'route.log')),
+        deprecated: Boolean(options.deprecated)
     };
 
     // winston
