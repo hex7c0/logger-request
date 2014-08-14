@@ -39,6 +39,7 @@ app.use(logger({
  - `console` - **Boolean** If true, it displays log also to console *(default "false")*
  - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default "false")*
  - `filename` - **String** Filename of the logfile to write output to *(default "route.log")*
+ - `deprecated` - **Boolean** Flag for write log after `res.end()`(true) instead of default `listener`(false) *(default "false")*
  
  
  
