@@ -14,6 +14,114 @@
  * functions
  */
 /**
+ * builder from option
+ * 
+ * @function info
+ * @param {Object} my - user options
+ * @return {Object}
+ */
+function info(my) {
+
+    var out = Object.create(null);
+    var promise = new Array();
+
+    if (my.pid) {
+        promise.push([ 'pid', function(req) {
+
+            return process.pid;
+        } ]);
+    }
+    if (my.bytesReq) {
+        promise.push([ 'bytesReq', function(req) {
+
+            // console.log(process.pid)
+            // console.log(req.connection.bytesRead)
+            // console.log(req.client.bytesRead)
+            // console.log(req.socket.bytesRead)
+            // console.log()
+            // var s = req.socket.bytesRead - storyReq;
+            // storyReq = req.socket.bytesRead;
+            // return s;
+            return req.socket.bytesRead;
+        } ]);
+    }
+    if (my.bytesRes) {
+        promise.push([ 'bytesRes', function(req) {
+
+            // console.log(process.pid)
+            // console.log(req.connection._bytesDispatched)
+            // console.log(req.client._bytesDispatched)
+            // console.log(req.socket._bytesDispatched)
+            // console.log()
+            // var s = req.socket._bytesDispatched - storyRes;
+            // storyRes = req.socket._bytesDispatched;
+            // return s;
+            return req.socket._bytesDispatched;
+        } ]);
+    }
+    if (my.referrer) {
+        promise.push([ 'referrer', function(req) {
+
+            return req.headers['referer'] || req.headers['referrer'];
+        } ]);
+    }
+    if (my.auth) {
+        var mod = require('basic-authentication')({
+            legacy: true
+        });
+        promise.push([ 'auth', function(req) {
+
+            return mod(req).user;
+        } ]);
+    }
+    if (my.agent) {
+        promise.push([ 'agent', function(req) {
+
+            return req.headers['user-agent'];
+        } ]);
+    }
+    if (my.lang) {
+        promise.push([ 'lang', function(req) {
+
+            return req.headers['accept-language'];
+        } ]);
+    }
+    if (my.cookie) {
+        promise.push([ 'cookie', function(req) {
+
+            return req.cookies;
+        } ]);
+    }
+    if (my.cookie) {
+        promise.push([ 'headers', function(req) {
+
+            return req.headers;
+        } ]);
+    }
+    if (my.version) {
+        promise.push([ 'version', function(req) {
+
+            return req.httpVersionMajor + '.' + req.httpVersionMinor;
+        } ]);
+    }
+
+    return function(req, statusCode, end) {
+
+        var req = req.req || req;
+        out.ip = req.headers['x-forwarded-for'] || req.ip;
+        out.method = req.method;
+        out.status = statusCode;
+        out.url = req.url;
+        out.response = end.toFixed(3);
+        for (var i = 0, ii = promise.length; i < ii; i++) {
+            var p = promise[i];
+            out[p[0]] = p[1](req);
+        }
+        return out;
+    };
+}
+
+/**
  * function wrapper for multiple require
  * 
  * @function wrapper
@@ -21,120 +129,11 @@
  * @param {Object} cst - custom object parsed
  * @return {Function}
  */
-function wrapper(log,my) {
+function wrapper(log, my) {
 
-    var mod;
     var who = my.logger;
     var oi = info(my.custom);
     // var storyReq = 0, storyRes = 0;
-
-    /**
-     * builder of option
-     * 
-     * @function info
-     * @param {Object} my - user options
-     * @return {Object}
-     */
-    function info(my) {
-
-        var out = Object.create(null);
-        var promise = new Array();
-
-        if (my.pid) {
-            promise.push(['pid',function(req) {
-
-                return process.pid;
-            }]);
-        }
-        if (my.bytesReq) {
-            promise.push(['bytesReq',function(req) {
-
-                // console.log(process.pid)
-                // console.log(req.connection.bytesRead)
-                // console.log(req.client.bytesRead)
-                // console.log(req.socket.bytesRead)
-                // console.log()
-                // var s = req.socket.bytesRead - storyReq;
-                // storyReq = req.socket.bytesRead;
-                // return s;
-                return req.socket.bytesRead;
-            }]);
-        }
-        if (my.bytesRes) {
-            promise.push(['bytesRes',function(req) {
-
-                // console.log(process.pid)
-                // console.log(req.connection._bytesDispatched)
-                // console.log(req.client._bytesDispatched)
-                // console.log(req.socket._bytesDispatched)
-                // console.log()
-                // var s = req.socket._bytesDispatched - storyRes;
-                // storyRes = req.socket._bytesDispatched;
-                // return s;
-                return req.socket._bytesDispatched;
-            }]);
-        }
-        if (my.referrer) {
-            promise.push(['referrer',function(req) {
-
-                return req.headers['referer'] || req.headers['referrer'];
-            }]);
-        }
-        if (my.auth) {
-            mod = require('basic-authentication')({
-                legacy: true
-            });
-            promise.push(['auth',function(req) {
-
-                return mod(req).user;
-            }]);
-        }
-        if (my.agent) {
-            promise.push(['agent',function(req) {
-
-                return req.headers['user-agent'];
-            }]);
-        }
-        if (my.lang) {
-            promise.push(['lang',function(req) {
-
-                return req.headers['accept-language'];
-            }]);
-        }
-        if (my.cookie) {
-            promise.push(['cookie',function(req) {
-
-                return req.cookies;
-            }]);
-        }
-        if (my.cookie) {
-            promise.push(['headers',function(req) {
-
-                return req.headers;
-            }]);
-        }
-        if (my.version) {
-            promise.push(['version',function(req) {
-
-                return req.httpVersionMajor + '.' + req.httpVersionMinor;
-            }]);
-        }
-
-        return function(req,statusCode,end) {
-
-            req = req.req || req;
-            out.ip = req.headers['x-forwarded-for'] || req.ip;
-            out.method = req.method;
-            out.status = statusCode;
-            out.url = req.url;
-            out.response = end.toFixed(3);
-            for (var i = 0, ii = promise.length; i < ii; i++) {
-                var p = promise[i];
-                out[p[0]] = p[1](req);
-            }
-            return out;
-        };
-    }
 
     /**
      * end of job (closures). Get response time and status code
@@ -144,10 +143,11 @@ function wrapper(log,my) {
      * @param {Integr} code - statusCode
      * @param {Array} start - hrtime
      */
-    function finale(req,statusCode,start) {
+    function finale(req, statusCode, start) {
 
         var diff = process.hrtime(start);
-        return log(who,oi(req,statusCode,(diff[0] * 1e9 + diff[1]) / 1000000));
+        return log(who,
+                oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1000000));
     }
 
     /**
@@ -159,12 +159,12 @@ function wrapper(log,my) {
      * @param {next} next - continue routes
      * @return {next}
      */
-    return function logging(req,res,next) {
+    return function logging(req, res, next) {
 
         var start = process.hrtime();
 
         if (res._headerSent) { // function
-            finale(req,res.statusCode,start); // after res.end()
+            finale(req, res.statusCode, start); // after res.end()
         } else { // middleware
             var buffer = res.end;
             var fin = finale;
@@ -177,12 +177,14 @@ function wrapper(log,my) {
              * @param {String} encoding - data encoding
              * @return {Boolean}
              */
-            res.end = function(chunk,encoding) {
+            res.end = function(chunk, encoding) {
 
                 res.end = buffer;
-                var b = res.end(chunk,encoding);
-                // res.end(chunk,encoding,finale) // callback available only with node 0.11
-                fin(req,res.statusCode,start); // write after sending all stuff, instead of
+                var b = res.end(chunk, encoding);
+                // res.end(chunk,encoding,finale) // callback available only
+                // with node 0.11
+                fin(req, res.statusCode, start); // write after sending all
+                // stuff, instead of
                 // callback
                 return b;
             };
@@ -229,7 +231,7 @@ module.exports = function logger(options) {
     };
     my.logger = winston.logger;
 
-    var log = require('winston').loggers.add(winston.logger,{
+    var log = require('winston').loggers.add(winston.logger, {
         console: {
             level: winston.level,
             silent: my.console,
@@ -269,5 +271,5 @@ module.exports = function logger(options) {
         version: Boolean(options.version)
     };
 
-    return wrapper(log,my);
+    return wrapper(log, my);
 };
