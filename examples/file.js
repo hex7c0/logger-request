@@ -25,7 +25,7 @@ try {
 // using middleware
 app.use(logger({
     filename: 'file.log',
-    deprecated: true,
+    deprecated: false,
     custom: {
         bytesReq: true,
         bytesRes: true,
