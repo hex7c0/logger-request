@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 2.2.1
+ * @version 3.0.1
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -15,7 +15,7 @@
  */
 // import
 try {
-    var finished = require('finished');
+    var finished = require('on-finished');
 } catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
     process.exit(1);
@@ -225,7 +225,7 @@ function wrapper(log, my) {
         if (res._headerSent) { // function || cache
             finale(req, res.statusCode, start);
         } else { // listener
-            finished(res, function() {
+            finished(req, function() {
 
                 finale(req, res.statusCode, start);
             });
