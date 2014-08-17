@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 3.0.1
+ * @version 3.0.2
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -45,28 +45,12 @@ function info(my) {
     if (my.bytesReq) {
         promise.push([ 'bytesReq', function(req) {
 
-            // console.log(process.pid)
-            // console.log(req.connection.bytesRead)
-            // console.log(req.client.bytesRead)
-            // console.log(req.socket.bytesRead)
-            // console.log()
-            // var s = req.socket.bytesRead - storyReq;
-            // storyReq = req.socket.bytesRead;
-            // return s;
             return req.socket.bytesRead;
         } ]);
     }
     if (my.bytesRes) {
         promise.push([ 'bytesRes', function(req) {
 
-            // console.log(process.pid)
-            // console.log(req.connection._bytesDispatched)
-            // console.log(req.client._bytesDispatched)
-            // console.log(req.socket._bytesDispatched)
-            // console.log()
-            // var s = req.socket._bytesDispatched - storyRes;
-            // storyRes = req.socket._bytesDispatched;
-            // return s;
             return req.socket._bytesDispatched;
         } ]);
     }
@@ -143,7 +127,6 @@ function wrapper(log, my) {
 
     var who = my.logger;
     var oi = info(my.custom);
-    // var storyReq = 0, storyRes = 0;
 
     /**
      * end of job (closures). Get response time and status code
@@ -180,7 +163,6 @@ function wrapper(log, my) {
                 finale(req, res.statusCode, start); // after res.end()
             } else { // middleware
                 var buffer = res.end;
-                var fin = finale;
                 /**
                  * middle of job. Set right end function (closure)
                  * 
@@ -195,7 +177,7 @@ function wrapper(log, my) {
                     var b = res.end(chunk, encoding);
                     // res.end(chunk,encoding,finale) // callback available only
                     // with node 0.11
-                    fin(req, res.statusCode, start); // write after sending
+                    finale(req, res.statusCode, start); // write after sending
                     // all stuff, instead of callback
                     return b;
                 };
@@ -225,9 +207,10 @@ function wrapper(log, my) {
         if (res._headerSent) { // function || cache
             finale(req, res.statusCode, start);
         } else { // listener
-            finished(req, function() {
+            finished(res, function() {
 
                 finale(req, res.statusCode, start);
+                return;
             });
         }
 
