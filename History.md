@@ -1,3 +1,9 @@
+v3.0.2 / 2014-08-17
+==================
+
+  * Change `req` to `res` on-finished callback
+  * Update `on-finished`@2.1.0
+
 v3.0.1 / 2014-08-16
 ==================
 

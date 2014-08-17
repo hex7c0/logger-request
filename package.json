@@ -1,5 +1,5 @@
 {
-  "version": "3.0.1",
+  "version": "3.0.2",
   "name": "logger-request",
   "description": "http request logger middleware",
   "keywords": [
@@ -28,7 +28,7 @@
   "main": "index.min.js",
   "dependencies": {
     "basic-authentication": "1.5.2",
-    "on-finished": "2.0.0",
+    "on-finished": "2.1.0",
     "winston": "0.7.3"
   },
   "devDependencies": {
