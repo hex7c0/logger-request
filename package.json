@@ -1,5 +1,5 @@
 {
-  "version": "3.0.5",
+  "version": "3.0.6",
   "name": "logger-request",
   "description": "http request logger middleware",
   "keywords": [
@@ -27,7 +27,7 @@
   },
   "main": "index.min.js",
   "dependencies": {
-    "basic-authentication": "1.5.5",
+    "basic-authentication": "1.5.6",
     "on-finished": "2.1.0",
     "winston": "0.7.3"
   },
@@ -37,7 +37,7 @@
     "mocha": "~1.21.4",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-uglify": "~0.5.1",
-    "grunt-endline": "~0.1.0",
+    "grunt-endline": "~0.2.0",
     "grunt-shell": "~1.0.1",
     "supertest": "~0.13.0"
   },
