@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 3.0.3
+ * @version 3.0.7
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -139,8 +139,7 @@ function wrapper(log, my) {
     function finale(req, statusCode, start) {
 
         var diff = process.hrtime(start);
-        return log(who,
-                oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1000000));
+        return log(who, oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1000000));
     }
 
     if (my.deprecated) {
@@ -233,8 +232,8 @@ module.exports = function logger(options) {
     var options = options || Object.create(null);
     var my = {
         console: !Boolean(options.console),
-        filename: require('path').resolve(
-                String(options.filename || 'route.log')),
+        filename: require('path').resolve(String(options.filename
+                || 'route.log')),
         deprecated: Boolean(options.deprecated)
     };
 
