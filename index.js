@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 3.0.7
+ * @version 3.0.8
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -37,7 +37,7 @@ function info(my) {
     var promise = new Array();
 
     if (my.pid) {
-        promise.push([ 'pid', function(req) {
+        promise.push([ 'pid', function() {
 
             return process.pid;
         } ]);
@@ -200,22 +200,18 @@ function wrapper(log, my) {
      */
     return function logging(req, res, next) {
 
-        var start = process.hrtime();
         req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
+        var start = process.hrtime();
         if (res._headerSent) { // function || cache
-            finale(req, res.statusCode, start);
+            finale(req, Number(res.statusCode), start);
         } else { // listener
             finished(res, function() {
 
-                finale(req, res.statusCode, start);
+                finale(req, Number(res.statusCode), start);
                 return;
             });
         }
-
-        if (next) {
-            return next();
-        }
-        return;
+        return next ? next() : null;
     };
 }
 
