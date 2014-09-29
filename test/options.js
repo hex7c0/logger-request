@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var logger = require('../index.min.js'); // use require('logger-request')
+    var logger = require('..'); // use require('logger-request')
     var app = require('express')();
     var cookie = require('cookie-parser');
     var request = require('supertest');

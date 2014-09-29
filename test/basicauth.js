@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var logger = require('../index.min.js'); // use require('logger-request')
+    var logger = require('..'); // use require('logger-request')
     var express = require('express');
     var authentication = require('basic-authentication');
     var request = require('supertest');
@@ -58,8 +58,8 @@ describe('basic authentication', function() {
         });
 
         var p = 'Basic ' + new Buffer('admin3:foo').toString('base64');
-        request(app).get('/').set('Authorization', p).expect(200).end(
-                function(err, res) {
+        request(app).get('/').set('Authorization', p).expect(200)
+                .end(function(err, res) {
 
                     setTimeout(function() {
 
@@ -105,8 +105,8 @@ describe('basic authentication', function() {
         });
 
         var p = 'Basic ' + new Buffer('admin:foo').toString('base64');
-        request(app).get('/').set('Authorization', p).expect(401).end(
-                function(err, res) {
+        request(app).get('/').set('Authorization', p).expect(401)
+                .end(function(err, res) {
 
                     setTimeout(function() {
 
