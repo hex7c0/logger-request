@@ -1,5 +1,5 @@
 {
-  "version": "3.0.7",
+  "version": "3.0.8",
   "name": "logger-request",
   "description": "http request logger middleware",
   "keywords": [
@@ -36,10 +36,10 @@
     "express": "~4.9.0",
     "mocha": "~1.21.4",
     "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-contrib-uglify": "~0.6.0",
     "grunt-endline": "~0.2.0",
     "grunt-shell": "~1.1.1",
-    "supertest": "~0.13.0"
+    "supertest": "~0.14.0"
   },
   "engines": {
     "node": ">=0.10"
