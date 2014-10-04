@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @file basicauth example
  * @module logger-request

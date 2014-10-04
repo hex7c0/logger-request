@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @file cluster example
  * @module logger-request
