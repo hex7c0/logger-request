@@ -1,5 +1,5 @@
 {
-  "version": "3.0.9",
+  "version": "3.0.10",
   "name": "logger-request",
   "description": "http request logger middleware",
   "keywords": [
@@ -26,7 +26,7 @@
   "dependencies": {
     "basic-authentication": "1.5.7",
     "on-finished": "2.1.0",
-    "winston": "0.8.0"
+    "winston": "0.8.1"
   },
   "devDependencies": {
     "cookie-parser": "~1.3",
