@@ -34,7 +34,7 @@ try {
 function info(my) {
 
     var out = Object.create(null);
-    var promise = new Array();
+    var promise = [];
 
     if (my.pid) {
         promise.push([ 'pid', function() {
@@ -57,7 +57,7 @@ function info(my) {
     if (my.referrer) {
         promise.push([ 'referrer', function(req) {
 
-            return req.headers['referer'] || req.headers['referrer'];
+            return req.headers.referer || req.headers.referrer;
         } ]);
     }
     if (my.auth) {
@@ -220,12 +220,12 @@ function wrapper(log, my) {
  * 
  * @exports logger
  * @function logger
- * @param {Object} options - various options. Check README.md
+ * @param {Object} opt - various options. Check README.md
  * @return {Function|Object}
  */
-module.exports = function logger(options) {
+function logger(opt) {
 
-    var options = options || Object.create(null);
+    var options = opt || Object.create(null);
     var my = {
         console: !Boolean(options.console),
         filename: require('path').resolve(String(options.filename
@@ -244,8 +244,8 @@ module.exports = function logger(options) {
         timestamp: options.winston.timestamp || true,
         maxsize: Number(options.winston.maxsize) || 8388608,
         maxFiles: Number(options.winston.maxFiles) || null,
-        json: options.winston.json == false ? false : true,
-        raw: options.winston.raw == false ? false : true
+        json: options.winston.json === false ? false : true,
+        raw: options.winston.raw === false ? false : true
     };
     my.logger = winston.logger;
 
@@ -290,4 +290,5 @@ module.exports = function logger(options) {
     };
 
     return wrapper(log, my);
-};
+}
+module.exports = logger;
