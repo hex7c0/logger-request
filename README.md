@@ -40,6 +40,7 @@ app.use(logger({
  - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default "false")*
  - `filename` - **String** Filename of the logfile to write output to *(default "route.log")*
  - `deprecated` - **Boolean** Flag for write log after `res.end()`(true) instead of default `listener`(false) *(default "false")*
+ - `functions` - **String** Use module like a function without `next` callback *(default "false")*
  
  
  
