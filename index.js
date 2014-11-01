@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 3.0.0
+ * @version 3.1.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -189,6 +189,30 @@ function wrapper(log, my) {
         };
     }
 
+    if (my.functions) {
+        /**
+         * logging all route without next callback
+         * 
+         * @function logging
+         * @param {Object} req - client request
+         * @param {Object} res - response to client
+         */
+        return function logging(req, res) {
+
+            req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
+            var start = process.hrtime();
+            if (res._headerSent) { // function || cache
+                finale(req, res.statusCode, start);
+            } else { // listener
+                finished(res, function() {
+
+                    return finale(req, res.statusCode, start);
+                });
+            }
+            return;
+        };
+    }
+
     /**
      * logging all route
      * 
@@ -229,7 +253,8 @@ function logger(opt) {
         console: !Boolean(options.console),
         filename: require('path').resolve(String(options.filename
                 || 'route.log')),
-        deprecated: Boolean(options.deprecated)
+        deprecated: Boolean(options.deprecated),
+        functions: Boolean(options.functions)
     };
 
     // winston
