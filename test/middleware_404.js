@@ -35,7 +35,8 @@ describe('404', function() {
             filename: 'f4.log',
             winston: {
                 logger: 'f4'
-            }
+            },
+            functions: true
         });
         var loggerr = logger({
             filename: 'r4.log',
@@ -46,8 +47,7 @@ describe('404', function() {
         app.use(loggerr);
         app.get('/', function(req, res) {
 
-            res.status(404).end('hello world!');
-            logger(req, res); // after res.end()
+            res.status(404).send('hello world!');
         });
         app.post('/f', function(req, res) {
 

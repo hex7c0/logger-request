@@ -35,7 +35,8 @@ describe('200', function() {
             filename: 'f2.log',
             winston: {
                 logger: 'f2'
-            }
+            },
+            functions: true
         });
         var loggerr = logger({
             filename: 'r2.log',
@@ -50,8 +51,7 @@ describe('200', function() {
         });
         app.post('/f', function(req, res) {
 
-            res.send('hello world!');
-            res.end();
+            res.end('hello world!');
             loggerf(req, res); // after res.end()
         });
         done();
