@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 3.0.10
+ * @version 3.0.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -139,7 +139,7 @@ function wrapper(log, my) {
     function finale(req, statusCode, start) {
 
         var diff = process.hrtime(start);
-        return log(who, oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1000000));
+        return log(who, oi(req, Number(statusCode), (diff[0] * 1e9 + diff[1]) / 1000000));
     }
 
     if (my.deprecated) {
@@ -203,15 +203,14 @@ function wrapper(log, my) {
         req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
         var start = process.hrtime();
         if (res._headerSent) { // function || cache
-            finale(req, Number(res.statusCode), start);
+            finale(req, res.statusCode, start);
         } else { // listener
             finished(res, function() {
 
-                finale(req, Number(res.statusCode), start);
-                return;
+                return finale(req, res.statusCode, start);
             });
         }
-        return next ? next() : null;
+        return next();
     };
 }
 
