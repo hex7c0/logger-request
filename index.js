@@ -33,9 +33,7 @@ try {
  */
 function info(my) {
 
-    var out = Object.create(null);
     var promise = [];
-
     if (my.pid) {
         promise.push([ 'pid', function() {
 
@@ -99,15 +97,18 @@ function info(my) {
             return req.httpVersionMajor + '.' + req.httpVersionMinor;
         } ]);
     }
+    var l = promise.length;
 
     return function(req, statusCode, end) {
 
-        out.ip = req.remoteAddr;
-        out.method = req.method;
-        out.status = statusCode;
-        out.url = req.url;
-        out.response = end.toFixed(3);
-        for (var i = 0, ii = promise.length; i < ii; i++) {
+        var out = {
+            ip: req.remoteAddr,
+            method: req.method,
+            status: statusCode,
+            url: req.url,
+            response: end.toFixed(3)
+        };
+        for (var i = 0; i < l; i++) {
             var p = promise[i];
             out[p[0]] = p[1](req);
         }
@@ -139,7 +140,7 @@ function wrapper(log, my) {
     function finale(req, statusCode, start) {
 
         var diff = process.hrtime(start);
-        return log(who, oi(req, Number(statusCode), (diff[0] * 1e9 + diff[1]) / 1000000));
+        return log(who, oi(req, Number(statusCode), (diff[0] * 1e9 + diff[1]) / 1e6));
     }
 
     if (my.deprecated) {
@@ -201,15 +202,14 @@ function wrapper(log, my) {
 
             req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
             var start = process.hrtime();
-            if (res._headerSent) { // function || cache
-                finale(req, res.statusCode, start);
-            } else { // listener
-                finished(res, function() {
+            if (res._headerSent === false) { // listener
+                return finished(res, function() {
 
                     return finale(req, res.statusCode, start);
                 });
             }
-            return;
+            // function || cache
+            return finale(req, res.statusCode, start);
         };
     }
 
@@ -226,13 +226,13 @@ function wrapper(log, my) {
 
         req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
         var start = process.hrtime();
-        if (res._headerSent) { // function || cache
-            finale(req, res.statusCode, start);
-        } else { // listener
+        if (res._headerSent === false) { // listener
             finished(res, function() {
 
                 return finale(req, res.statusCode, start);
             });
+        } else { // function || cache
+            finale(req, res.statusCode, start);
         }
         return next();
     };
