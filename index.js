@@ -140,7 +140,7 @@ function wrapper(log, my) {
     function finale(req, statusCode, start) {
 
         var diff = process.hrtime(start);
-        return log(who, oi(req, Number(statusCode), (diff[0] * 1e9 + diff[1]) / 1e6));
+        return log(who, oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1e6));
     }
 
     if (my.deprecated) {
@@ -202,13 +202,6 @@ function wrapper(log, my) {
 
             req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
             var start = process.hrtime();
-            if (res._headerSent === false) { // listener
-                return finished(res, function() {
-
-                    return finale(req, res.statusCode, start);
-                });
-            }
-            // function || cache
             return finale(req, res.statusCode, start);
         };
     }
@@ -226,14 +219,10 @@ function wrapper(log, my) {
 
         req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
         var start = process.hrtime();
-        if (res._headerSent === false) { // listener
-            finished(res, function() {
+        finished(res, function() {
 
-                return finale(req, res.statusCode, start);
-            });
-        } else { // function || cache
-            finale(req, res.statusCode, start);
-        }
+            return finale(req, res.statusCode, start);
+        });
         return next();
     };
 }
