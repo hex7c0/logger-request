@@ -1,6 +1,6 @@
 'use strict';
 /**
- * @file function example
+ * @file functions example
  * @module logger-request
  * @package logger-request
  * @subpackage examples
@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var logger = require('../index.min.js'); // use require('logger-request') instead
+    var logger = require('..'); // use require('logger-request') instead
     var app = require('express')();
 } catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
@@ -23,20 +23,21 @@ try {
 
 // using function
 logger = logger({
-    filename: 'function.log',
+    filename: 'functions.log',
+    functions: true
 });
 
 // express routing
-app.get('/',function(req,res) {
+app.get('/', function(req, res) {
 
     res.send('hello world!');
     res.end();
-    logger(req,res); // after res.end()
+    logger(req, res); // after res.end()
 });
-app.get('/err',function(req,res) {
+app.get('/err', function(req, res) {
 
     res.status(401).end('Unauthorized');
-    logger(req,res); // after res.end()
+    logger(req, res); // after res.end()
 });
 // server starting
 app.listen(3000);
