@@ -1,6 +1,6 @@
 'use strict';
 /**
- * @file middleware test
+ * @file middleware404 test
  * @module logger-request
  * @package logger-request
  * @subpackage test
