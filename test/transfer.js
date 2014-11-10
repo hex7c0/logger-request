@@ -106,7 +106,7 @@ describe('express #2433', function() {
                 assert.equal(c.method, 'GET');
                 assert.equal(c.status, 200);
                 assert.equal(c.message, 'tt');
-                assert.equal(c.bytesRes, 12583197);
+                assert.equal(/^1258319/.test(c.bytesRes), true);
                 assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
 
                 // 1° 206 chunk
@@ -114,7 +114,7 @@ describe('express #2433', function() {
                 assert.equal(c.method, 'GET');
                 assert.equal(c.status, 206);
                 assert.equal(c.message, 'tt');
-                assert.equal(c.bytesRes, 33102);
+                assert.equal(/^3310/.test(c.bytesRes), true);
                 assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
 
                 // 2° 206 chunk
@@ -122,7 +122,7 @@ describe('express #2433', function() {
                 assert.equal(c.method, 'GET');
                 assert.equal(c.status, 206);
                 assert.equal(c.message, 'tt');
-                assert.equal(c.bytesRes, 12550488);
+                assert.equal(/^1255048/.test(c.bytesRes), true);
                 assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
 
                 done();
