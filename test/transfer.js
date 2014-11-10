@@ -24,7 +24,7 @@ try {
     process.exit(1);
 }
 
-describe('#2433', function() {
+describe('express #2433', function() {
 
     var size = 12582912;
     var file = __dirname + '/aa.pdf';
@@ -52,6 +52,7 @@ describe('#2433', function() {
 
     it('should write 12mb fake pdf', function(done) {
 
+        this.timeout(5000);
         var e = '';
         for (var i = 0; i < size; i++) {
             e += 'e';
