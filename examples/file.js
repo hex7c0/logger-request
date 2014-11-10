@@ -14,14 +14,13 @@
  */
 // import
 try {
-    var logger = require('../index.min.js'); // use require('logger-request')
+    var logger = require('..'); // use require('logger-request') instead
     var app = require('express')();
 } catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
     process.exit(1);
 }
 
-// customization
 // using middleware
 app.use(logger({
     filename: 'file.log',
@@ -35,7 +34,7 @@ app.use(logger({
 // routing
 app.get('/', function(req, res) {
 
-    res.sendFile(require('path').resolve('a.pdf'));
+    res.sendFile(__dirname + '/a.pdf');
 });
 // server starting
 app.listen(3000);
