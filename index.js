@@ -4,7 +4,7 @@
  * @module logger-request
  * @package logger-request
  * @subpackage main
- * @version 3.1.0
+ * @version 3.2.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -59,12 +59,19 @@ function info(my) {
         } ]);
     }
     if (my.auth) {
-        var mod = require('basic-authentication')({
+        var mod0 = require('basic-authentication')({
             legacy: true
         });
         promise.push([ 'auth', function(req) {
 
-            return mod(req).user;
+            return mod0(req).user;
+        } ]);
+    }
+    if (my.transfer) {
+        var mod1 = require('transfer-rate')();
+        promise.push([ 'transfer', function(req) {
+
+            return mod1(req, req.start);
         } ]);
     }
     if (my.agent) {
@@ -101,12 +108,13 @@ function info(my) {
 
     return function(req, statusCode, end) {
 
+        var diff = (end[0] * 1e9 + end[1]) / 1e6;
         var out = {
             ip: req.remoteAddr,
             method: req.method,
             status: statusCode,
             url: req.url,
-            response: end.toFixed(3)
+            response: diff.toFixed(3)
         };
         for (var i = 0; i < l; i++) {
             var p = promise[i];
@@ -139,8 +147,8 @@ function wrapper(log, my) {
      */
     function finale(req, statusCode, start) {
 
-        var diff = process.hrtime(start);
-        return log(who, oi(req, statusCode, (diff[0] * 1e9 + diff[1]) / 1e6));
+        req.start = start;
+        return log(who, oi(req, statusCode, process.hrtime(start)));
     }
 
     if (my.deprecated) {
@@ -295,6 +303,7 @@ function logger(opt) {
         bytesRes: Boolean(options.bytesRes),
         referrer: Boolean(options.referrer),
         auth: Boolean(options.auth),
+        transfer: Boolean(options.transfer),
         agent: Boolean(options.agent),
         lang: Boolean(options.lang),
         cookie: Boolean(options.cookie),
