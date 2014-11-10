@@ -26,6 +26,7 @@
   "dependencies": {
     "basic-authentication": "1.5.8",
     "on-finished": "2.1.1",
+    "transfer-rate": "1.0.4",
     "winston": "0.8.3"
   },
   "devDependencies": {
