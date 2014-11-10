@@ -62,7 +62,8 @@ related to https://github.com/flatiron/winston#file-transport
   - `bytesReq` - **Boolean** Flag for `req.socket.bytesRead` *(default "disabled")*
   - `bytesRes` - **Boolean** Flag for `req.socket._bytesDispatched` *(default "disabled")*
   - `referrer` - **Boolean** Flag for `req.headers['referrer']` *(default "disabled")*
-  - `auth` - **Boolean** Flag for `basic-authentication` *(default "disabled")*
+  - `auth` - **Boolean** Flag for [`basic-authentication`](https://github.com/hex7c0/basic-authentication) *(default "disabled")*
+  - `transfer` - **Boolean** Flag for [`transfer-rate`](https://github.com/hex7c0/transfer-rate) *(default "disabled")*
   - `agent` - **Boolean** Flag for `req.headers['user-agent']` *(default "disabled")*
   - `lang` - **Boolean** Flag for `req.headers['accept-language']` *(default "disabled")*
   - `cookie` - **Boolean** Flag for `req.cookies` *(default "disabled")*
