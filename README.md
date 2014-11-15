@@ -5,7 +5,7 @@
 [![Dependency Status](https://david-dm.org/hex7c0/logger-request/status.svg)](https://david-dm.org/hex7c0/logger-request)
 
 HTTP request logger middleware for [nodejs](http://nodejs.org/).
-Save logs to file or show to console.
+Save logs to file, show to console or both.
 Look at [`logger-request-cli`](https://github.com/hex7c0/logger-request-cli) for Parser.
 
 ## Installation
@@ -28,7 +28,7 @@ var logger = require('logger-request');
 var app = require('express')();
 
 app.use(logger({
-    filename : 'foo.log',
+  filename : 'foo.log',
 }));
 ```
 
