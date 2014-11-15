@@ -227,10 +227,7 @@ function wrapper(log, my) {
 
     req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
     var start = process.hrtime();
-    finished(res, function() {
-
-      return finale(req, res.statusCode, start);
-    });
+    finished(res, finale.bind(this, req, res.statusCode, start));
     return next();
   };
 }
