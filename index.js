@@ -245,11 +245,13 @@ function logger(opt) {
 
   var options = opt || Object.create(null);
   var my = {
-    console: !Boolean(options.console),
-    filename: require('path').resolve(String(options.filename || 'route.log')),
-    deprecated: Boolean(options.deprecated),
-    functions: Boolean(options.functions)
+    filename: require('path').resolve(String(options.filename || 'route.log'))
   };
+  if (Boolean(options.deprecated)) {
+    my.deprecated = true;
+  } else if (Boolean(options.functions)) {
+    my.functions = true;
+  }
 
   // winston
   options.winston = options.winston || Object.create(null);
@@ -270,7 +272,7 @@ function logger(opt) {
   var log = require('winston').loggers.add(winston.logger, {
     console: {
       level: winston.level,
-      silent: my.console,
+      silent: !Boolean(options.console),
       colorize: winston.colorize,
       timestamp: winston.timestamp,
       json: winston.json,
