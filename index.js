@@ -128,14 +128,12 @@ function info(my) {
  * function wrapper for multiple require
  * 
  * @function wrapper
- * @param {Function} logger - logging function
- * @param {Object} cst - custom object parsed
+ * @param {Function} log - logging function
+ * @param {Object} my - parsed options
+ * @param {Function} io - extra function
  * @return {Function}
  */
-function wrapper(log, my) {
-
-  var who = my.logger;
-  var oi = info(my.custom);
+function wrapper(log, my, io) {
 
   /**
    * end of job (closures). Get response time and status code
@@ -148,7 +146,7 @@ function wrapper(log, my) {
   function finale(req, statusCode, start) {
 
     req.start = start;
-    return log(who, oi(req, statusCode, process.hrtime(start)));
+    return log(my.logger, io(req, statusCode, process.hrtime(start)));
   }
 
   if (my.deprecated) {
@@ -227,7 +225,10 @@ function wrapper(log, my) {
 
     req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
     var start = process.hrtime();
-    finished(res, finale.bind(this, req, res.statusCode, start));
+    finished(res, function() {
+
+      return finale(req, res.statusCode, start);
+    });
     return next();
   };
 }
@@ -293,7 +294,7 @@ function logger(opt) {
 
   // custom
   options = options.custom || Object.create(null);
-  my.custom = {
+  var io = info({
     pid: Boolean(options.pid),
     bytesReq: Boolean(options.bytesReq),
     bytesRes: Boolean(options.bytesRes),
@@ -305,8 +306,8 @@ function logger(opt) {
     cookie: Boolean(options.cookie),
     headers: Boolean(options.headers),
     version: Boolean(options.version)
-  };
+  });
 
-  return wrapper(log, my);
+  return wrapper(log, my, io);
 }
 module.exports = logger;
