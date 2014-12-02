@@ -104,6 +104,12 @@ function info(my) {
       return req.httpVersionMajor + '.' + req.httpVersionMinor;
     } ]);
   }
+  if (my.callback) {
+    promise.push([ 'callback', function(req) {
+
+      return my.callback(req);
+    } ]);
+  }
   var l = promise.length;
 
   return function(req, statusCode, end) {
@@ -307,7 +313,8 @@ function logger(opt) {
     lang: Boolean(options.lang),
     cookie: Boolean(options.cookie),
     headers: Boolean(options.headers),
-    version: Boolean(options.version)
+    version: Boolean(options.version),
+    callback: Boolean(options.callback) ? options.callback : false
   });
 
   return wrapper(log, my, io);
