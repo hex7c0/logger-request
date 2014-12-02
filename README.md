@@ -69,6 +69,7 @@ related to https://github.com/flatiron/winston#file-transport
   - `cookie` - **Boolean** Flag for `req.cookies` *(default "disabled")*
   - `headers` - **Boolean** Flag for `req.headers` *(default "disabled")*
   - `version` - **Boolean** Flag for `req.httpVersionMajor` *(default "disabled")*
+  - `callback` - **Function** Flag for using callback function *(default "disabled")*
 
 ## Examples
 
