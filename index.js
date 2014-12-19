@@ -120,7 +120,7 @@ function info(my) {
       method: req.method,
       status: statusCode,
       url: req.url,
-      response: diff.toFixed(3)
+      response: diff.toFixed(2)
     };
     for (var i = 0; i < l; i++) {
       var p = promise[i];
