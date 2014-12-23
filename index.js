@@ -29,7 +29,7 @@ try {
  * 
  * @function info
  * @param {Object} my - user options
- * @return {Object}
+ * @return {Function}
  */
 function info(my) {
 
@@ -164,8 +164,7 @@ function wrapper(log, my, io) {
      * @function deprecated
      * @param {Object} req - client request
      * @param {Object} res - response to client
-     * @param {next} next - continue routes
-     * @return {next}
+     * @param {Function} next - continue routes
      */
     return function deprecated(req, res, next) {
 
@@ -224,8 +223,7 @@ function wrapper(log, my, io) {
    * @function logging
    * @param {Object} req - client request
    * @param {Object} res - response to client
-   * @param {next} next - continue routes
-   * @return {next}
+   * @param {Function} next - continue routes
    */
   return function logging(req, res, next) {
 
