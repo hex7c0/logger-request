@@ -151,8 +151,9 @@ function wrapper(log, my, io) {
    */
   function finale(req, statusCode, start) {
 
+    var end = process.hrtime(start);
     req.start = start;
-    return log(my.logger, io(req, statusCode, process.hrtime(start)));
+    return log(my.logger, io(req, statusCode, end));
   }
 
   if (my.deprecated) {
@@ -227,12 +228,13 @@ function wrapper(log, my, io) {
    */
   return function logging(req, res, next) {
 
+    var start;
     req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
-    var start = process.hrtime();
     finished(res, function() {
 
       return finale(req, res.statusCode, start);
     });
+    start = process.hrtime();
     return next();
   };
 }
