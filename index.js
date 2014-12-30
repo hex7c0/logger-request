@@ -112,6 +112,20 @@ function info(my) {
   }
   var l = promise.length;
 
+  if (l === 0) {
+    return function(req, statusCode, end) {
+
+      var diff = (end[0] * 1e9 + end[1]) / 1e6;
+      var out = {
+        ip: req.remoteAddr || req.ip,
+        method: req.method,
+        status: statusCode,
+        url: req.url,
+        response: diff.toFixed(2)
+      };
+      return out;
+    };
+  }
   return function(req, statusCode, end) {
 
     var diff = (end[0] * 1e9 + end[1]) / 1e6;
