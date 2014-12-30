@@ -116,7 +116,7 @@ function info(my) {
 
     var diff = (end[0] * 1e9 + end[1]) / 1e6;
     var out = {
-      ip: req.remoteAddr,
+      ip: req.remoteAddr || req.ip,
       method: req.method,
       status: statusCode,
       url: req.url,
@@ -170,7 +170,7 @@ function wrapper(log, my, io) {
     return function deprecated(req, res, next) {
 
       var start = process.hrtime();
-      req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
+      req.remoteAddr = req.ip;
       if (res._headerSent) { // function
         finale(req, res.statusCode, start); // after res.end()
       } else { // middleware
@@ -212,7 +212,7 @@ function wrapper(log, my, io) {
      */
     return function logging(req, res) {
 
-      req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
+      req.remoteAddr = req.ip;
       var start = process.hrtime();
       return finale(req, res.statusCode, start);
     };
@@ -229,7 +229,7 @@ function wrapper(log, my, io) {
   return function logging(req, res, next) {
 
     var start;
-    req.remoteAddr = req.headers['x-forwarded-for'] || req.ip;
+    req.remoteAddr = req.ip;
     finished(res, function() {
 
       return finale(req, res.statusCode, start);
