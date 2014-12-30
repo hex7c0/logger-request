@@ -33,7 +33,7 @@ try {
  */
 function info(my) {
 
-  var promise = [];
+  var promise = Array.call();
   if (my.pid) {
     promise.push([ 'pid', function() {
 
