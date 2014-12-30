@@ -4,9 +4,11 @@
 [![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request)
 [![Dependency Status](https://david-dm.org/hex7c0/logger-request/status.svg)](https://david-dm.org/hex7c0/logger-request)
 
-HTTP request logger middleware for [nodejs](http://nodejs.org/).
-Save logs to file, show to console or both.
-Look at [`logger-request-cli`](https://github.com/hex7c0/logger-request-cli) for Parser.
+HTTP request logger middleware for [nodejs](http://nodejs.org/)
+
+Save logs to file, show to console or both
+
+Look at [`logger-request-cli`](https://github.com/hex7c0/logger-request-cli) for Parser
 
 ## Installation
 
