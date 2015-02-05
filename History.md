@@ -1,3 +1,12 @@
+v3.2.8 / 2015-02-05
+==================
+
+  * `windows` test
+  * `iojs` test
+  * Update `basic-authentication`@1.5.11
+  * Update `transfer-rate`@1.0.6
+  * Update `winston`@0.9.0
+
 v3.2.7 / 2015-01-02
 ==================
 
