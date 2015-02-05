@@ -11,17 +11,6 @@
  */
 
 /*
- * initialize module
- */
-// import
-try {
-  var finished = require('on-finished');
-} catch (MODULE_NOT_FOUND) {
-  console.error(MODULE_NOT_FOUND);
-  process.exit(1);
-}
-
-/*
  * functions
  */
 /**
@@ -154,6 +143,8 @@ function info(my) {
  */
 function wrapper(log, my, io) {
 
+  var finished = require('on-finished');
+
   /**
    * end of job (closures). Get response time and status code
    * 
@@ -209,7 +200,7 @@ function wrapper(log, my, io) {
       }
 
       if (next) {
-        return next();
+        next();
       }
       return;
     };
@@ -295,7 +286,8 @@ function logger(opt) {
       colorize: winston.colorize,
       timestamp: winston.timestamp,
       json: winston.json,
-      raw: winston.raw
+      raw: winston.raw,
+      showLevel: false
     },
     file: {
       level: winston.level,
@@ -305,7 +297,8 @@ function logger(opt) {
       filename: winston.filename,
       maxsize: winston.maxsize,
       maxFiles: winston.maxFiles,
-      json: winston.json
+      json: winston.json,
+      showLevel: false
     }
   })[winston.level];
 
