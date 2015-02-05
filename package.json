@@ -24,7 +24,7 @@
   },
   "main": "index.min.js",
   "dependencies": {
-    "basic-authentication": "1.5.9",
+    "basic-authentication": "1.5.11",
     "on-finished": "2.2.0",
     "transfer-rate": "1.0.6",
     "winston": "0.9.0"
