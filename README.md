@@ -1,8 +1,9 @@
 # [logger-request](http://supergiovane.tk/#/logger-request)
 
-[![NPM version](https://badge.fury.io/js/logger-request.svg)](http://badge.fury.io/js/logger-request)
-[![Build Status](https://travis-ci.org/hex7c0/logger-request.svg?branch=master)](https://travis-ci.org/hex7c0/logger-request)
-[![Dependency Status](https://david-dm.org/hex7c0/logger-request/status.svg)](https://david-dm.org/hex7c0/logger-request)
+[![NPM version](https://img.shields.io/npm/v/logger-request.svg)](https://www.npmjs.com/package/logger-request)
+[![Linux Status](https://img.shields.io/travis/hex7c0/logger-request.svg?label=linux)](https://travis-ci.org/hex7c0/logger-request)
+[![Windows Status](https://img.shields.io/appveyor/ci/hex7c0/logger-request.svg?label=windows)](https://ci.appveyor.com/project/hex7c0/logger-request)
+[![Dependency Status](https://img.shields.io/david/hex7c0/logger-request.svg)](https://david-dm.org/hex7c0/logger-request)
 
 HTTP request logger middleware for [nodejs](http://nodejs.org/)
 
@@ -75,6 +76,6 @@ related to https://github.com/flatiron/winston#file-transport
 
 ## Examples
 
-Take a look at my [examples](https://github.com/hex7c0/logger-request/tree/master/examples)
+Take a look at my [examples](examples)
 
-### [License GPLv3](http://opensource.org/licenses/GPL-3.0)
+### [License GPLv3](LICENSE)
