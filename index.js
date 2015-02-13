@@ -41,8 +41,8 @@ function info(my) {
       return req.socket._bytesDispatched;
     } ]);
   }
-  if (my.referrer) {
-    promise.push([ 'referrer', function(req) {
+  if (my.referer) {
+    promise.push([ 'referer', function(req) {
 
       return req.headers.referer || req.headers.referrer;
     } ]);
@@ -81,7 +81,7 @@ function info(my) {
       return req.cookies;
     } ]);
   }
-  if (my.cookie) {
+  if (my.headers) {
     promise.push([ 'headers', function(req) {
 
       return req.headers;
@@ -161,7 +161,6 @@ function wrapper(log, my, io) {
   }
 
   if (my.deprecated) {
-    console.error('warning! `logger-request` option is deprecated');
     /**
      * logging all route
      * 
@@ -171,7 +170,7 @@ function wrapper(log, my, io) {
      * @param {Object} res - response to client
      * @param {Function} next - continue routes
      */
-    return function deprecated(req, res, next) {
+    return require('util').deprecate(function deprecated(req, res, next) {
 
       var start = process.hrtime();
       req.remoteAddr = req.ip;
@@ -203,7 +202,7 @@ function wrapper(log, my, io) {
         next();
       }
       return;
-    };
+    }, '`logger-request` option is deprecated');
   }
 
   if (my.functions) {
@@ -312,7 +311,7 @@ function logger(opt) {
     pid: Boolean(options.pid),
     bytesReq: Boolean(options.bytesReq),
     bytesRes: Boolean(options.bytesRes),
-    referrer: Boolean(options.referrer),
+    referer: Boolean(options.referer),
     auth: Boolean(options.auth),
     transfer: Boolean(options.transfer),
     agent: Boolean(options.agent),
