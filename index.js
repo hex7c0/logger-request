@@ -256,7 +256,7 @@ function logger(opt) {
 
   var options = opt || Object.create(null);
   var my = {
-    filename: require('path').resolve(String(options.filename)) || false,
+    filename: options.filename || false,
     transports: Array.isArray(options.transports) ? options.transports : []
   };
   if (Boolean(options.deprecated)) {
@@ -268,7 +268,6 @@ function logger(opt) {
   // winston
   var optional = options.winston || Object.create(null);
   // default option for File transport and Console
-  optional.filename = my.filename;
   optional.logger = String(optional.logger || 'logger-request');
   optional.level = String(optional.level || 'info');
   optional.timestamp = optional.timestamp || true;
@@ -281,6 +280,7 @@ function logger(opt) {
   var log = new winston.Logger(); // without transport
 
   if (my.filename) {
+    optional.filename = require('path').resolve(String(my.filename));
     log.add(winston.transports.File, optional);
   }
   if (Boolean(options.console)) {
