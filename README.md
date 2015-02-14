@@ -8,7 +8,7 @@
 
 HTTP request logger middleware for [nodejs](http://nodejs.org/), standalone logger and even more!
 
-Save logs to file, show to console or both
+Save logs to file, show to console or both, to MongoDb, etc...
 
 Look at [`logger-request-cli`](https://github.com/hex7c0/logger-request-cli) for Parser
 
@@ -40,12 +40,13 @@ app.use(logger({
 
 #### options
 
- - `console` - **Boolean** If true, it displays log also to console *(default "false")*
- - `standalone` - **Boolean** If true, return logger function instead expressjs callback *(default "false")*
- - `filename` - **String** Filename of the logfile to write output to *(default "route.log")*
+ - `transports` - **Array** Array of [winston transports](https://github.com/winstonjs/winston/blob/master/docs/transports.md) *(default "false")* 
+ - `filename` - **String** If string, filename of the logfile to write output to *(default "false")*
+ - `console` - **Boolean** If true, it displays log to console *(default "false")*
+ - `standalone` - **Boolean** If true, return logger function instead of callback *(default "false")*
  - `deprecated` - **Boolean** Flag for write log after `res.end()`(true) instead of default `listener`(false) *(default "false")*
  - `functions` - **String** Use module like a function without `next` callback *(default "false")*
- - `winston` - **Object** Setting for https://github.com/flatiron/winston#file-transport
+ - `winston` - **Object** Setting for selected transports
   - `logger` - **String** Logger option related to [`winston`](https://github.com/flatiron/winston#working-with-multiple-loggers-in-winston) *(default "logger-request")*
   - `level` - **String** Level of messages that this transport should log *(default "info")*
   - `silent` - **Boolean** Flag indicating whether to suppress output *(default "false")*
@@ -55,7 +56,8 @@ app.use(logger({
   - `maxFiles` - **Number** Limit the number of files created when the size of the logfile is exceeded *(default "no limit")*
   - `json` - **Boolean** If true, messages will be logged as JSON *(default "true")*
   - `raw` - **Boolean** If true, raw messages will be logged to console *(default "false")*
- - `custom` - **Object** Setting for add customization to log
+    `...` - **Mixed** Extra settings
+ - `custom` - **Object** Setting for customization of logs
   - `pid` - **Boolean** Flag for `process.pid` *(default "disabled")*
   - `bytesReq` - **Boolean** Flag for `req.socket.bytesRead` *(default "disabled")*
   - `bytesRes` - **Boolean** Flag for `req.socket._bytesDispatched` *(default "disabled")*
