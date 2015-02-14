@@ -252,9 +252,12 @@ function wrapper(log, my, io) {
  */
 function logger(opt) {
 
+  var winston = require('winston');
+
   var options = opt || Object.create(null);
   var my = {
-    filename: require('path').resolve(String(options.filename || 'route.log'))
+    filename: require('path').resolve(String(options.filename)) || false,
+    transports: Array.isArray(options.transports) ? options.transports : []
   };
   if (Boolean(options.deprecated)) {
     my.deprecated = true;
@@ -263,43 +266,30 @@ function logger(opt) {
   }
 
   // winston
-  options.winston = options.winston || Object.create(null);
-  var winston = {
-    filename: my.filename,
-    logger: String(options.winston.logger || 'logger-request'),
-    level: String(options.winston.level || 'info'),
-    silent: Boolean(options.winston.silent),
-    colorize: Boolean(options.winston.colorize),
-    timestamp: options.winston.timestamp || true,
-    maxsize: Number(options.winston.maxsize) || 8388608,
-    maxFiles: Number(options.winston.maxFiles) || null,
-    json: options.winston.json === false ? false : true,
-    raw: options.winston.raw === false ? false : true
-  };
-  my.logger = winston.logger;
+  var optional = options.winston || Object.create(null);
+  // default option for File transport and Console
+  optional.filename = my.filename;
+  optional.logger = String(optional.logger || 'logger-request');
+  optional.level = String(optional.level || 'info');
+  optional.timestamp = optional.timestamp || true;
+  optional.maxsize = Number(optional.maxsize) || 8388608;
+  optional.maxFiles = Number(optional.maxFiles) || null;
+  optional.json = optional.json === false ? false : true;
+  optional.raw = optional.raw === false ? false : true;
+  my.logger = optional.logger;
 
-  var log = require('winston').loggers.add(winston.logger, {
-    console: {
-      level: winston.level,
-      silent: !Boolean(options.console),
-      colorize: winston.colorize,
-      timestamp: winston.timestamp,
-      json: winston.json,
-      raw: winston.raw,
-      showLevel: false
-    },
-    file: {
-      level: winston.level,
-      silent: winston.silent,
-      colorize: winston.colorize,
-      timestamp: winston.timestamp,
-      filename: winston.filename,
-      maxsize: winston.maxsize,
-      maxFiles: winston.maxFiles,
-      json: winston.json,
-      showLevel: false
-    }
-  })[winston.level];
+  var log = new winston.Logger(); // without transport
+
+  if (my.filename) {
+    log.add(winston.transports.File, optional);
+  }
+  if (Boolean(options.console)) {
+    log.add(winston.transports.Console, optional);
+  }
+  for (var i = 0; i < my.transports.length; i++) {
+    log.add(my.transports[i], optional);
+  }
+  log = log[optional.level]; // extract logger level function
 
   if (Boolean(options.standalone)) {
     return log;
@@ -319,7 +309,7 @@ function logger(opt) {
     cookie: Boolean(options.cookie),
     headers: Boolean(options.headers),
     version: Boolean(options.version),
-    callback: Boolean(options.callback) ? options.callback : false
+    callback: typeof options.callback == 'function' ? options.callback : false
   });
 
   return wrapper(log, my, io);
