@@ -56,7 +56,7 @@ app.use(logger({
   - `maxFiles` - **Number** Limit the number of files created when the size of the logfile is exceeded *(default "no limit")*
   - `json` - **Boolean** If true, messages will be logged as JSON *(default "true")*
   - `raw` - **Boolean** If true, raw messages will be logged to console *(default "false")*
-    `...` - **Mixed** Extra settings
+  - `...` - **Mixed** Extra settings
  - `custom` - **Object** Setting for customization of logs
   - `pid` - **Boolean** Flag for `process.pid` *(default "disabled")*
   - `bytesReq` - **Boolean** Flag for `req.socket.bytesRead` *(default "disabled")*
