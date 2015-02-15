@@ -1,11 +1,12 @@
 {
-  "version": "3.2.8",
+  "version": "3.3.0",
   "name": "logger-request",
   "description": "http request logger middleware",
   "keywords": [
     "request",
     "logger",
-    "logging"
+    "logging",
+    "winston"
   ],
   "preferGlobal": false,
   "homepage": "http://supergiovane.tk/#/logger-request",

@@ -1,3 +1,10 @@
+v3.3.0 / 2015-02-15
+==================
+
+  * Add `transports` (options)
+  * `filename` (options) default options is `false`
+  * `coveralls` test
+
 v3.2.8 / 2015-02-05
 ==================
 
