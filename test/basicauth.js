@@ -50,19 +50,14 @@ describe('basic authentication', function() {
 
         setTimeout(function() {
 
-          fs.readFile('rb.log', {
-            encoding: 'utf8'
-          }, function(err, data) {
+          fs.readFile('rb.log', function(err, data) {
 
             if (err) return done(err);
             var d = JSON.parse(data);
             assert.deepEqual(d.method, 'GET', 'method');
             assert.deepEqual(d.status, 200, 'status code');
             assert.deepEqual(d.auth, 'admin3', 'status code');
-            fs.unlink('rb.log', function() {
-
-              done();
-            });
+            fs.unlink('rb.log', done);
           });
         }, 25);
       });
@@ -94,19 +89,14 @@ describe('basic authentication', function() {
 
         setTimeout(function() {
 
-          fs.readFile('fb.log', {
-            encoding: 'utf8'
-          }, function(err, data) {
+          fs.readFile('fb.log', function(err, data) {
 
             if (err) return done(err);
             var d = JSON.parse(data);
             assert.deepEqual(d.method, 'GET', 'method');
             assert.deepEqual(d.status, 401, 'status code');
             assert.deepEqual(d.auth, 'admin', 'status code');
-            fs.unlink('fb.log', function() {
-
-              done();
-            });
+            fs.unlink('fb.log', done);
           });
         }, 25);
       });

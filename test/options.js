@@ -94,9 +94,7 @@ describe('options', function() {
 
         setTimeout(function() {
 
-          fs.readFile('ro.log', {
-            encoding: 'utf8'
-          }, function(err, data) {
+          fs.readFile('ro.log', function(err, data) {
 
             assert.equal(err, null);
             var d = JSON.parse(data);
@@ -130,12 +128,9 @@ describe('options', function() {
             assert.equal(d.message, 'ro', 'winston logger');
             assert.notEqual(d.timestamp, undefined, 'winston timestamp');
 
-            fs.unlink('ro.log', function() {
-
-              done();
-            });
+            fs.unlink('ro.log', done);
           });
-        }, 120);
+        }, 25);
       });
   });
 
@@ -149,9 +144,7 @@ describe('options', function() {
 
         setTimeout(function() {
 
-          fs.readFile('rod.log', {
-            encoding: 'utf8'
-          }, function(err, data) {
+          fs.readFile('rod.log', function(err, data) {
 
             assert.equal(err, null);
             var d = JSON.parse(data);
@@ -182,12 +175,9 @@ describe('options', function() {
               'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4');
             assert.equal(h['connection'], 'close');
 
-            fs.unlink('rod.log', function() {
-
-              done();
-            });
+            fs.unlink('rod.log', done);
           });
-        }, 120);
+        }, 25);
       });
   });
 

@@ -38,24 +38,20 @@ describe('standalone', function() {
   it('should write random log', function(done) {
 
     log('ciao');
-    setTimeout(done, 100);
+    setTimeout(done, 25);
   });
-
   it('should read random log', function(done) {
 
-    fs.readFile('ss.log', {
-      encoding: 'utf8'
-    }, function(err, data) {
+    fs.readFile('ss.log', function(err, data) {
 
       assert.equal(err, null);
       var d = JSON.parse(data);
       assert.equal(d.message, 'ciao');
-
-      fs.unlink('ss.log', function() {
-
-        done();
-      });
+      done();
     });
   });
+  it('should remove random log', function(done) {
 
+    fs.unlink('ss.log', done);
+  });
 });

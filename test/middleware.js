@@ -61,12 +61,9 @@ describe('0.11 fix', function() {
 
       setTimeout(function() {
 
-        fs.readFile('f.log', {
-          encoding: 'utf8'
-        }, function(err, data) {
+        fs.readFile('f.log', function(err, data) {
 
-          if (err)
-            return done(err);
+          if (err) return done(err);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 403, 'status code');
@@ -74,10 +71,7 @@ describe('0.11 fix', function() {
           assert.deepEqual(d.message, 'f', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
           assert.deepEqual(d.callback, 'pluto', 'callback');
-          fs.unlink('f.log', function() {
-
-            done();
-          });
+          fs.unlink('f.log', done);
         });
       }, 25);
     });

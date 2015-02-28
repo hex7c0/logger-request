@@ -44,9 +44,7 @@ describe('file', function() {
 
       setTimeout(function() {
 
-        fs.readFile('ff.log', {
-          encoding: 'utf8'
-        }, function(err, data) {
+        fs.readFile('ff.log', function(err, data) {
 
           if (err) return done(err);
           var d = JSON.parse(data);
@@ -55,10 +53,7 @@ describe('file', function() {
           assert.deepEqual(d.url, '/f', 'url');
           assert.deepEqual(d.message, 'ff', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
-          fs.unlink('ff.log', function() {
-
-            done();
-          });
+          fs.unlink('ff.log', done);
         });
       }, 25);
     });
