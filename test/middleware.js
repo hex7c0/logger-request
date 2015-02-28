@@ -49,7 +49,7 @@ describe('0.11 fix', function() {
     done();
   });
 
-  it('middleware - should read log of GET "/" 403 after end', function(done) {
+  it('should read log of GET "/" 403 after end', function(done) {
 
     request(app).get('/').expect(403).end(function(err, res) {
 

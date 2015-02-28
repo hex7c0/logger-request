@@ -51,7 +51,7 @@ describe('404', function() {
     done();
   });
 
-  it('middleware - should read log of GET "/" 404', function(done) {
+  it('should read log of GET "/" 404', function(done) {
 
     request(app).get('/').expect(404).end(function(err, res) {
 
@@ -72,7 +72,7 @@ describe('404', function() {
     });
   });
 
-  it('function - should read log of POST "/" 404', function(done) {
+  it('should read log of POST "/" 404', function(done) {
 
     request(app).post('/f').expect(404).end(function(err, res) {
 

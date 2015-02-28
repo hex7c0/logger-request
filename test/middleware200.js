@@ -51,7 +51,7 @@ describe('200', function() {
     done();
   });
 
-  it('middleware - should read log of GET "/" 200', function(done) {
+  it('should read log of GET "/" 200', function(done) {
 
     request(app).get('/').expect(200).end(function(err, res) {
 
@@ -72,7 +72,7 @@ describe('200', function() {
     });
   });
 
-  it('function - should read log of POST "/" 200', function(done) {
+  it('should read log of POST "/" 200', function(done) {
 
     request(app).post('/f').expect(200).end(function(err, res) {
 

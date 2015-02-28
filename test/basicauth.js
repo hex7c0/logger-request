@@ -24,7 +24,7 @@ var fs = require('fs');
  */
 describe('basic authentication', function() {
 
-  it('auth - should read log of "/" 200', function(done) {
+  it('should read log of "/" 200', function(done) {
 
     var app = express();
     app.use(logger({
@@ -63,7 +63,7 @@ describe('basic authentication', function() {
       });
   });
 
-  it('auth - should read log of "/" 401', function(done) {
+  it('should read log of "/" 401', function(done) {
 
     var app = express();
     app.use(logger({

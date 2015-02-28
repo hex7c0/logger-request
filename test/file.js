@@ -38,7 +38,7 @@ describe('file', function() {
     done();
   });
 
-  it('middleware - should read log of Send "/" 200', function(done) {
+  it('should read log of Send "/" 200', function(done) {
 
     request(app).get('/f').expect(200).end(function(err, res) {
 
