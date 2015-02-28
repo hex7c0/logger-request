@@ -55,7 +55,7 @@ describe('file', function() {
           assert.deepEqual(d.level, 'info', 'log level');
           fs.unlink('ff.log', done);
         });
-      }, 25);
+      }, 50);
     });
   });
 });

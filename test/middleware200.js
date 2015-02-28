@@ -2,7 +2,6 @@
 /**
  * @file middleware200 test
  * @module logger-request
- * @package logger-request
  * @subpackage test
  * @version 0.0.1
  * @author hex7c0 <hex7c0@gmail.com>
@@ -13,16 +12,11 @@
  * initialize module
  */
 // import
-try {
-  var logger = require('..'); // use require('logger-request')
-  var app = require('express')();
-  var request = require('supertest');
-  var assert = require('assert');
-  var fs = require('fs');
-} catch (MODULE_NOT_FOUND) {
-  console.error(MODULE_NOT_FOUND);
-  process.exit(1);
-}
+var logger = require('..');
+var app = require('express')();
+var request = require('supertest');
+var assert = require('assert');
+var fs = require('fs');
 
 /*
  * test module
@@ -74,7 +68,7 @@ describe('200', function() {
           assert.deepEqual(d.level, 'info', 'log level');
           fs.unlink('r2.log', done);
         });
-      }, 25);
+      }, 50);
     });
   });
 
@@ -95,7 +89,7 @@ describe('200', function() {
           assert.deepEqual(d.level, 'info', 'log level');
           fs.unlink('f2.log', done);
         });
-      }, 25);
+      }, 50);
     });
   });
 });

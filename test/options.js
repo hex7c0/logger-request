@@ -130,7 +130,7 @@ describe('options', function() {
 
             fs.unlink('ro.log', done);
           });
-        }, 25);
+        }, 50);
       });
   });
 
@@ -177,7 +177,7 @@ describe('options', function() {
 
             fs.unlink('rod.log', done);
           });
-        }, 25);
+        }, 50);
       });
   });
 

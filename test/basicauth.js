@@ -59,7 +59,7 @@ describe('basic authentication', function() {
             assert.deepEqual(d.auth, 'admin3', 'status code');
             fs.unlink('rb.log', done);
           });
-        }, 25);
+        }, 50);
       });
   });
 
@@ -98,7 +98,7 @@ describe('basic authentication', function() {
             assert.deepEqual(d.auth, 'admin', 'status code');
             fs.unlink('fb.log', done);
           });
-        }, 25);
+        }, 50);
       });
   });
 });

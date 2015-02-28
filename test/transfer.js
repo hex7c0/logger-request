@@ -2,7 +2,6 @@
 /**
  * @file transfer test
  * @module logger-request
- * @package logger-request
  * @subpackage test
  * @version 0.0.1
  * @author hex7c0 <hex7c0@gmail.com>
@@ -13,16 +12,11 @@
  * initialize module
  */
 // import
-try {
-  var logger = require('..'); // use require('logger-request')
-  var app = require('express')();
-  var request = require('supertest');
-  var assert = require('assert');
-  var fs = require('fs');
-} catch (MODULE_NOT_FOUND) {
-  console.error(MODULE_NOT_FOUND);
-  process.exit(1);
-}
+var logger = require('..');
+var app = require('express')();
+var request = require('supertest');
+var assert = require('assert');
+var fs = require('fs');
 
 describe('express #2433', function() {
 
@@ -59,9 +53,7 @@ describe('express #2433', function() {
     }
     require('fs').writeFile(file, e, function(err) {
 
-      if (err) {
-        throw err;
-      }
+      assert.equal(err, null);
       done();
     });
   });
@@ -91,9 +83,12 @@ describe('express #2433', function() {
 
     setTimeout(function() {
 
-      fs.readFile(logfile, function(err, data) {
+      fs.readFile(logfile, {
+        encoding: 'utf8' // force encoding for multiple lines
+      }, function(err, data) {
 
-        if (err) throw err;
+        assert.equal(err, null);
+        assert.notEqual(data, null);
         var d = data.split('\n');
 
         // 1° 200 chunk
@@ -122,7 +117,7 @@ describe('express #2433', function() {
 
         done();
       });
-    }, 25);
+    }, 50);
   });
   it('should delete files', function(done) {
 

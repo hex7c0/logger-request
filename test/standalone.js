@@ -38,7 +38,7 @@ describe('standalone', function() {
   it('should write random log', function(done) {
 
     log('ciao');
-    setTimeout(done, 25);
+    setTimeout(done, 50);
   });
   it('should read random log', function(done) {
 
