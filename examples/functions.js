@@ -13,32 +13,31 @@
  * initialize module
  */
 // import
-try {
-    var logger = require('..'); // use require('logger-request') instead
-    var app = require('express')();
-} catch (MODULE_NOT_FOUND) {
-    console.error(MODULE_NOT_FOUND);
-    process.exit(1);
-}
+var logger = require('..'); // use require('logger-request') instead
+var app = require('express')();
 
 // using function
 logger = logger({
-    filename: 'functions.log',
-    functions: true
+  filename: 'functions.log',
+  functions: true
 });
 
 // express routing
 app.get('/', function(req, res) {
 
-    res.send('hello world!');
-    res.end();
-    logger(req, res); // after res.end()
-});
-app.get('/err', function(req, res) {
+  res.send('hello world!');
+  res.end();
 
-    res.status(401).end('Unauthorized');
-    logger(req, res); // after res.end()
+  logger(req, res); // after res.end()
+
+}).get('/err', function(req, res) {
+
+  res.status(401).end('Unauthorized');
+
+  logger(req, res); // after res.end()
+
 });
+
 // server starting
 app.listen(3000);
 console.log('starting server on port 3000');
