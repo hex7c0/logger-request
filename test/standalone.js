@@ -44,6 +44,7 @@ describe('standalone', function() {
 
     fs.readFile('ss.log', function(err, data) {
 
+      // @todo: appveyor fail on Node@0.10
       assert.equal(err, null);
       var d = JSON.parse(data);
       assert.equal(d.message, 'ciao');
