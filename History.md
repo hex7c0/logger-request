@@ -1,14 +1,14 @@
 v3.3.1 / 2015-02-28
 ==================
 
-  * Ignore `/coverage`
+  * Ignore `/coverage` for npm
   * Update `basic-authentication`@1.5.12
 
 v3.3.0 / 2015-02-15
 ==================
 
   * Add `transports` (options)
-  * `filename` (options) default options is `false`
+  * `filename` (options) default value is `false`
   * `coveralls` test
 
 v3.2.8 / 2015-02-05
