@@ -29,10 +29,11 @@ git clone git://github.com/hex7c0/logger-request.git
 inside expressjs project
 ```js
 var logger = require('logger-request');
+
 var app = require('express')();
 
 app.use(logger({
-  filename : 'foo.log',
+  filename: 'foo.log',
 }));
 ```
 
