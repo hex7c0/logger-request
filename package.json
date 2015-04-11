@@ -27,7 +27,7 @@
   "dependencies": {
     "basic-authentication": "1.5.12",
     "on-finished": "2.2.0",
-    "transfer-rate": "1.0.6",
+    "transfer-rate": "1.1.0",
     "winston": "1.0.0"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "istanbul": "~0.3",
     "mocha": "~2.2",
     "supertest": "~0.15",
-    "timeout-request": "~1.3"
+    "timeout-request": "~1.4"
   },
   "engines": {
     "node": ">=0.10"
