@@ -8,10 +8,9 @@
  * @license GPLv3
  */
 
-/**
+/*
  * initialize module
  */
-// import
 var logger = require('..'); // use require('logger-request') instead
 var express = require('express');
 var cluster = require('cluster');
@@ -26,10 +25,11 @@ if (cluster.isMaster) { // father
 
     console.log('worker ' + worker.process.pid + ' died');
   });
+
 } else { // child
   var app = express();
 
-  // using middleware
+  // as middleware
   app.use(logger({
     filename: 'cluster.log',
     custom: {
@@ -39,17 +39,13 @@ if (cluster.isMaster) { // father
     }
   }));
 
-  // express routing
   app.get('/', function(req, res) {
 
     res.send('hello world!');
   }).get('/err', function(req, res) {
 
     res.status(401).end('Unauthorized');
-  });
-
-  // server starting
-  app.listen(3000);
+  }).listen(3000);
   console.log('starting server on port 3000, pid:' + process.pid);
 
 }

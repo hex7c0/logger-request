@@ -11,11 +11,10 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..'); // use require('logger-request') instead
 var app = require('express')();
 
-// using middleware
+// as middleware
 app.use(logger({
   filename: 'file.log',
   deprecated: false,
@@ -25,12 +24,8 @@ app.use(logger({
   }
 }));
 
-// routing
 app.get('/', function(req, res) {
 
-  res.sendFile(__dirname + '/a.pdf');
-});
-
-// server starting
-app.listen(3000);
+  res.sendFile(__dirname + '/a.pdf'); // 12Mb file
+}).listen(3000);
 console.log('starting "hello world" on port 3000');

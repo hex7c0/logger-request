@@ -8,14 +8,13 @@
  * @license GPLv3
  */
 
-/**
+/*
  * initialize module
  */
-// import
 var logger = require('..'); // use require('logger-request') instead
 var app = require('express')();
 
-// using middleware
+// as middleware
 app.use(logger({
   filename: 'middleware.log'
 }));
@@ -27,8 +26,5 @@ app.get('/', function(req, res) {
 }).get('/err', function(req, res) {
 
   res.status(401).end('Unauthorized');
-});
-
-// server starting
-app.listen(3000);
+}).listen(3000);
 console.log('starting server on port 3000');

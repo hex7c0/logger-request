@@ -8,33 +8,28 @@
  * @license GPLv3
  */
 
-/**
+/*
  * initialize module
  */
-// import
 var logger = require('..'); // use require('logger-request') instead
 var authentication = require('basic-authentication');
 var app = require('express')();
 
-// using middleware
+// as middleware
 app.use(logger({
   filename: 'basicauth.log',
   custom: {
     auth: true
   }
-})).use(authentication({
-  suppress: true
 }));
 
-// express routing
-app.get('/', function(req, res) {
+app.use(authentication({
+  suppress: true
+})).get('/', function(req, res) {
 
   res.send('hello world!');
 }).get('/err', function(req, res) {
 
   res.status(401).end('Unauthorized');
-});
-
-// server starting
-app.listen(3000);
+}).listen(3000);
 console.log('starting server on port 3000');

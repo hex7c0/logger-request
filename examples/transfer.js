@@ -1,7 +1,6 @@
 'use strict';
 /**
  * @file transfer example
- * @module logger-request
  * @subpackage examples
  * @version 0.0.1
  * @author hex7c0 <hex7c0@gmail.com>
@@ -11,11 +10,10 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..'); // use require('logger-request') instead
 var app = require('express')();
 
-// using middleware
+// as middleware
 app.use(logger({
   filename: 'transfer.log',
   custom: {
@@ -24,15 +22,11 @@ app.use(logger({
   }
 }));
 
-// express routing
 app.get('/', function(req, res) {
 
-  res.sendFile(__dirname + '/a.pdf');
+  res.sendFile(__dirname + '/a.pdf'); // 12Mb file
 }).get('/err', function(req, res) {
 
   res.status(401).end('Unauthorized');
-});
-
-// server starting
-app.listen(3000);
+}).listen(3000);
 console.log('starting server on port 3000');
