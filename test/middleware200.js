@@ -11,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var app = require('express')();
 var request = require('supertest');
@@ -59,7 +58,7 @@ describe('200', function() {
 
         fs.readFile('r2.log', function(err, data) {
 
-          if (err) return done(err);
+          assert.equal(err, null);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 200, 'status code');
@@ -71,7 +70,6 @@ describe('200', function() {
       }, 50);
     });
   });
-
   it('should read log of POST "/" 200', function(done) {
 
     request(app).post('/f').expect(200).end(function(err, res) {
@@ -80,7 +78,7 @@ describe('200', function() {
 
         fs.readFile('f2.log', function(err, data) {
 
-          if (err) return done(err);
+          assert.equal(err, null);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'POST', 'method');
           assert.deepEqual(d.status, 200, 'status code');

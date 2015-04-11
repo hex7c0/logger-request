@@ -11,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var app = require('express')();
 var request = require('supertest');

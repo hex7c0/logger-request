@@ -11,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var express = require('express');
 var authentication = require('basic-authentication');
@@ -52,7 +51,7 @@ describe('basic authentication', function() {
 
           fs.readFile('rb.log', function(err, data) {
 
-            if (err) return done(err);
+            assert.equal(err, null);
             var d = JSON.parse(data);
             assert.deepEqual(d.method, 'GET', 'method');
             assert.deepEqual(d.status, 200, 'status code');
@@ -91,7 +90,7 @@ describe('basic authentication', function() {
 
           fs.readFile('fb.log', function(err, data) {
 
-            if (err) return done(err);
+            assert.equal(err, null);
             var d = JSON.parse(data);
             assert.deepEqual(d.method, 'GET', 'method');
             assert.deepEqual(d.status, 401, 'status code');

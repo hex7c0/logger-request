@@ -2,7 +2,6 @@
 /**
  * @file logger-request main
  * @module logger-request
- * @package logger-request
  * @subpackage main
  * @version 3.2.0
  * @author hex7c0 <hex7c0@gmail.com>

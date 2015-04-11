@@ -2,7 +2,6 @@
 /**
  * @file options test
  * @module logger-request
- * @package logger-request
  * @subpackage test
  * @version 0.0.1
  * @author hex7c0 <hex7c0@gmail.com>
@@ -12,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var app = require('express')();
 var cookie = require('cookie-parser');
@@ -133,7 +131,6 @@ describe('options', function() {
         }, 50);
       });
   });
-
   it('should read log options of "/deprecated" 200', function(done) {
 
     request(app).get('/deprecated').set('Cookie',

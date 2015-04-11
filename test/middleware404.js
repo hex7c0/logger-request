@@ -11,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var app = require('express')();
 var request = require('supertest');
@@ -59,7 +58,7 @@ describe('404', function() {
 
         fs.readFile('r4.log', function(err, data) {
 
-          if (err) return done(err);
+          assert.equal(err, null);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 404, 'status code');
@@ -71,7 +70,6 @@ describe('404', function() {
       }, 50);
     });
   });
-
   it('should read log of POST "/" 404', function(done) {
 
     request(app).post('/f').expect(404).end(function(err, res) {
@@ -80,7 +78,7 @@ describe('404', function() {
 
         fs.readFile('f4.log', function(err, data) {
 
-          if (err) return done(err);
+          assert.equal(err, null);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'POST', 'method');
           assert.deepEqual(d.status, 404, 'status code');

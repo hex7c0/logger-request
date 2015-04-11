@@ -11,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var app = require('express')();
 var timeout = require('timeout-request');
@@ -43,7 +42,6 @@ describe('408', function() {
     });
     done();
   });
-
   it('should read log of GET "/" 408', function(done) {
 
     request(app).get('/').expect(408).end(function(err, res) {
@@ -53,7 +51,7 @@ describe('408', function() {
 
         fs.readFile('r8.log', function(err, data) {
 
-          if (err) return done(err);
+          assert.equal(err, null);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 408, 'status code');

@@ -11,7 +11,6 @@
 /*
  * initialize module
  */
-// import
 var logger = require('..');
 var app = require('express')();
 var request = require('supertest');
@@ -57,7 +56,7 @@ describe('0.11 fix', function() {
 
         fs.readFile('f.log', function(err, data) {
 
-          if (err) return done(err);
+          assert.equal(err, null);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 403, 'status code');
