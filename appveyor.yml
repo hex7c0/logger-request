@@ -2,6 +2,7 @@ environment:
   matrix:
     - nodejs_version: "0.12"
     - nodejs_version: "1.0"
+    - nodejs_version: "1.8"
     - nodejs_version: "2.0"
     - nodejs_version: "2"
 install:
