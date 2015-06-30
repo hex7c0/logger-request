@@ -111,7 +111,7 @@ describe('express #2433', function() {
         assert.equal(c.method, 'GET');
         assert.equal(c.status, 206);
         assert.equal(c.message, 'tt');
-        assert.equal(/^1255048/.test(c.bytesRes), true);
+        assert.equal(/^12550490/.test(c.bytesRes), true);
         assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
 
         done();
