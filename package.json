@@ -28,7 +28,7 @@
     "basic-authentication": "1.5.12",
     "on-finished": "2.3.0",
     "transfer-rate": "1.1.0",
-    "winston": "1.0.0"
+    "winston": "1.0.1"
   },
   "devDependencies": {
     "cookie-parser": "~1.3",
