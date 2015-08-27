@@ -20,11 +20,9 @@ app.use(logger({
   deprecated: false,
   custom: {
     bytesReq: true,
-    bytesRes: true,
+    bytesRes: true, // 12Mb
   }
-}));
-
-app.get('/', function(req, res) {
+})).get('/', function(req, res) {
 
   res.sendFile(__dirname + '/a.pdf'); // 12Mb file
 }).listen(3000);

@@ -18,10 +18,8 @@ var app = require('express')();
 // as function
 logger = logger({
   filename: 'functions.log',
-  functions: true
-});
-
-app.get('/', function(req, res) {
+  functions: true, // as a function
+}).get('/', function(req, res) {
 
   res.send('hello world!');
   res.end();

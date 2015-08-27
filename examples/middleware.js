@@ -15,12 +15,7 @@ var logger = require('..'); // use require('logger-request') instead
 var app = require('express')();
 
 // as middleware
-app.use(logger({
-  filename: 'middleware.log'
-}));
-
-// express routing
-app.get('/', function(req, res) {
+app.use(logger()).get('/', function(req, res) {
 
   res.send('hello world!');
 }).get('/err', function(req, res) {

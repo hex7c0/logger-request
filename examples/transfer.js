@@ -17,12 +17,10 @@ var app = require('express')();
 app.use(logger({
   filename: 'transfer.log',
   custom: {
-    transfer: true,
+    transfer: true, // activate transfer-rate logs
     bytesRes: true
   }
-}));
-
-app.get('/', function(req, res) {
+})).get('/', function(req, res) {
 
   res.sendFile(__dirname + '/a.pdf'); // 12Mb file
 }).get('/err', function(req, res) {

@@ -33,13 +33,11 @@ if (cluster.isMaster) { // father
   app.use(logger({
     filename: 'cluster.log',
     custom: {
-      pid: true,
+      pid: true, // activate pid logs
       bytesReq: true,
       bytesRes: true,
     }
-  }));
-
-  app.get('/', function(req, res) {
+  })).get('/', function(req, res) {
 
     res.send('hello world!');
   }).get('/err', function(req, res) {

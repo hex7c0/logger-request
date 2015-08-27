@@ -19,11 +19,9 @@ var app = require('express')();
 app.use(logger({
   filename: 'basicauth.log',
   custom: {
-    auth: true
+    auth: true, // activate auth logs
   }
-}));
-
-app.use(authentication({
+})).use(authentication({
   suppress: true
 })).get('/', function(req, res) {
 
