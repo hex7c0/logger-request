@@ -3,7 +3,7 @@
  * @file logger-request main
  * @module logger-request
  * @subpackage main
- * @version 3.2.0
+ * @version 3.4.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -173,9 +173,8 @@ function wrapper(log, my, io) {
    */
   function finale(req, statusCode, start) {
 
-    var end = process.hrtime(start);
     req.start = start;
-    return log(my.logger, io(req, statusCode, end));
+    return log(my.logger, io(req, statusCode, process.hrtime(start)));
   }
 
   if (my.deprecated) {
@@ -216,10 +215,7 @@ function wrapper(log, my, io) {
         };
       }
 
-      if (next) {
-        next();
-      }
-      return;
+      return next ? next() : null;
     }, '`logger-request` option is deprecated');
   }
 
@@ -318,7 +314,8 @@ function logger(opt) {
 
   // custom
   options = options.custom || Object.create(null);
-  var io = __info({
+
+  return wrapper(log, my, __info({
     pid: Boolean(options.pid),
     bytesReq: Boolean(options.bytesReq),
     bytesRes: Boolean(options.bytesRes),
@@ -331,8 +328,6 @@ function logger(opt) {
     headers: Boolean(options.headers),
     version: Boolean(options.version),
     callback: typeof options.callback == 'function' ? options.callback : false
-  });
-
-  return wrapper(log, my, io);
+  }));
 }
 module.exports = logger;
