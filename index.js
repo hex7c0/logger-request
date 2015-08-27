@@ -13,13 +13,14 @@
  * functions
  */
 /**
- * builder from option
+ * output builder
  * 
+ * @private
  * @function info
  * @param {Object} my - user options
  * @return {Function}
  */
-function info(my) {
+function __info(my) {
 
   var promise = Array.call();
   if (my.pid) {
@@ -101,7 +102,15 @@ function info(my) {
   var l = promise.length;
 
   if (l === 0) {
-    return function(req, statusCode, end) {
+    /**
+     * standard logger output
+     * 
+     * @function io
+     * @param {Object} req - client request
+     * @param {Integer} statusCode - response status code
+     * @return {Object}
+     */
+    return function io(req, statusCode, end) {
 
       var diff = end[0] * 1e3 + end[1] * 1e-6;
       return {
@@ -113,7 +122,16 @@ function info(my) {
       };
     };
   }
-  return function(req, statusCode, end) {
+  /**
+   * logger output after info builder
+   * 
+   * @function io
+   * @param {Object} req - client request
+   * @param {Integer} statusCode - response status code
+   * @param {Array} end - high resolution time
+   * @return {Object}
+   */
+  return function io(req, statusCode, end) {
 
     var diff = end[0] * 1e3 + end[1] * 1e-6;
     var out = {
@@ -123,7 +141,7 @@ function info(my) {
       url: req.url,
       response: diff.toFixed(2)
     };
-    for (var i = 0; i < l; i++) {
+    for (var i = 0; i < l; ++i) {
       var p = promise[i];
       out[p[0]] = p[1](req);
     }
@@ -149,8 +167,9 @@ function wrapper(log, my, io) {
    * 
    * @function finale
    * @param {Object} req - client request
-   * @param {Integr} code - statusCode
-   * @param {Array} start - hrtime
+   * @param {Integer} statusCode - response status code
+   * @param {Array} start - high resolution time
+   * @return {Null}
    */
   function finale(req, statusCode, start) {
 
@@ -167,7 +186,7 @@ function wrapper(log, my, io) {
      * @function deprecated
      * @param {Object} req - client request
      * @param {Object} res - response to client
-     * @param {Function} next - continue routes
+     * @param {Function} next - next callback
      */
     return require('util').deprecate(function deprecated(req, res, next) {
 
@@ -185,7 +204,7 @@ function wrapper(log, my, io) {
          * @param {String} encoding - data encoding
          * @return {Boolean}
          */
-        res.end = function(chunk, encoding) {
+        res.end = function end(chunk, encoding) {
 
           res.end = buffer;
           var b = res.end(chunk, encoding);
@@ -211,12 +230,12 @@ function wrapper(log, my, io) {
      * @function logging
      * @param {Object} req - client request
      * @param {Object} res - response to client
+     * @return {Null}
      */
     return function logging(req, res) {
 
       req.remoteAddr = req.ip;
-      var start = process.hrtime();
-      return finale(req, res.statusCode, start);
+      return finale(req, res.statusCode, process.hrtime());
     };
   }
 
@@ -227,15 +246,18 @@ function wrapper(log, my, io) {
    * @param {Object} req - client request
    * @param {Object} res - response to client
    * @param {Function} next - continue routes
+   * @return {Null}
    */
   return function logging(req, res, next) {
 
-    var start;
+    var start; // closure
     req.remoteAddr = req.ip;
+
     finished(res, function() {
 
       return finale(req, res.statusCode, start);
     });
+
     start = process.hrtime();
     return next();
   };
@@ -285,7 +307,7 @@ function logger(opt) {
   if (Boolean(options.console)) {
     log.add(winston.transports.Console, optional);
   }
-  for (var i = 0; i < my.transports.length; i++) {
+  for (var i = 0; i < my.transports.length; ++i) {
     log.add(my.transports[i], optional);
   }
   log = log[optional.level]; // extract logger level function
@@ -296,7 +318,7 @@ function logger(opt) {
 
   // custom
   options = options.custom || Object.create(null);
-  var io = info({
+  var io = __info({
     pid: Boolean(options.pid),
     bytesReq: Boolean(options.bytesReq),
     bytesRes: Boolean(options.bytesRes),
