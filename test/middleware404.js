@@ -37,12 +37,10 @@ describe('404', function() {
         logger: 'r4'
       }
     });
-    app.use(loggerr);
-    app.get('/', function(req, res) {
+    app.use(loggerr).get('/', function(req, res) {
 
       res.status(404).send('hello world!');
-    });
-    app.post('/f', function(req, res) {
+    }).post('/f', function(req, res) {
 
       res.status(404).end('hello world!');
       loggerf(req, res); // after res.end()

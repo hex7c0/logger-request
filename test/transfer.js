@@ -34,12 +34,10 @@ describe('express #2433', function() {
         transfer: true,
         bytesRes: true
       }
-    }));
-    app.get('/', function(req, res) {
+    })).get('/', function(req, res) {
 
       res.sendFile(file);
-    });
-    app.listen(3000);
+    }).listen(3000);
     done();
   });
 
@@ -69,14 +67,14 @@ describe('express #2433', function() {
 
     request(app).get('/').set('Range', 'bytes=0-32767').expect(206).expect(
       'Content-Length', 32768).expect('Content-Type', 'application/pdf')
-    .expect('Content-Range', 'bytes 0-32767/12582912').end(done);
+        .expect('Content-Range', 'bytes 0-32767/12582912').end(done);
   });
   it('should return 2° 206 chunk', function(done) {
 
     request(app).get('/').set('Range', 'bytes=32768-12582911').expect(206)
-    .expect('Content-Length', 12550144).expect('Content-Type',
-      'application/pdf').expect('Content-Range',
-      'bytes 32768-12582911/12582912').end(done);
+        .expect('Content-Length', 12550144).expect('Content-Type',
+          'application/pdf').expect('Content-Range',
+          'bytes 32768-12582911/12582912').end(done);
   });
   it('should read logfile', function(done) {
 

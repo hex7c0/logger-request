@@ -37,12 +37,10 @@ describe('200', function() {
         logger: 'r2'
       }
     });
-    app.use(loggerr);
-    app.get('/', function(req, res) {
+    app.use(loggerr).get('/', function(req, res) {
 
       res.send('hello world!');
-    });
-    app.post('/f', function(req, res) {
+    }).post('/f', function(req, res) {
 
       res.end('hello world!');
       loggerf(req, res); // after res.end()
