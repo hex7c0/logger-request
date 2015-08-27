@@ -1,3 +1,11 @@
+v3.4.0 / 2015-08-27
+==================
+
+  * `iojs@3` test
+  * Small improvements
+  * Update `basic-authentication`@1.6.0
+  * Update `transfer-rate`@1.1.1
+
 v3.3.5 / 2015-06-30
 ==================
 
