@@ -1,3 +1,11 @@
+v3.5.0 / 2015-08-27
+==================
+
+  * Test `node`@4
+  * Update `winston`@1.1.1
+  * Update `basic-authentication`@1.6.1
+  * Update `transfer-rate`@1.1.2
+
 v3.4.0 / 2015-08-27
 ==================
 

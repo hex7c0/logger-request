@@ -1,4 +1,4 @@
-# [logger-request](http://supergiovane.tk/#/logger-request)
+# [logger-request](https://github.com/hex7c0/logger-request)
 
 [![NPM version](https://img.shields.io/npm/v/logger-request.svg)](https://www.npmjs.com/package/logger-request)
 [![Linux Status](https://img.shields.io/travis/hex7c0/logger-request.svg?label=linux)](https://travis-ci.org/hex7c0/logger-request)

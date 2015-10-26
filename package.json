@@ -1,5 +1,5 @@
 {
-  "version": "3.4.0",
+  "version": "3.5.0",
   "name": "logger-request",
   "description": "http request logger middleware",
   "keywords": [
@@ -9,7 +9,7 @@
     "winston"
   ],
   "preferGlobal": false,
-  "homepage": "http://supergiovane.tk/#/logger-request",
+  "homepage": "https://github.com/hex7c0/logger-request",
   "author": {
     "name": "hex7c0",
     "email": "hex7c0@gmail.com",
