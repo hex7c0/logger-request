@@ -49,7 +49,7 @@ describe('transport', function() {
     before(function(done) {
 
       app.use(logger({
-        transports: [ winston.transports.Webhook ],
+        transports: [ winston.transports.Http ],
         winston: {
           host: '127.0.0.1',
           port: 3001,
