@@ -25,9 +25,10 @@ describe('basic authentication', function() {
 
   it('should read log of "/" 200', function(done) {
 
+    var f = 'rb.log';
     var app = express();
     app.use(logger({
-      filename: 'rb.log',
+      filename: f,
       winston: {
         logger: '200b'
       },
@@ -50,24 +51,25 @@ describe('basic authentication', function() {
         assert.ifError(err);
         setTimeout(function() {
 
-          fs.readFile('rb.log', function(err, data) {
+          fs.readFile(f, function(err, data) {
 
             assert.ifError(err);
             var d = JSON.parse(data);
             assert.deepEqual(d.method, 'GET', 'method');
             assert.deepEqual(d.status, 200, 'status code');
             assert.deepEqual(d.auth, 'admin3', 'status code');
-            fs.unlink('rb.log', done);
+            fs.unlink(f, done);
           });
-        }, 50);
+        }, 75);
       });
   });
 
   it('should read log of "/" 401', function(done) {
 
+    var f = 'fb.log';
     var app = express();
     app.use(logger({
-      filename: 'fb.log',
+      filename: f,
       winston: {
         logger: '401b'
       },
@@ -90,16 +92,16 @@ describe('basic authentication', function() {
         assert.ifError(err);
         setTimeout(function() {
 
-          fs.readFile('fb.log', function(err, data) {
+          fs.readFile(f, function(err, data) {
 
             assert.ifError(err);
             var d = JSON.parse(data);
             assert.deepEqual(d.method, 'GET', 'method');
             assert.deepEqual(d.status, 401, 'status code');
             assert.deepEqual(d.auth, 'admin', 'status code');
-            fs.unlink('fb.log', done);
+            fs.unlink(f, done);
           });
-        }, 50);
+        }, 75);
       });
   });
 });

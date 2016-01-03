@@ -22,17 +22,20 @@ var fs = require('fs');
  */
 describe('200', function() {
 
+  var f0 = 'f2.log';
+  var f1 = 'r2.log';
+
   before(function(done) {
 
     var loggerf = logger({
-      filename: 'f2.log',
+      filename: f0,
       winston: {
         logger: 'f2'
       },
       functions: true
     });
     var loggerr = logger({
-      filename: 'r2.log',
+      filename: f1,
       winston: {
         logger: 'r2'
       }
@@ -55,7 +58,7 @@ describe('200', function() {
       assert.ifError(err);
       setTimeout(function() {
 
-        fs.readFile('r2.log', function(err, data) {
+        fs.readFile(f1, function(err, data) {
 
           assert.ifError(err);
           var d = JSON.parse(data);
@@ -64,9 +67,9 @@ describe('200', function() {
           assert.deepEqual(d.url, '/', 'url');
           assert.deepEqual(d.message, 'r2', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
-          fs.unlink('r2.log', done);
+          fs.unlink(f1, done);
         });
-      }, 50);
+      }, 75);
     });
   });
   it('should read log of POST "/" 200', function(done) {
@@ -76,7 +79,7 @@ describe('200', function() {
       assert.ifError(err);
       setTimeout(function() {
 
-        fs.readFile('f2.log', function(err, data) {
+        fs.readFile(f0, function(err, data) {
 
           assert.ifError(err);
           var d = JSON.parse(data);
@@ -85,9 +88,9 @@ describe('200', function() {
           assert.deepEqual(d.url, '/f', 'url');
           assert.deepEqual(d.message, 'f2', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
-          fs.unlink('f2.log', done);
+          fs.unlink(f0, done);
         });
-      }, 50);
+      }, 75);
     });
   });
 });

@@ -23,6 +23,8 @@ var fs = require('fs');
  */
 describe('408', function() {
 
+  var f = 'r8.log';
+
   before(function(done) {
 
     app.use(timeout({
@@ -32,7 +34,7 @@ describe('408', function() {
         res.status(408).send('timeout');
       }
     })).use(logger({
-      filename: 'r8.log',
+      filename: f,
       winston: {
         logger: 'r8'
       }
@@ -42,6 +44,7 @@ describe('408', function() {
     });
     done();
   });
+
   it('should read log of GET "/" 408', function(done) {
 
     request(app).get('/').expect(408).end(function(err, res) {
@@ -49,7 +52,7 @@ describe('408', function() {
       assert.ifError(err);
       setTimeout(function() {
 
-        fs.readFile('r8.log', function(err, data) {
+        fs.readFile(f, function(err, data) {
 
           assert.ifError(err);
           var d = JSON.parse(data);
@@ -58,9 +61,9 @@ describe('408', function() {
           assert.deepEqual(d.url, '/', 'url');
           assert.deepEqual(d.message, 'r8', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
-          fs.unlink('r8.log', done);
+          fs.unlink(f, done);
         });
-      }, 50);
+      }, 75);
     });
   });
 });

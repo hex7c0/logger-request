@@ -48,8 +48,8 @@
   },
   "scripts": {
     "prepublish": "npm prune",
-    "test": "mocha --bail --check-leaks",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly"
+    "test": "mocha --bail --check-leaks --slow 100",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --slow 100"
   },
   "license": "GPL-3.0"
 }

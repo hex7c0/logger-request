@@ -21,10 +21,12 @@ var fs = require('fs');
 describe('standalone', function() {
 
   var log;
+  var f = 'ss.log';
+
   before(function(done) {
 
     log = logger({
-      filename: 'ss.log',
+      filename: f,
       standalone: true,
       winston: {
         logger: 'ss'
@@ -36,11 +38,11 @@ describe('standalone', function() {
   it('should write random log', function(done) {
 
     log('ciao');
-    setTimeout(done, 50);
+    setTimeout(done, 75);
   });
   it('should read random log', function(done) {
 
-    fs.readFile('ss.log', function(err, data) {
+    fs.readFile(f, function(err, data) {
 
       assert.ifError(err);
       var d = JSON.parse(data);
@@ -50,6 +52,6 @@ describe('standalone', function() {
   });
   it('should remove random log', function(done) {
 
-    fs.unlink('ss.log', done);
+    fs.unlink(f, done);
   });
 });

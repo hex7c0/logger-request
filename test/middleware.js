@@ -22,10 +22,12 @@ var fs = require('fs');
  */
 describe('0.11 fix', function() {
 
+  var f = 'f.log';
+
   before(function(done) {
 
     var log = logger({
-      filename: 'f.log',
+      filename: f,
       custom: {
         callback: function(req) {
 
@@ -55,7 +57,7 @@ describe('0.11 fix', function() {
       assert.ifError(err);
       setTimeout(function() {
 
-        fs.readFile('f.log', function(err, data) {
+        fs.readFile(f, function(err, data) {
 
           assert.ifError(err);
           var d = JSON.parse(data);
@@ -65,9 +67,9 @@ describe('0.11 fix', function() {
           assert.deepEqual(d.message, 'f', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
           assert.deepEqual(d.callback, 'pluto', 'callback');
-          fs.unlink('f.log', done);
+          fs.unlink(f, done);
         });
-      }, 50);
+      }, 75);
     });
   });
 });

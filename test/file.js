@@ -22,10 +22,12 @@ var fs = require('fs');
  */
 describe('file', function() {
 
+  var f = 'ff.log';
+
   before(function(done) {
 
     var log = logger({
-      filename: 'ff.log',
+      filename: f,
       winston: {
         logger: 'ff'
       }
@@ -44,7 +46,7 @@ describe('file', function() {
       assert.ifError(err);
       setTimeout(function() {
 
-        fs.readFile('ff.log', function(err, data) {
+        fs.readFile(f, function(err, data) {
 
           assert.ifError(err);
           var d = JSON.parse(data);
@@ -53,9 +55,9 @@ describe('file', function() {
           assert.deepEqual(d.url, '/f', 'url');
           assert.deepEqual(d.message, 'ff', 'logger');
           assert.deepEqual(d.level, 'info', 'log level');
-          fs.unlink('ff.log', done);
+          fs.unlink(f, done);
         });
-      }, 50);
+      }, 75);
     });
   });
 });

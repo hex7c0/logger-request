@@ -23,10 +23,13 @@ var fs = require('fs');
  */
 describe('options', function() {
 
+  var f0 = 'ro.log';
+  var f1 = 'rod.log';
+
   before(function(done) {
 
     app.use(cookie('foo')).get('/', logger({
-      filename: 'ro.log',
+      filename: f0,
       winston: {
         logger: 'ro'
       },
@@ -52,7 +55,7 @@ describe('options', function() {
       res.setHeader('x-count', 123);
       res.send('hello world!');
     }).get('/deprecated', logger({
-      filename: 'rod.log',
+      filename: f1,
       deprecated: true,
       winston: {
         logger: 'rod'
@@ -93,7 +96,7 @@ describe('options', function() {
             assert.ifError(err);
             setTimeout(function() {
 
-              fs.readFile('ro.log', function(err, data) {
+              fs.readFile(f0, function(err, data) {
 
                 assert.ifError(err);
                 var d = JSON.parse(data);
@@ -127,9 +130,9 @@ describe('options', function() {
                 assert.equal(d.message, 'ro', 'winston logger');
                 assert.notEqual(d.timestamp, undefined, 'winston timestamp');
 
-                fs.unlink('ro.log', done);
+                fs.unlink(f0, done);
               });
-            }, 50);
+            }, 75);
           });
   });
   it('should read log options of "/deprecated" 200', function(done) {
@@ -143,7 +146,7 @@ describe('options', function() {
         assert.ifError(err);
         setTimeout(function() {
 
-          fs.readFile('rod.log', function(err, data) {
+          fs.readFile(f1, function(err, data) {
 
             assert.ifError(err);
             var d = JSON.parse(data);
@@ -174,9 +177,9 @@ describe('options', function() {
               'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4');
             assert.equal(h['connection'], 'close');
 
-            fs.unlink('rod.log', done);
+            fs.unlink(f1, done);
           });
-        }, 50);
+        }, 75);
       });
   });
 

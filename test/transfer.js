@@ -114,7 +114,7 @@ describe('express #2433', function() {
 
         done();
       });
-    }, 50);
+    }, 75);
   });
   it('should delete files', function(done) {
 
