@@ -52,11 +52,12 @@ describe('0.11 fix', function() {
 
     request(app).get('/').expect(403).end(function(err, res) {
 
+      assert.ifError(err);
       setTimeout(function() {
 
         fs.readFile('f.log', function(err, data) {
 
-          assert.equal(err, null);
+          assert.ifError(err);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 403, 'status code');

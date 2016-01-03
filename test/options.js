@@ -85,51 +85,52 @@ describe('options', function() {
   it('should read log options of "/" 200', function(done) {
 
     request(app).get('/').set('Cookie', 'cc=XX; Max-Age=31536000; Path=/;')
-    .set('user-agent', 'SuPeR').set('Accept-Language',
-      'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4').set('Referer', 'website').expect(
-      200).end(
-      function(err, res) {
+        .set('user-agent', 'SuPeR').set('Accept-Language',
+          'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4').set('Referer', 'website')
+        .expect(200).end(
+          function(err, res) {
 
-        setTimeout(function() {
+            assert.ifError(err);
+            setTimeout(function() {
 
-          fs.readFile('ro.log', function(err, data) {
+              fs.readFile('ro.log', function(err, data) {
 
-            assert.equal(err, null);
-            var d = JSON.parse(data);
-            assert.equal(d.method, 'GET', 'method');
-            assert.equal(d.status, 200, 'status code');
-            assert.equal(d.url, '/', 'url');
+                assert.ifError(err);
+                var d = JSON.parse(data);
+                assert.equal(d.method, 'GET', 'method');
+                assert.equal(d.status, 200, 'status code');
+                assert.equal(d.url, '/', 'url');
 
-            // assert.equal(d.bytesReq, 225, 'bytes requested');
-            assert.equal(d.bytesRes, 220, 'bytes sent');
-            assert.equal(d.agent, 'SuPeR', 'user agent');
-            assert.equal(d.referer, 'website', 'http referer');
-            assert.equal(d.version, '1.1', 'http version');
-            assert.equal(d.pid, process.pid, 'pid');
-            assert.equal(d.callback, 'cod 123', 'callback');
-            assert.equal(d.lang, 'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4',
-              'browser language');
-            assert.deepEqual(d.cookie, {
-              cc: 'XX',
-              'Max-Age': '31536000',
-              Path: '/'
-            }, 'cookie');
-            var h = d.headers;
-            assert.equal(h['accept-encoding'], 'gzip, deflate');
-            assert.equal(h['cookie'], 'cc=XX; Max-Age=31536000; Path=/;');
-            assert.equal(h['user-agent'], 'SuPeR');
-            assert.equal(h['accept-language'],
-              'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4');
-            assert.equal(h['connection'], 'close');
+                // assert.equal(d.bytesReq, 225, 'bytes requested');
+                assert.equal(d.bytesRes, 220, 'bytes sent');
+                assert.equal(d.agent, 'SuPeR', 'user agent');
+                assert.equal(d.referer, 'website', 'http referer');
+                assert.equal(d.version, '1.1', 'http version');
+                assert.equal(d.pid, process.pid, 'pid');
+                assert.equal(d.callback, 'cod 123', 'callback');
+                assert.equal(d.lang, 'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4',
+                  'browser language');
+                assert.deepEqual(d.cookie, {
+                  cc: 'XX',
+                  'Max-Age': '31536000',
+                  Path: '/'
+                }, 'cookie');
+                var h = d.headers;
+                assert.equal(h['accept-encoding'], 'gzip, deflate');
+                assert.equal(h['cookie'], 'cc=XX; Max-Age=31536000; Path=/;');
+                assert.equal(h['user-agent'], 'SuPeR');
+                assert.equal(h['accept-language'],
+                  'it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4');
+                assert.equal(h['connection'], 'close');
 
-            assert.equal(d.level, 'info', 'winston level');
-            assert.equal(d.message, 'ro', 'winston logger');
-            assert.notEqual(d.timestamp, undefined, 'winston timestamp');
+                assert.equal(d.level, 'info', 'winston level');
+                assert.equal(d.message, 'ro', 'winston logger');
+                assert.notEqual(d.timestamp, undefined, 'winston timestamp');
 
-            fs.unlink('ro.log', done);
+                fs.unlink('ro.log', done);
+              });
+            }, 50);
           });
-        }, 50);
-      });
   });
   it('should read log options of "/deprecated" 200', function(done) {
 
@@ -139,11 +140,12 @@ describe('options', function() {
       'website').expect(200).end(
       function(err, res) {
 
+        assert.ifError(err);
         setTimeout(function() {
 
           fs.readFile('rod.log', function(err, data) {
 
-            assert.equal(err, null);
+            assert.ifError(err);
             var d = JSON.parse(data);
             assert.equal(d.method, 'GET', 'method');
             assert.equal(d.status, 200, 'status code');

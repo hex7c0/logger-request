@@ -41,11 +41,12 @@ describe('file', function() {
 
     request(app).get('/f').expect(200).end(function(err, res) {
 
+      assert.ifError(err);
       setTimeout(function() {
 
         fs.readFile('ff.log', function(err, data) {
 
-          assert.equal(err, null);
+          assert.ifError(err);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 200, 'status code');

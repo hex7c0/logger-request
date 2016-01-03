@@ -50,7 +50,7 @@ describe('express #2433', function() {
     }
     require('fs').writeFile(file, e, function(err) {
 
-      assert.equal(err, null);
+      assert.ifError(err);
       done();
     });
   });
@@ -84,7 +84,7 @@ describe('express #2433', function() {
         encoding: 'utf8' // force encoding for multiple lines
       }, function(err, data) {
 
-        assert.equal(err, null);
+        assert.ifError(err);
         assert.notEqual(data, null);
         var d = data.split('\n');
 

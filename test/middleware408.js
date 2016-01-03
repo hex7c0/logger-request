@@ -46,12 +46,12 @@ describe('408', function() {
 
     request(app).get('/').expect(408).end(function(err, res) {
 
-      assert.equal(err, null);
+      assert.ifError(err);
       setTimeout(function() {
 
         fs.readFile('r8.log', function(err, data) {
 
-          assert.equal(err, null);
+          assert.ifError(err);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 408, 'status code');

@@ -52,11 +52,12 @@ describe('200', function() {
 
     request(app).get('/').expect(200).end(function(err, res) {
 
+      assert.ifError(err);
       setTimeout(function() {
 
         fs.readFile('r2.log', function(err, data) {
 
-          assert.equal(err, null);
+          assert.ifError(err);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'GET', 'method');
           assert.deepEqual(d.status, 200, 'status code');
@@ -72,11 +73,12 @@ describe('200', function() {
 
     request(app).post('/f').expect(200).end(function(err, res) {
 
+      assert.ifError(err);
       setTimeout(function() {
 
         fs.readFile('f2.log', function(err, data) {
 
-          assert.equal(err, null);
+          assert.ifError(err);
           var d = JSON.parse(data);
           assert.deepEqual(d.method, 'POST', 'method');
           assert.deepEqual(d.status, 200, 'status code');
