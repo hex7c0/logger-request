@@ -12,7 +12,7 @@
  * initialize module
  */
 var logger = require('..');
-var app = require('express')();
+var express = require('express');
 var request = require('supertest');
 var assert = require('assert');
 var fs = require('fs');
@@ -24,40 +24,103 @@ describe('file', function() {
 
   var f = 'ff.log';
 
-  before(function(done) {
+  describe('filename', function() {
 
-    var log = logger({
-      filename: f,
-      winston: {
-        logger: 'ff'
-      }
-    });
-    app.use(log).get('/f', function(req, res) {
+    var app = express();
 
-      res.sendFile(require('path').resolve('README.md'));
+    before(function(done) {
+
+      var log = logger({
+        filename: f,
+        winston: {
+          logger: 'ff'
+        }
+      });
+      app.use(log).get('/f', function(req, res) {
+
+        res.sendFile(require('path').resolve('README.md'));
+      });
+      done();
     });
-    done();
+
+    it('should read log of Send "/" 200', function(done) {
+
+      request(app).get('/f').expect(200).end(function(err, res) {
+
+        assert.ifError(err);
+        setTimeout(function() {
+
+          fs.readFile(f, function(err, data) {
+
+            assert.ifError(err);
+            var d = JSON.parse(data);
+            assert.deepEqual(d.method, 'GET', 'method');
+            assert.deepEqual(d.status, 200, 'status code');
+            assert.deepEqual(d.url, '/f', 'url');
+            assert.deepEqual(d.message, 'ff', 'logger');
+            assert.deepEqual(d.level, 'info', 'log level');
+            fs.unlink(f, done);
+          });
+        }, 75);
+      });
+    });
   });
 
-  it('should read log of Send "/" 200', function(done) {
+  describe('daily', function() {
 
-    request(app).get('/f').expect(200).end(function(err, res) {
+    var app = express();
 
-      assert.ifError(err);
-      setTimeout(function() {
+    before(function(done) {
 
-        fs.readFile(f, function(err, data) {
+      var log = logger({
+        filename: f,
+        daily: true,
+        winston: {
+          logger: 'ffD'
+        }
+      });
+      app.use(log).get('/fd', function(req, res) {
+
+        res.sendFile(require('path').resolve('README.md'));
+      });
+      done();
+    });
+
+    it('should read log of Send "/" 200', function(done) {
+
+      var pad = function(val, len) {
+
+        var val = String(val);
+        var len = len || 2;
+        while (val.length < len) {
+          val = '0' + val;
+        }
+        return val;
+      };
+
+      request(app).get('/fd').expect(200).end(
+        function(err, res) {
 
           assert.ifError(err);
-          var d = JSON.parse(data);
-          assert.deepEqual(d.method, 'GET', 'method');
-          assert.deepEqual(d.status, 200, 'status code');
-          assert.deepEqual(d.url, '/f', 'url');
-          assert.deepEqual(d.message, 'ff', 'logger');
-          assert.deepEqual(d.level, 'info', 'log level');
-          fs.unlink(f, done);
+          setTimeout(function() {
+
+            var date = new Date();
+            var dailyF = date.getUTCFullYear() + '-'
+              + pad(date.getUTCMonth() + 1) + '-' + pad(date.getUTCDate())
+              + '.' + f;
+            fs.readFile(dailyF, function(err, data) {
+
+              assert.ifError(err);
+              var d = JSON.parse(data);
+              assert.deepEqual(d.method, 'GET', 'method');
+              assert.deepEqual(d.status, 200, 'status code');
+              assert.deepEqual(d.url, '/fd', 'url');
+              assert.deepEqual(d.message, 'ffD', 'logger');
+              assert.deepEqual(d.level, 'info', 'log level');
+              fs.unlink(dailyF, done);
+            });
+          }, 75);
         });
-      }, 75);
     });
   });
 });

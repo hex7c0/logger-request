@@ -274,6 +274,7 @@ function logger(opt) {
   var options = opt || Object.create(null);
   var my = {
     filename: options.filename || false,
+    daily: Boolean(options.daily),
     transports: Array.isArray(options.transports) ? options.transports : []
   };
   if (Boolean(options.deprecated)) {
@@ -298,12 +299,19 @@ function logger(opt) {
 
   if (my.filename) {
     optional.filename = require('path').resolve(String(my.filename));
-    log.add(winston.transports.File, optional);
+    if (my.daily) {
+      optional.prepend = true;
+      log.add(require('winston-daily-rotate-file'), optional);
+    } else {
+      log.add(winston.transports.File, optional);
+    }
   }
+
   if (Boolean(options.console)) {
     log.add(winston.transports.Console, optional);
   }
-  for (var i = 0; i < my.transports.length; ++i) {
+
+  for (var i = 0, ii = my.transports.length; i < ii; ++i) {
     log.add(my.transports[i], optional);
   }
   log = log[optional.level]; // extract logger level function

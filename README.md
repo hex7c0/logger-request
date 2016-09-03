@@ -43,6 +43,7 @@ app.use(logger({
 
  - `transports` - **Array** Array of [winston transports](https://github.com/winstonjs/winston/blob/master/docs/transports.md) *(default "false")* 
  - `filename` - **String** If string, filename of the logfile to write output to *(default "false")*
+ - `daily` - **Boolean** If true, rotate log each day *(default "false")*
  - `console` - **Boolean** If true, it displays log to console *(default "false")*
  - `standalone` - **Boolean** If true, return logger function instead of callback *(default "false")*
  - `deprecated` - **Boolean** Flag for write log after `res.end()`(true) instead of default `listener`(false) *(default "false")*
