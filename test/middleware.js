@@ -69,7 +69,7 @@ describe('0.11 fix', function() {
           assert.deepEqual(d.callback, 'pluto', 'callback');
           fs.unlink(f, done);
         });
-      }, 75);
+      }, 100);
     });
   });
 });

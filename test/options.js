@@ -132,7 +132,7 @@ describe('options', function() {
 
                 fs.unlink(f0, done);
               });
-            }, 75);
+            }, 100);
           });
   });
   it('should read log options of "/deprecated" 200', function(done) {
@@ -179,7 +179,7 @@ describe('options', function() {
 
             fs.unlink(f1, done);
           });
-        }, 75);
+        }, 100);
       });
   });
 

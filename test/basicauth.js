@@ -60,7 +60,7 @@ describe('basic authentication', function() {
             assert.deepEqual(d.auth, 'admin3', 'status code');
             fs.unlink(f, done);
           });
-        }, 75);
+        }, 100);
       });
   });
 
@@ -101,7 +101,7 @@ describe('basic authentication', function() {
             assert.deepEqual(d.auth, 'admin', 'status code');
             fs.unlink(f, done);
           });
-        }, 75);
+        }, 100);
       });
   });
 });

@@ -61,7 +61,7 @@ describe('file', function() {
             assert.deepEqual(d.level, 'info', 'log level');
             fs.unlink(f, done);
           });
-        }, 75);
+        }, 100);
       });
     });
   });
@@ -119,7 +119,7 @@ describe('file', function() {
               assert.deepEqual(d.level, 'info', 'log level');
               fs.unlink(dailyF, done);
             });
-          }, 75);
+          }, 100);
         });
     });
   });

@@ -69,7 +69,7 @@ describe('404', function() {
           assert.deepEqual(d.level, 'info', 'log level');
           fs.unlink(f1, done);
         });
-      }, 75);
+      }, 100);
     });
   });
   it('should read log of POST "/" 404', function(done) {
@@ -90,7 +90,7 @@ describe('404', function() {
           assert.deepEqual(d.level, 'info', 'log level');
           fs.unlink(f0, done);
         });
-      }, 75);
+      }, 100);
     });
   });
 });
