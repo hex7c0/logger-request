@@ -1,3 +1,10 @@
+v3.7.0 / 2016-09-03
+==================
+
+  * Rotate log each day
+  * Add `daily` (options)
+  * Tested against `node`@6
+
 v3.6.1 / 2016-03-06
 ==================
 
