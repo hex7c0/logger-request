@@ -1,3 +1,10 @@
+v3.7.1 / 2016-09-12
+==================
+
+  * Update `basic-authentication`@1.7.0
+  * Update `transfer-rate`@1.2.0
+  * Update `winston-daily-rotate-file`@1.3.1
+
 v3.7.0 / 2016-09-03
 ==================
 
