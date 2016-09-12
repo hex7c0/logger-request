@@ -41,7 +41,7 @@
     "istanbul": "~0.4",
     "mocha": "~3.0",
     "supertest": "~2.0",
-    "timeout-request": "~1.4"
+    "timeout-request": "~1.5"
   },
   "engines": {
     "node": ">=0.10"
