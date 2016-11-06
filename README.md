@@ -1,7 +1,7 @@
 # [logger-request](https://github.com/hex7c0/logger-request)
 
 [![NPM version](https://img.shields.io/npm/v/logger-request.svg)](https://www.npmjs.com/package/logger-request)
-[![Linux Status](https://img.shields.io/travis/hex7c0/logger-request.svg?label=linux)](https://travis-ci.org/hex7c0/logger-request)
+[![Linux Status](https://img.shields.io/travis/hex7c0/logger-request.svg?label=linux-osx)](https://travis-ci.org/hex7c0/logger-request)
 [![Windows Status](https://img.shields.io/appveyor/ci/hex7c0/logger-request.svg?label=windows)](https://ci.appveyor.com/project/hex7c0/logger-request)
 [![Dependency Status](https://img.shields.io/david/hex7c0/logger-request.svg)](https://david-dm.org/hex7c0/logger-request)
 [![Coveralls](https://img.shields.io/coveralls/hex7c0/logger-request.svg)](https://coveralls.io/r/hex7c0/logger-request)

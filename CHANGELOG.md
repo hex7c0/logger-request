@@ -1,3 +1,10 @@
+v3.7.2 / 2016-11-06
+==================
+
+  * Tested against `node`@7
+  * Remove support for `node`@0
+  * Update `winston`@2.3.0
+
 v3.7.1 / 2016-09-12
 ==================
 
