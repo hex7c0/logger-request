@@ -45,7 +45,7 @@
     "timeout-request": "~1.5"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=1"
   },
   "scripts": {
     "prepublish": "npm prune",
