@@ -104,8 +104,8 @@ describe('options', function() {
                 assert.equal(d.status, 200, 'status code');
                 assert.equal(d.url, '/', 'url');
 
-                // assert.equal(d.bytesReq, 225, 'bytes requested');
-                assert.equal(d.bytesRes, 220, 'bytes sent');
+                assert.equal(d.bytesReq, 225, 'bytes requested');
+                // assert.equal(d.bytesRes, 220, 'bytes sent');
                 assert.equal(d.agent, 'SuPeR', 'user agent');
                 assert.equal(d.referer, 'website', 'http referer');
                 assert.equal(d.version, '1.1', 'http version');
@@ -154,8 +154,8 @@ describe('options', function() {
             assert.equal(d.status, 200, 'status code');
             assert.equal(d.url, '/deprecated', 'url');
 
-            // assert.equal(d.bytesReq, 235, 'bytes requested');
-            assert.equal(d.bytesRes, 220, 'bytes sent');
+            assert.equal(d.bytesReq, 235, 'bytes requested');
+            // assert.equal(d.bytesRes, 220, 'bytes sent');
             assert.equal(d.level, 'info', 'log level');
             assert.equal(d.agent, 'SuPeR', 'user agent');
             assert.equal(d.referer, 'website', 'http referer');
