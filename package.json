@@ -27,7 +27,7 @@
   "dependencies": {
     "basic-authentication": "1.9.0",
     "on-finished": "2.3.0",
-    "transfer-rate": "1.2.0",
+    "transfer-rate": "2.1.0",
     "winston": "2.3.0",
     "winston-daily-rotate-file": "1.4.0"
   },

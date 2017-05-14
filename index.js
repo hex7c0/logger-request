@@ -60,7 +60,7 @@ function __info(my) {
     var mod1 = require('transfer-rate')();
     promise.push([ 'transfer', function(req) {
 
-      return mod1(req, req.start);
+      return mod1(req, req.res, req.start);
     } ]);
   }
   if (my.agent) {

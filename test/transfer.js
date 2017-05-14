@@ -95,7 +95,7 @@ describe('express #2433', function() {
         assert.equal(c.status, 200);
         assert.equal(c.message, 'tt');
         assert.equal(/^1258319/.test(c.bytesRes), true);
-        assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
+        assert.equal(/^[0-9]*.[0-9]{0,2} KB\/s$/.test(c.transfer), true);
 
         // 1° 206 chunk
         var c = JSON.parse(d[1]);
@@ -103,7 +103,7 @@ describe('express #2433', function() {
         assert.equal(c.status, 206);
         assert.equal(c.message, 'tt');
         assert.equal(/^3310/.test(c.bytesRes), true);
-        assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
+        assert.equal(/^[0-9]*.[0-9]{0,2} KB\/s$/.test(c.transfer), true);
 
         // 2° 206 chunk
         var c = JSON.parse(d[2]);
@@ -111,7 +111,7 @@ describe('express #2433', function() {
         assert.equal(c.status, 206);
         assert.equal(c.message, 'tt');
         assert.equal(/^12550490/.test(c.bytesRes), true);
-        assert.equal(/^[0-9]*.[0-9]? KB\/s$/.test(c.transfer), true);
+        assert.equal(/^[0-9]*.[0-9]{0,2} KB\/s$/.test(c.transfer), true);
 
         done();
       });
