@@ -29,7 +29,7 @@
     "on-finished": "2.3.0",
     "transfer-rate": "2.1.0",
     "winston": "2.3.1",
-    "winston-daily-rotate-file": "1.4.0"
+    "winston-daily-rotate-file": "1.4.6"
   },
   "devDependencies": {
     "cookie-parser": "~1.4",
