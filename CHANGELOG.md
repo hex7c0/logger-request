@@ -1,3 +1,12 @@
+v3.8.0 / 2017-05-14
+==================
+
+  * Change LICENSE to Apache2 from GPL3
+  * Update `basic-authentication`@1.9.0
+  * Update `transfer-rate`@2.1.0
+  * Update `winston`@2.3.1
+  * Update `winston-daily-rotate-file`@1.4.6
+
 v3.7.3 / 2016-12-04
 ==================
 
