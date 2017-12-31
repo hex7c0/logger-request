@@ -28,7 +28,7 @@ describe('408', function() {
   before(function(done) {
 
     app.use(timeout({
-      milliseconds: 1800,
+      milliseconds: 1500,
       callback: function(req, res) {
 
         res.status(408).send('timeout');
