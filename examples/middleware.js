@@ -15,8 +15,10 @@ var logger = require('..'); // use require('logger-request') instead
 var app = require('express')();
 
 // as middleware
-app.use(logger()).get('/', function(req, res) {
-
+var p = require('body-parser');
+app.use(logger()).use(p.urlencoded({extended: false})).use(p.json({ type2: 'application/*+json' })).post('/', function(req, res) {
+//app.use(logger()).use(p.urlencoded({extended: false})).use(p.json({ type: 'application/*+json' })).post('/', function(req, res) {
+console.log(req.body);
   res.send('hello world!');
 }).get('/err', function(req, res) {
 

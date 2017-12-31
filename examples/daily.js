@@ -11,7 +11,7 @@
 /*
  * initialize module
  */
-var logger = require('..'); // use require('logger-request') instead
+var logger = require('logger-request'); // use require('logger-request') instead
 var app = require('express')();
 
 // as middleware
