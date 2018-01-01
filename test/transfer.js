@@ -43,16 +43,9 @@ describe('express #2433', function() {
 
   it('should write 12mb fake pdf', function(done) {
 
-    this.timeout(5000);
-    var e = '';
-    for (var i = 0; i < size; i++) {
-      e += 'e';
-    }
-    require('fs').writeFile(file, e, function(err) {
-
-      assert.ifError(err);
-      done();
-    });
+    this.timeout(7000);
+    var e = 'e';
+    fs.writeFile(file, e.repeat(size + 1), done);
   });
   it('should return 1° 200 chunk', function(done) {
 
