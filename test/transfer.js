@@ -45,7 +45,7 @@ describe('express #2433', function() {
 
     this.timeout(7000);
     var e = 'e';
-    fs.writeFile(file, e.repeat(size + 1), done);
+    fs.writeFile(file, e.repeat(size), done);
   });
   it('should return 1° 200 chunk', function(done) {
 
